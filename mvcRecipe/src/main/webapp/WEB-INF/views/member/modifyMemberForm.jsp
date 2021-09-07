@@ -38,7 +38,7 @@
 			}
 			if($('#phone').val().trim() == '') {
 				alert('전화번호를 입력하세요!');
-				$('#phone').foucs();
+				$('#phone').focus();
 				$('#phone').val('');
 				return false;
 			}
@@ -48,7 +48,7 @@
 				$('#passkey').val();
 				return false;
 			}
-			if($('#newpasswd').val() != $('chepasswd').val()) {
+			if($('#newpasswd').val() != $('#chepasswd').val()) {
 				alert('새 비밀번호와 새 비밀번호 확인이 불일치 합니다!');
 				$('#chepasswd').val('').focus();
 				return false;
@@ -57,7 +57,7 @@
 		
 		// 새 비밀번호 확인까지 한 후 새 비밀번호를 수정하려고 하면 새 비밀번호를 초기화
 		$('#newpasswd').keyup(function() {
-			$('#newpasswd').val('');
+			$('#chepasswd').val('');
 			$('#message_chepasswd').text('');
 		});
 		

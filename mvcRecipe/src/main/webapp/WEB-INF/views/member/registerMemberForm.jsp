@@ -132,7 +132,7 @@
 		});
 		
 		// 비밀번호와 비밀번호 확인 일치 여부 체크
-		$('#passwd').keyup(function() {
+		$('#passwd2').keyup(function() {
 			if($('#passwd').val() == $('#passwd2').val()) {
 				$('#message_passwd2').text('비밀번호 일치');
 			}else {
