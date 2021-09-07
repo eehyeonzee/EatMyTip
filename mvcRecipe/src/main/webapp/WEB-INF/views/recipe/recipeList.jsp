@@ -70,6 +70,7 @@
 		</c:if>
 		 <hr>
 		 <div align="left">
+		 <%-- 검색부분 --%>
 		<form action="recipeSearch.do" method="get" name="search" id="search">
 			<input type="hidden" value="${ mem_num }" name="mem_num">
 			<input type="search" id="search" name="search">
