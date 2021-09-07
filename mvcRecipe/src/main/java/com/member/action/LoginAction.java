@@ -8,6 +8,14 @@ import com.controller.Action;
 import com.member.dao.MemberDAO;
 import com.member.vo.MemberVO;
 
+/**
+ * @Package Name   : com.member.action
+ * @FileName  : LoginAction.java
+ * @작성일       : 2021. 9. 7. 
+ * @작성자       : 박용복
+ * @프로그램 설명 : 로그인 Action
+ */
+
 public class LoginAction implements Action{
 
 	@Override

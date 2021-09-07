@@ -7,6 +7,14 @@ import java.sql.ResultSet;
 import com.member.vo.MemberVO;
 import com.util.DBUtil;
 
+/**
+ * @Package Name   : com.member.dao
+ * @FileName  : MemberDAO.java
+ * @작성일       : 2021. 9. 7. 
+ * @작성자       : 박용복
+ * @프로그램 설명 : MemberDAO
+ */
+
 public class MemberDAO {
 	
 	private static MemberDAO instance = new MemberDAO();
@@ -100,6 +108,67 @@ public class MemberDAO {
 		}
 		
 		return member;
+	}
+	
+	// 회원 상세 정보
+	public MemberVO getMember(int mem_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberVO member = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM member m JOIN member_detail d ON m.mem_num = d.mem_num WHERE m.mem_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new MemberVO();
+				member.setMem_num(rs.getInt("mem_num"));
+				member.setId(rs.getString("id"));
+				member.setAuth(rs.getInt("auth"));
+				member.setName(rs.getString("name"));
+				member.setPasswd(rs.getString("passwd"));
+				member.setEmail(rs.getString("email"));
+				member.setPhone(rs.getString("phone"));
+				member.setBirthday(rs.getString("birthday"));
+				member.setPasskey(rs.getString("passkey"));
+				member.setPhoto(rs.getString("photo"));
+				member.setJoin_date(rs.getDate("join_date"));
+				
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return member;
+	}
+	
+	// 프로필 사진 수정
+	public void updateMyPhoto(String photo, int mem_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql = "UPDATE member_detail SET photo = ? WHERE mem_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, photo);
+			pstmt.setInt(2, mem_num);
+			
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}
 	}
 	
 }
