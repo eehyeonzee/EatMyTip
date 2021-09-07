@@ -20,6 +20,7 @@
 </head>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
+<div align="center">
 	<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 		<c:if test="${ mem_num == recipe.mem_num }">
 			<input type="button" value= "수정" onclick="location.href='#'">
@@ -35,7 +36,8 @@
 				};
 			</script>
 		</c:if>
-
+		<input type="button" value="목록" onclick="location.href='recipeList.do'">
+</div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>
