@@ -136,7 +136,7 @@ public class RecipeSearchAction implements Action {
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do");
+			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do?pageNum="+ pageNum + "&search="+search+"&category="+category);
 					
 			List<RecipeVO> list = null;
 					
@@ -149,7 +149,8 @@ public class RecipeSearchAction implements Action {
 			request.setAttribute("count", count);
 			request.setAttribute("list", list);
 			request.setAttribute("pagingHtml", page.getPagingHtml());
-					
+			request.setAttribute("category", category);
+			request.setAttribute("search", search);
 			// 모두의 레시피로 이동	
 			return "/WEB-INF/views/recipe/recipeList.jsp";
 		}
