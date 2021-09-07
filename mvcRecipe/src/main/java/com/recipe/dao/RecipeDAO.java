@@ -310,6 +310,55 @@ public class RecipeDAO {
 	
 	
 	// 글상세
+	public RecipeVO getRecipeBoard(int board_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		RecipeVO recipe = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "select * from recipe_board b join member m on b.mem_num = m.mem_num where b.board_num=?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문을 실행해서 결과행을 resultSet에 담음
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				recipe = new RecipeVO();
+				recipe.setBoard_num(rs.getInt("board_num"));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setContent(rs.getString("content"));
+				recipe.setHits(rs.getInt("hits"));
+				recipe.setRecom_count(rs.getInt("recom_count"));	// 추천수
+				recipe.setReport_date(rs.getDate("report_date"));
+				recipe.setModify_date(rs.getDate("modify_date"));
+				recipe.setFilename(rs.getString("filename"));
+				recipe.setMem_num(rs.getInt("mem_num"));
+				recipe.setIp(rs.getString("ip"));
+				recipe.setCategory(rs.getString("category"));
+				recipe.setId(rs.getString("id"));
+				
+				
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return recipe;
+	}
+	
 	// 조회수
 	// 글수정
 	// 글삭제

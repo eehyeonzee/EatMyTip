@@ -122,7 +122,7 @@
 		              </div>
 		           </div>
 		           <br>
-	              <a href="#" class="btn btn-primary">더보기</a>
+	              <a href="recipeDetail.do?board_num=${ recipe.board_num }" class="btn btn-primary">더보기</a>
 	            </div>
 	          </div>
 	        </div>
