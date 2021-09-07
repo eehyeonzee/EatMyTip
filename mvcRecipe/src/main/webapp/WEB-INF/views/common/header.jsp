@@ -20,14 +20,14 @@
 <c:if test="${!empty mem_num && auth == 1}">
   <ul class="navbar-nav mr-5">
     <li class="nav-item"  style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="#">로그아웃</a>
+      <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
     </li>
   </ul>
 </c:if>
 <c:if test="${!empty mem_num && auth == 2}">
   <ul class="navbar-nav mr-5">
     <li class="nav-item mr-5" style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="#">마이페이지</a>
+      <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage.do">마이페이지</a>
     </li>
     <li class="nav-item mr-5"  style="font-size: 13pt; font-weight: bold;">
       <a class="nav-link" href="#">내가 쓴 글 보기</a>
@@ -36,7 +36,7 @@
       <a class="nav-link" href="#">북마크</a>
     </li>
     <li class="nav-item"  style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="#">로그아웃</a>
+      <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
     </li>
   </ul>
 </c:if>
@@ -46,7 +46,7 @@
       <a class="nav-link" href="../member/loginForm.do">관리자 정보보기</a>
     </li>
     <li class="nav-item "  style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="../member/registerMemberForm.do">로그아웃</a>
+      <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
     </li>
   </ul>
 </c:if>
