@@ -388,6 +388,35 @@ public class RecipeDAO {
 	}
 	
 	// 조회수
+	public void updateHitsCount(int board_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "UPDATE recipe_board set hits=hits+1 where board_num=?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+					
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
 	// 글수정
 	// 글삭제
 }

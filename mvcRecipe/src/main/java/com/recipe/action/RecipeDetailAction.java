@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.controller.Action;
 import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeVO;
+import com.util.StringUtil;
 
 /**
  * @Package Name   : com.recipe.action
@@ -25,13 +26,14 @@ public class RecipeDetailAction implements Action {
 		RecipeDAO dao = RecipeDAO.getInstance();
 		
 		// 조회수 증가
-		
+		dao.updateHitsCount(board_num);
 		// 한건의 레코드 받기
 		RecipeVO recipe = dao.getRecipeBoard(board_num);
 		
 		// HTML을 허용하지 않음
-		
+		recipe.setTitle(StringUtil.useBrNoHtml(recipe.getTitle()));
 		// HTML을 허용하지 않으면서 줄바꿈 처리
+		recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
 		
 		// 한건의 레코드 반환
 		request.setAttribute("recipe", recipe);
