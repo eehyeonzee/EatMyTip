@@ -120,6 +120,7 @@
 	<div class = "">
 		<h3>개인 정보 수정</h3>
 		<ul>
+			<li>아이디 : ${member.id}</li>
 			<li>이름 : ${member.name}</li>
 			<li>전화번호 : ${member.phone}</li>
 			<li>이메일 : ${member.email}</li>

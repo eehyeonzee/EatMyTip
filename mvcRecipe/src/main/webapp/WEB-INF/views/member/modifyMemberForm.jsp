@@ -24,12 +24,6 @@
 				$('#nowpasswd').val('');
 				return false;
 			}
-			if($('#newpasswd').val().trim() != '') {
-				alert('새 비밀번호 확인을 입력하세요!');
-				$('#chepasswd').focus();
-				$('#chepasswd').val('');
-				return false;
-			}
 			if($('#email').val().trim() == '') {
 				alert('이메일을 입력하세요!');
 				$('#email').focus();
@@ -78,6 +72,10 @@
 	<h2>회원 정보 수정</h2>
 	<form action = "modifyMember.do" method = "post" id = "modify_form">
 		<ul>
+			<li>
+				<label for = "id">아이디</label>
+				: ${member.id}
+			</li>
 			<li>
 				<label for = "name">이름</label>
 				: ${member.name}

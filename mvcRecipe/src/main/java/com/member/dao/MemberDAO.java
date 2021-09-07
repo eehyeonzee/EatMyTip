@@ -24,6 +24,13 @@ public class MemberDAO {
 	}
 	
 	private MemberDAO() {}
+
+	/**
+	 * @Method 메소드명  : insertMember
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 멤버 회원 가입
+	 */
 	
 	// 회원 가입
 	public void insertMember(MemberVO member)throws Exception {
@@ -76,7 +83,15 @@ public class MemberDAO {
 		}
 	}
 	
+	
 	// ID 중복 체크 및 로그인 처리
+	/**
+	 * @Method 메소드명  : checkMember
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 아이디 중복 체크 및 로그인 처리
+	 */
+	
 	public MemberVO checkMember(String id)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -111,6 +126,12 @@ public class MemberDAO {
 	}
 	
 	// 회원 상세 정보
+	/**
+	 * @Method 메소드명  : getMember
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 회원 상세 정보 조회
+	 */
 	public MemberVO getMember(int mem_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -152,6 +173,12 @@ public class MemberDAO {
 	}
 	
 	// 프로필 사진 수정
+	/**
+	 * @Method 메소드명  : updateMyPhoto
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 프로필 사진 수정
+	 */
 	public void updateMyPhoto(String photo, int mem_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -168,6 +195,51 @@ public class MemberDAO {
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			throw new Exception(e);
+		}
+	}
+	
+	
+	// 회원 정보 및 비밀번호 수정
+	
+	/**
+	 * @Method 메소드명  : updateMember
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 회원 정보 및 비밀번호 수정
+	 */
+	
+	public void updateMember(MemberVO member, String newPasswd)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE member_detail SET email = ?, phone = ?, passkey = ? WHERE mem_num = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getEmail());
+			pstmt.setString(2, member.getPhone());
+			pstmt.setString(3, member.getPasskey());
+			pstmt.setInt(4, member.getMem_num());
+			
+			pstmt.executeUpdate();
+			
+			if(newPasswd != null) {
+				sql = "UPDATE member_detail SET passwd = ? WHERE mem_num = ?";
+				
+				pstmt2 = conn.prepareStatement(sql);
+				pstmt2.setString(1, newPasswd);
+				pstmt2.setInt(2, member.getMem_num());
+				pstmt2.executeUpdate();
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt2, null);
+			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
 	
