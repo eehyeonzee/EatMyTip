@@ -158,7 +158,7 @@
 		</div>
 		<div class = "form-group row">
 			<label for = "name" class = "col-sm-2 col-form-label">이름</label>
-			<input type = "text" class = "form-control" name = "name" id = "name" maxlength = "12">
+			<input type = "text" class = "form-control" name = "name" id = "name" maxlength = "8">
 		</div>
 		<div class = "form-group row">
 			<label for = "passwd" class = "col-sm-2 col-form-label">비밀번호</label>
@@ -166,7 +166,7 @@
 		</div>
 		<div class = "form-group row">
 			<label for = "passwd2" class = "col-sm-2 col-form-label">비밀번호 확인</label>
-			<input type = "password" class = "form-control" id = "passwd2" maxlength = "35">
+			<input type = "password" class = "form-control" id = "passwd2" maxlength = "12">
 			<span id = "message_passwd2"></span>
 		</div>
 		<div class = "form-group row">
@@ -182,11 +182,11 @@
 			<input type = "date" class = "form-control" name = "birthday" id = "birthday">
 		</div>
 		<div class = "form-group row">
-			<label class = "col-sm-5 col-form-label">비밀번호 힌트 가장 좋아하는 요리는?</label>
+			<label class = "col-sm-5 col-form-label">비밀번호 힌트 : 가장 좋아하는 요리는?</label>
 		</div>
 		<div class = "form-group row">
 			<label for = "passkey" class = "col-sm-2 col-form-label">비밀번호 정답</label>
-			<input type = "text" class = "form-control" name = "passkey" id = "passkey" maxlength = "15">
+			<input type = "text" class = "form-control" name = "passkey" id = "passkey" maxlength = "16">
 		</div>
 		<div class = "form-group row">
 			<div class = "col-sm-10">
