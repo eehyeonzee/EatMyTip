@@ -32,31 +32,30 @@ public class RecipeSearchAction implements Action {
 		
 		// 전송된 데이터 반환
 		String search = request.getParameter("search");
-		String category = request.getParameter("category");
+		String division = request.getParameter("division");
 		
 		request.setAttribute("search", search);
-		request.setAttribute("category", category);
+		request.setAttribute("category", division);
+		request.setAttribute("mem_num", mem_num);
 		
-//		if(category == null) category = "전체";
-		
-		// 검새조건이 식사인 경우
-		if(category.equals("식사")) {
+		// 검새조건이 제목인 경우
+		if(division.equals("제목")) {
 		
 			String pageNum = request.getParameter("pageNum");
 			if(pageNum==null) pageNum = "1";
 				
 			RecipeDAO dao = RecipeDAO.getInstance();
-			int count = dao.getRecipeCount(category, search);	// 검색조건에 부합한 총 레코드 수
+			int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do");
+			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 5, 5,"recipeSearch.do");
 					
 			List<RecipeVO> list = null;
 					
 			// 총 레코드가 0이 아닐 때 list에 값을 담는다
 			if(count > 0) {
-				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), category, search);
+				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), division, search);
 			}
 					
 			// list와 총 페이지, 페이지 하단부분 넘겨주기
@@ -68,24 +67,24 @@ public class RecipeSearchAction implements Action {
 			
 			return "/WEB-INF/views/recipe/recipeList.jsp";
 			
-			// 검색조건이 간식인 경우
-		}else if(category.equals("간식")) {
+			// 검색조건이 내용인 경우
+		}else if(division.equals("내용")) {
 		
 			String pageNum = request.getParameter("pageNum");
 			if(pageNum==null) pageNum = "1";
 				
 			RecipeDAO dao = RecipeDAO.getInstance();
-			int count = dao.getRecipeCount(category, search);	// 검색조건에 부합한 총 레코드 수
+			int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do");
+			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 5, 5,"recipeSearch.do");
 					
 			List<RecipeVO> list = null;
 					
 			// 총 레코드가 0이 아닐 때 list에 값을 담는다
 			if(count > 0) {
-				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), category, search);
+				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), division, search);
 			}
 					
 			// list와 총 페이지, 페이지 하단부분 넘겨주기
@@ -97,59 +96,30 @@ public class RecipeSearchAction implements Action {
 			
 			return "/WEB-INF/views/recipe/recipeList.jsp";
 			
-			// 검색조건이 음료인 경우
-		}else if(category.equals("음료")) {
-		
-			String pageNum = request.getParameter("pageNum");
-			if(pageNum==null) pageNum = "1";
-				
-			RecipeDAO dao = RecipeDAO.getInstance();
-			int count = dao.getRecipeCount(category, search);	// 검색조건에 부합한 총 레코드 수
-					
-			// 페이지 처리
-			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do");
-					
-			List<RecipeVO> list = null;
-					
-			// 총 레코드가 0이 아닐 때 list에 값을 담는다
-			if(count > 0) {
-				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), category, search);
-			}
-					
-			// list와 총 페이지, 페이지 하단부분 넘겨주기
-			request.setAttribute("count", count);
-			request.setAttribute("list", list);
-			request.setAttribute("pagingHtml", page.getPagingHtml());
-					
-			// 모두의 레시피로 이동		
-			
-			return "/WEB-INF/views/recipe/recipeList.jsp";
-			
-			// 검색 조건이 전체인 경우
+			// 검색조건이 작성자인 경우
 		}else {
 			String pageNum = request.getParameter("pageNum");
 			if(pageNum==null) pageNum = "1";
 				
 			RecipeDAO dao = RecipeDAO.getInstance();
-			int count = dao.getRecipeCount(category, search);	// 검색조건에 부합한 총 레코드 수
+			int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeSearch.do?pageNum="+ pageNum + "&search="+search+"&category="+category);
+			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 5, 5,"recipeSearch.do?pageNum="+ pageNum + "&search="+search+"&category="+division);
 					
 			List<RecipeVO> list = null;
 					
 			// 총 레코드가 0이 아닐 때 list에 값을 담는다
 			if(count > 0) {
-				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), category, search);
+				list = dao.getSearchlRecipeList(page.getStartCount(), page.getEndCount(), division, search);
 			}
 					
 			// list와 총 페이지, 페이지 하단부분 넘겨주기
 			request.setAttribute("count", count);
 			request.setAttribute("list", list);
 			request.setAttribute("pagingHtml", page.getPagingHtml());
-			request.setAttribute("category", category);
+			request.setAttribute("division", division);
 			request.setAttribute("search", search);
 			// 모두의 레시피로 이동	
 			return "/WEB-INF/views/recipe/recipeList.jsp";
