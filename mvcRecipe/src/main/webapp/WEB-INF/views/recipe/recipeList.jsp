@@ -1,4 +1,8 @@
-<!--  -->
+<%-- 
+ 작성자 : 오상준
+ 작성일 : 2021-09-07
+ 설명 : 모두의 레시피 게시판
+ --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

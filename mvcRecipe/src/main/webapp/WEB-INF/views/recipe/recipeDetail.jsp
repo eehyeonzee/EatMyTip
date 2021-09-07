@@ -17,20 +17,65 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript">
+	$(function(){
+		//var rec_count = {recipe.recom_count};
+		$("#rec_count").text("${recipe.recom_count}");
+		// 추천 버튼 클릭시 추천 추가 또는 제거
+		$("#rec_btn").click(function(){
+			$.ajax({
+				url:"recipeRecom.do",		// 보내는 곳 주소
+				type:"post",				// 전송 데이터 타입
+				data:{						// 보낼 데이터
+					board_num : ${ recipe.board_num },
+					mem_num : ${ recipe.mem_num }
+				},
+				dataType:"json",			// 보내는 데이터 타입
+				cache:false,
+				timeout:30000,
+				success:function(param){	// param을 통해 데이터 전송받음
+					$("#rec_count").text(param.count);
+				},
+				error : function(request,status,error){		// 에러메세지 반환
+					idChecked = 0;
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+			}) 
+		}); // end of clickEvent
+		//$("#rec_count").text(rec_count);
+	});
+</script>
 </head>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
 <div class="recipe-detail-main">
 	<div class="detail_title">   <!-- 상세 글 머리부분 -->
-		<h3> ${ recipe.title }</h3>
+		<br><h3>No. ${recipe.board_num} [${recipe.category}] ${ recipe.title }</h3>
 	</div>
 	<hr size="2" noshade width="100%">
-	<b>작성자 </b> &nbsp;${ recipe.id } | <b>작성일</b> ${ recipe.report_date } <span style="float: right;"><b style="color: red">추천 : </b> ${ recipe.recom_count } &nbsp; <b>조회수 : </b> ${ recipe.hits }</span>
+	<b>작성자 </b> &nbsp;${ recipe.id } | <b>작성일</b> ${ recipe.report_date } 
+	<span style="float: right;">
+		<b style="color: red">추천수 : </b> <span id="rec_count"></span>&nbsp;
+		<b>조회수 : </b> ${ recipe.hits }
+	</span>
 	<hr size="2" noshade width="100%">
-	<b> IPAdress </b> &nbsp;${ recipe.ip } &nbsp;| <b>구분 </b> &nbsp;[${recipe.category}] <span style="float: right;"><b style="color: red">찜하기</b></span>
+	<b> IPAdress </b> &nbsp;${ recipe.ip }
+	<%-- 추천 및 찜기능 --%> 
+	<div class="btn_click">
+	<c:if test="${ mem_num == recipe.mem_num }">
+		<button id="rec_btn" class="btn btn-outline-danger">
+	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/heart.svg"></span>
+		</button>
+	<%-- 찜기능 --%>	 
+		<button id="swapHeart" class="btn btn-outline-warning">
+	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/bookmark.svg"></span>
+		</button>
+	</c:if>
+	</div>
+	<br>
 	<hr size="2" noshade width="100%">
 	<!-- 상세글 내용 -->
-		<c:if test="${ !empty board.filename }">
+		<c:if test="${ !empty recipe.filename }">
 		<div class="detail-content">
 		<img src="${ pageContext.request.contextPath }/upload/${ recipe.filename }" class="detail-img">
 		</div>

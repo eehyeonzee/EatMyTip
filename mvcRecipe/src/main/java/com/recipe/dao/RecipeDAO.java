@@ -337,7 +337,12 @@ public class RecipeDAO {
 	}
 	
 	
-	// 글상세
+	/**
+	 * @Method 메소드명  : getRecipeBoard
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 상세 페이지 출력 메소드
+	 */
 	public RecipeVO getRecipeBoard(int board_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -387,7 +392,13 @@ public class RecipeDAO {
 		return recipe;
 	}
 	
-	// 조회수
+	
+	/**
+	 * @Method 메소드명  : updateHitsCount
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 조회수 업데이트 메소드
+	 */
 	public void updateHitsCount(int board_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -417,6 +428,193 @@ public class RecipeDAO {
 		}
 	}
 	
+	
+	/**
+	 * @Method 메소드명  : recomDuplicationCheck
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 회원의 추천수 중복 체크 메소드
+	 */
+	public int recomDuplicationCheck(int board_num, int mem_num)throws Exception{
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "select count(*) from recommend where board_num = ? and mem_num = ?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, mem_num);
+			
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+					
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @Method 메소드명  : recomDelete
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 :  레시피 추천 삭제 메소드
+	 */
+	public void recomDelete(int board_num, int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			// SQL문 작성
+			sql = "delete from recommend where board_num = ? and mem_num = ?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, mem_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+					
+			// 추천 테이블의 데이터를 삭제하면 레시피 테이블의 추천수도 -1 헤야 한다.
+			
+			//SQL문 작성
+			sql = "update recipe_board set recom_count = recom_count-1 where board_num=?";
+			
+			// pstmt 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+						
+			// ? 에 데이터 바인딩
+			pstmt2.setInt(1, board_num);
+					
+			// SQL문 실행
+			pstmt2.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * @Method 메소드명  : recomAdd
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피의 추천수를 1 증가시켜주면서 추천테이블에 추가하는 메소드
+	 */
+	public void recomAdd(int board_num , int mem_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "update recipe_board set recom_count = recom_count+1 where board_num=?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+					
+			// 추천 테이블의 데이터를 삭제하면 레시피 테이블의 추천수도 -1 헤야 한다.
+			
+			//SQL문 작성
+			sql = "insert into recommend (board_num, mem_num) values (?,?)";
+					
+			// pstmt 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+									
+			// ? 에 데이터 바인딩
+			pstmt2.setInt(1, board_num);
+			pstmt2.setInt(2, mem_num);			
+			
+			// SQL문 실행
+			pstmt2.executeUpdate();			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * @Method 메소드명  : recomCount
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 현재 레시피의 추천수를 반환하는 메소드
+	 */
+	public int recomCount(int board_num)throws Exception {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "select recom_count from recipe_board where board_num = ?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt("recom_count");
+			}
+					
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
 	// 글수정
 	// 글삭제
 }
