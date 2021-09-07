@@ -55,7 +55,7 @@ public class PagingUtil {
 			if(keyword==null){//검색 미사용시
 				pagingHtml.append("<a href="+pageUrl+"?pageNum="+ (startPage - 1) + addKey +">");
 			}else{
-				pagingHtml.append("<a href="+pageUrl+"?keyfield="+keyfield+"&keyword="+keyword+"&pageNum="+ (startPage - 1) + addKey +">");
+				pagingHtml.append("<a href="+pageUrl+"?search="+keyfield+"&division="+keyword+"&pageNum="+ (startPage - 1) + addKey +">");
 			}
 			pagingHtml.append("이전");
 			pagingHtml.append("</a>");
@@ -74,7 +74,7 @@ public class PagingUtil {
 				if(keyword==null){//검색 미사용시
 					pagingHtml.append("&nbsp;<a href='"+pageUrl+"?pageNum=");
 				}else{
-					pagingHtml.append("&nbsp;<a href='"+pageUrl+"?keyfield="+keyfield+"&keyword="+keyword+"&pageNum=");
+					pagingHtml.append("&nbsp;<a href='"+pageUrl+"?search="+keyfield+"&division="+keyword+"&pageNum=");
 				}
 				pagingHtml.append(i);
 				pagingHtml.append(addKey+"'>");
@@ -89,7 +89,7 @@ public class PagingUtil {
 			if(keyword==null){//검색 미사용시
 				pagingHtml.append("<a href="+pageUrl+"?pageNum="+ (endPage + 1) + addKey +">");
 			}else{
-				pagingHtml.append("<a href="+pageUrl+"?keyfield="+keyfield+"&keyword="+keyword+"&pageNum="+ (endPage + 1) + addKey +">");
+				pagingHtml.append("<a href="+pageUrl+"?search="+keyfield+"&division="+keyword+"&pageNum="+ (endPage + 1) + addKey +">");
 			}
 			pagingHtml.append("다음");
 			pagingHtml.append("</a>");

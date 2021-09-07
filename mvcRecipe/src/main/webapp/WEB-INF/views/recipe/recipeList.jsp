@@ -71,14 +71,13 @@
 		 <hr>
 		 <div align="left">
 		 <%-- 검색부분 --%>
-		<form action="recipeSearch.do" method="get" name="search" id="search">
+		<form action="recipeList.do" method="get" name="search" id="search">
 			<input type="hidden" value="${ mem_num }" name="mem_num">
 			<input type="search" id="search" name="search">
-			<select name="category">
-				<option value="전체">전체</option>
-				<option value="식사">식사</option>
-				<option value="간식">간식</option>
-				<option value="음료">음료</option>
+			<select name="division">
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="작성자">작성자</option>
 			</select>
 			<input type="submit" value="검색">
 		</form>
