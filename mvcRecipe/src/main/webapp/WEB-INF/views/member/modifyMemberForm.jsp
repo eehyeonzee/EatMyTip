@@ -97,7 +97,7 @@
 			</li>
 			<li>
 				<label for = "email">이메일</label>
-				<input type = "email" name = "email" id = "phone" value = "${member.email}" maxlength = "50">
+				<input type = "email" name = "email" id = "email" value = "${member.email}" maxlength = "50">
 			</li>
 			<li>
 				<label for = "phone">전화번호</label>
