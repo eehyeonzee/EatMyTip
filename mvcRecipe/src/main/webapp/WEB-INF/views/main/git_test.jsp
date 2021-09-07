@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title </title>
+<title>Insert </title>
 </head>
 <body>
 
