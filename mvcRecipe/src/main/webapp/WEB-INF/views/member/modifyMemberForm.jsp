@@ -74,7 +74,8 @@
 		<ul>
 			<li>
 				<label for = "id">아이디</label>
-				: ${member.id}
+				: ${member.id} &emsp;
+				<input type = "button" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
 			</li>
 			<li>
 				<label for = "name">이름</label>

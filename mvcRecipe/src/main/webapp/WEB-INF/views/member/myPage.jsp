@@ -110,12 +110,6 @@
 				</div>
 			</li>
 		</ul>
-		<h3>회원탈퇴</h3>
-		<ul>
-			<li>
-				<input type = "button" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
-			</li>
-		</ul>
 	</div>
 	<div class = "">
 		<h3>개인 정보 수정</h3>
