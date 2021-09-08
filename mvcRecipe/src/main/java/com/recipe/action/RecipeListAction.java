@@ -48,7 +48,7 @@ public class RecipeListAction implements Action {
 			
 			// 其捞瘤 贸府
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeList.do");
+			PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 4, 5,"recipeList.do");
 			
 			List<RecipeVO> list = null;
 			
@@ -76,7 +76,7 @@ public class RecipeListAction implements Action {
 						
 				// 其捞瘤 贸府
 				// currentPage, count, rowCount, pageCount, url
-				PagingUtil page = new PagingUtil(search,division, Integer.parseInt(pageNum), count, 6, 5,"recipeList.do");
+				PagingUtil page = new PagingUtil(search,division, Integer.parseInt(pageNum), count, 4, 5,"recipeList.do");
 						
 				List<RecipeVO> list = null;
 						
@@ -105,7 +105,7 @@ public class RecipeListAction implements Action {
 						
 				// 其捞瘤 贸府
 				// currentPage, count, rowCount, pageCount, url
-				PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 6, 5,"recipeList.do");
+				PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do");
 						
 				List<RecipeVO> list = null;
 						
@@ -133,7 +133,7 @@ public class RecipeListAction implements Action {
 						
 				// 其捞瘤 贸府
 				// currentPage, count, rowCount, pageCount, url
-				PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 6, 5,"recipeList.do?search="+search+"&category="+division);
+				PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do?search="+search+"&category="+division);
 						
 				List<RecipeVO> list = null;
 						

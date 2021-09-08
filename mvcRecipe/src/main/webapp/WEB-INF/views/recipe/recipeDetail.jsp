@@ -119,7 +119,7 @@
 		<img src="${ pageContext.request.contextPath }/upload/${ recipe.filename }" class="detail-img">
 		</div>
 	</c:if>
-	<p>
+	<p align="center">
 		${ recipe.content }
 	</p>
 	<hr size="2" noshade width="100%">
