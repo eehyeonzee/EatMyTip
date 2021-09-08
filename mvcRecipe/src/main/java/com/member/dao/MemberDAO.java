@@ -10,7 +10,7 @@ import com.util.DBUtil;
 /**
  * @Package Name   : com.member.dao
  * @FileName  : MemberDAO.java
- * @작성일       : 2021. 9. 7. 
+ * @작성일       : 2021. 9. 8. 
  * @작성자       : 박용복
  * @프로그램 설명 : MemberDAO
  */
@@ -281,4 +281,112 @@ public class MemberDAO {
 		}
 	}
 	
+	// ID 찾기
+	
+	/**
+	 * @Method 메소드명  : idSearch
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : ID 찾기
+	 */
+	
+	public MemberVO idSearch(String name, String phone)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		MemberVO member = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT id,name FROM member m, member_detail d WHERE m.mem_num = d.mem_num AND name = ? AND phone = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, phone);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new MemberVO();
+				member.setId(rs.getString("id"));
+				member.setName(rs.getString("name"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return member;
+	}
+	
+	// 비밀번호를 몰라서 변경하기 전 작업
+	/**
+	 * @Method 메소드명  : passwdSearch
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 비밀번호 찾기
+	 */
+	public MemberVO passwdSearch(String id, String name, String passkey)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		MemberVO member = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT id, name, passkey FROM member m, member_detail d WHERE m.mem_num = d.mem_num AND id = ? AND name = ? AND passkey = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, passkey);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new MemberVO();
+				member.setId(rs.getString("id"));
+				member.setName(rs.getString("name"));
+				member.setPasskey(rs.getString("passkey"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return member;
+	}
+
+	// 비밀번호 변경
+	
+	/**
+	 * @Method 메소드명  : updatePassword
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 비밀번호 변경
+	 */
+	
+	public void updatePassword(String passwd, String id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE (SELECT passwd FROM member_detail d, member m WHERE d.mem_num = m.mem_num AND id = ?) SET passwd = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, passwd);
+			
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }

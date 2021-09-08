@@ -40,19 +40,18 @@
 <!-- container 시작 -->
 <div class = "container" style = "width:100%">
 	<form id = "login_form" action = "login.do" method = "post">
-		<ul>
-			<li>
-				<label for = "id">아이디</label>
-				<input type = "text" name = "id" id = "id" maxlength = "12">
-			</li>
-			<li>
-				<label for ="passwd">비밀번호</label>
-				<input type = "password" name = "passwd" id = "passwd" maxlength = "12">
-			</li>
-		</ul>
+		<table>
+			<tr>
+				<td>아이디 <input type = "text" name = "id" id = "id" maxlength = "12"></td>
+				<td colspan = "2"><input type = "submit" value = "로그인"></td>
+			</tr>
+			<tr>
+				<td>비밀번호 <input type = "password" name = "passwd" id = "passwd" maxlength = "12"></td>
+			</tr>
+		</table>
 		<div>
-			<input type = "submit" value = "로그인">
-			<input type = "button" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'">
+			<input type = "button" value = "아이디 찾기" onclick = "location.href='idSearchForm.do'">
+			<input type = "button" value = "비밀번호 찾기" onclick = "location.href='passwdSearchForm.do'">
 		</div>
 	</form>
 </div>
