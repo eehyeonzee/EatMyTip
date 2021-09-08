@@ -21,30 +21,39 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col">
+		<div class="text-center">
 			<h3>게시판 글 상세</h3>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-6">
+		<div class="col">
 			<span>글 제목: ${news.news_title}</span>
 		</div>
-		<div class="col-2">
+	</div>
+	<div class="row">
+		<div class="col">
 			<span>조회수: ${news.news_hits}</span>
 		</div>
-		<div class="col-2">
+		<div class="col">
 			<span>작성자: ${news.name}</span>
 		</div>
-		<div class="col-2">
+		<div class="col">
 			<span>작성일: ${news.news_date}</span>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col">
-			<span>내용:</span>
+			<span class="text-justify">내용:</span>
 			<span>${news.news_content}</span>
 		</div>
 	</div>
+		<c:if test="${!empty news.news_file}">
+		<div class="row">
+			<div class="col">
+				<img src="${pageContext.request.contextPath}/upload/${news.news_file}" class="detail-img">
+			</div>
+		</div>
+		</c:if>
 	<c:if test="${auth==3}">
 	<div class="row">
 		<div class="col">

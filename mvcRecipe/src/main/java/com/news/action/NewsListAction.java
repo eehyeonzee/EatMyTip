@@ -22,15 +22,20 @@ public class NewsListAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String pageNum = request.getParameter("pageNum");
-		if(pageNum==null)pageNum = "1";
-		NewsDAO dao = NewsDAO.getInstance();
-		int count = dao.getNewsCount();
+		//세션으로 회원등급파악
 		HttpSession session = request.getSession();
 		Integer auth =(Integer)session.getAttribute("auth");
 		
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"NewsList.do");
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum==null)pageNum = "1";
+		
+		NewsDAO dao = NewsDAO.getInstance();
+		int count = dao.getNewsCount();
+		
+		//페이지처리
+		//currentPage, count, rowCount, pageCount, url
+		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"newsList.do");
+		
 		List<NewsVO> list =null;
 		if(count > 0) {
 			list = dao.getNewsList(page.getStartCount(), page.getEndCount());

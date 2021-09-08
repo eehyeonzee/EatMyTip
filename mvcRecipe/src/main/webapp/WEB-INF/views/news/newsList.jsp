@@ -23,28 +23,35 @@
 </head>
 <body>
 <!-- 공지사항 상단 -->
-	<div class="container ">
+	<div class="container text-center mt-5">
 		<div class="row">
 			<div class="col">
-				<h1>공지사항</h1>
+				<h3>공지사항</h3>
 			</div>
 			<hr>
 		</div>
-		<div class="row">
+		<div class="row mt-1">
 			<div class="col">
-				<h4>잇마이 레시피의 공지사항입니다.</h4>
+				<h6>잇마이팁의 공지사항입니다.</h6>
 			</div>
 		</div>
 	</div>
+	<!-- 관리자일 경우 공지사항 글 작성 버튼 보이게 -->
+		<div class="container text-right mt-3">
+		<c:if test="${auth==3}">
+			<a href="${pageContext.request.contextPath}/news/newsForm.do"
+			class="btn btn-info" role="button">글작성</a>
+		</c:if>
+		</div>
 <!-- 공지사항에 게시글이 없을 경우 없다는 표시 -->
 	<c:if test="${count == 0}">
-		<div class="container">
+		<div class="container mt-5">
 			<h3>등록된 게시물이 없습니다.</h3>
 		</div>
 	</c:if>
 <!-- 공지사항에 게시글이 있을 경우 리스트를 출력 -->
 	<c:if test="${count > 0}">
-		<div class="container">
+		<div class="container mt-3 mb-5">
 			<table class="table">
 				<thead>
 					<tr>
@@ -65,18 +72,19 @@
 					</c:forEach>
 				</thead>
 			</table>
-		</div>
-	</c:if>
-<!-- 관리자일 경우 공지사항 글 작성 버튼 보이게 -->
-	<c:if test="${auth==3}">
-	<div class="container">
 		<div class="row">
-			<div class="col-sm-10"></div>
-			<div class="col-sm-2">
-				<a href="${pageContext.request.contextPath}/news/newsForm.do"
-					class="btn btn-info" role="button">글작성</a>
+			<div class="col text-center mt-3">
+				${pagingHtml}
 			</div>
 		</div>
+	</div>
+	<div class="container">
+	<form action="newsSearch.do" method="GET">
+		<div class="form-group">
+			<input type="text" class="form-control" name="search" id="search"  placeholder="검색">
+		</div>	
+		<button type="submit" class="btn btn-primary mb-2">검색</button>
+	</form>
 	</div>
 	</c:if>
 </body>

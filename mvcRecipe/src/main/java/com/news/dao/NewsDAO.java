@@ -35,7 +35,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : insertNews
 	 * @작성일     : 2021. 9. 7. 
 	 * @작성자     : 신혜지
-	 * @Method 설명 : 공지사항에 올라갈 정보를 담고 있습니다. 파일 널값처리,지워둠
+	 * @Method 설명 : 공지사항에 올라갈 정보를 담고 있습니다.
 	 */
 	public void insertNews(NewsVO news) throws Exception{
 		Connection conn = null;
@@ -44,13 +44,13 @@ public class NewsDAO {
 		
 		try {
 		conn = DBUtil.getConnection();
-		sql="insert into NEWS_BOARD VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, null)";
+		sql="insert into NEWS_BOARD VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, ?)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,news.getNews_title());
 		pstmt.setString(2,news.getNews_content());
 		pstmt.setInt(3,news.getMem_num());
-		//pstmt.setString(4,news.getNews_file());
-		pstmt.executeUpdate();
+		pstmt.setString(4,news.getNews_file());
+		pstmt.executeQuery();
 		}catch(Exception e){
 			throw new Exception(e);
 		}finally {
@@ -181,7 +181,7 @@ public class NewsDAO {
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_content(rs.getString("news_content"));
 				news.setNews_hits(rs.getInt("news_hits"));
-				//news.setNews_file(rs.getString("news_file"));
+				news.setNews_file(rs.getString("news_file"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
