@@ -132,8 +132,8 @@ public class QnaBoardDAO {
 			conn = getConnection();
 			
 			//SQL巩 累己
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qnaboard "
-					+ "ORDER BY num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qna_board "
+					+ "ORDER BY qna_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
 			
 			//PreparedStatement 按眉 积己
 			pstmt = conn.prepareStatement(sql);

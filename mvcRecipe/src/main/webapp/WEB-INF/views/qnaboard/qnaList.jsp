@@ -21,8 +21,8 @@
 	<h2>게시판 목록</h2>
 	<div class ="align-right">
 		
-			<input type="button" value="글쓰기" onclick="location.href='writeForm.do'">
-			<input type="button" value="목록" onclick="location.href='list.do'">
+			<input type="button" value="글쓰기" onclick="location.href='qnaWriteForm.do'">
+			<input type="button" value="목록" onclick="location.href='qnaList.do'">
 			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	
 	</div>
@@ -40,14 +40,14 @@
 		<tr>
 			<th>글번호</th>
 			<th>제목</th>
-			<th>아이디</th>
+			<th>작성자</th>
 			<th>작성일</th>
 			
 		</tr>
 		<c:forEach var="qnaboard" items="${list }">
 		<tr>
 			<td>${qnaboard.qna_num}</td>
-			<td><a href="detail.do?num=${qnaboard.qna_num}">${qndboard.qna_title}</a></td>
+			<td><a href="detail.do?num=${qnaboard.qna_num}">${qnaboard.qna_title}</a></td>
 			<td>${qnaboard.qna_id}</td>
 			<td>${qnaboard.qna_date}</td>
 		</tr>

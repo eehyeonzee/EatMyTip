@@ -40,7 +40,7 @@ public class QnaWriteAction implements Action{
 		dao.write(qnaboardVO);
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/qnaboard/QnaWrite.jsp";
+		return "/WEB-INF/views/qnaboard/qnaWrite.jsp";
 	}
 
 }

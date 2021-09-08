@@ -33,7 +33,7 @@ public class QnaListAction implements Action{
 		
 		//페이지 처리
 		//currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"QnaList.do");
+		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"qnaList.do");
 		
 		List<QnaBoardVO> list = null;
 		if(count>0) {
@@ -46,7 +46,7 @@ public class QnaListAction implements Action{
 		request.setAttribute("pagingHtml", page.getPagingHtml());		
 
 		//JSP 경로 반환
-		return "/WEB-INF/views/qnaboard/QnaList.jsp";
+		return "/WEB-INF/views/qnaboard/qnaList.jsp";
 	}
 
 }

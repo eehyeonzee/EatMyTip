@@ -18,7 +18,7 @@
 	<h2>글쓰기 완료</h2>
 	<div class="result-display">
 		성공적으로 글을 등록했습니다.
-		<input type="button" value="목록" onclick="location.href='list.do'">
+		<input type="button" value="목록" onclick="location.href='qnaList.do'">
 	</div>
 </div>
 </body>
