@@ -20,14 +20,14 @@ public class NewsVO {
 	private int news_hits;
 	private Date news_date;
 	private Date news_modi;
-	private String new_file;
-	private String id;
+	private String news_file;
+	private String name;
 	
-	public String getId() {
-		return id;
+	public String getname() {
+		return name;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setname(String name) {
+		this.name = name;
 	}
 	public int getNews_num() {
 		return news_num;
@@ -71,10 +71,10 @@ public class NewsVO {
 	public void setNews_modi(Date news_modi) {
 		this.news_modi = news_modi;
 	}
-	public String getNew_file() {
-		return new_file;
+	public String getNews_file() {
+		return news_file;
 	}
-	public void setNew_file(String new_file) {
-		this.new_file = new_file;
+	public void setNews_file(String new_file) {
+		this.news_file = new_file;
 	}
 }

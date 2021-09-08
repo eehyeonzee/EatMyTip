@@ -1,9 +1,9 @@
 <%--
 /**
  * 1. 프로젝트명 : 잇마이레시피
- * 2. 작성일 : 2021. 9. 6. 오후 7:11:56
+ * 2. 작성일 : 2021. 9. 7. 오후 8:27:27
  * 3. 작성자 : ASUS
- * 4. 설명 : NewsWriteAction이 불러옴. 
+ * 4. 설명 : 뉴스 수정 후 결과창
  */
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,20 +12,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/bootstrap.bundle.min.js"></script>
 <script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>페이지명</title>
-
+<title>공지사항</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>
-
 	<div class="container ">
 		<div class="row">
-			<div class="col"><h1>작성 완료 되었습니다.</h1></div>
+			<div class="col"><h1>수정 완료 되었습니다.</h1></div>
 			<hr>
 		</div>
 		<div class="row">
