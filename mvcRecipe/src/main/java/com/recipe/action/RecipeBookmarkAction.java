@@ -1,6 +1,5 @@
 package com.recipe.action;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +13,12 @@ import com.recipe.dao.RecipeDAO;
 
 /**
  * @Package Name   : com.recipe.action
- * @FileName  : RecipeRecomAction.java
+ * @FileName  : RecipeBookmarkAction.java
  * @작성일       : 2021. 9. 8. 
  * @작성자       : 오상준
- * @프로그램 설명 : 레시피 추천 업데이트(중복체크 후 증가 및 감소) 액션 ajax 반환
+ * @프로그램 설명 : 레시피게시판 북마크 액션
  */
-public class RecipeRecomAction implements Action {
+public class RecipeBookmarkAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,27 +29,26 @@ public class RecipeRecomAction implements Action {
 		int mem_num = Integer.parseInt(request.getParameter("mem_num"));
 		
 		
-		// 추천 중복 체크를 위해 check 함수 실행
 		RecipeDAO dao = RecipeDAO.getInstance();
-		int duplication = dao.recomDuplicationCheck(board_num, mem_num);
+		// 회원이 레시피를 북마크에 이미 저장했는지 확인
+		int check = 0;
+		check = dao.bookmarkCheck(board_num, mem_num);
 		
-		if(duplication == 0) { // 추천하지 않았다면 추천 추가
-			dao.recomAdd(board_num, mem_num);
-		}else { // 추천을 했다면 추천 삭제
-			dao.recomDelete(board_num, mem_num);
+		Map<String, String> ajaxMap = new HashMap<String, String>();
+		
+		
+		if(check == 0) {	// 레시피를 북마크 하지 않았을 경우
+			// 북마크에 데이터 저장
+			dao.addBookmark(board_num, mem_num);
+			ajaxMap.put("result", "addition");
+		}else {			// 레시피 북마크 한 경우
+			dao.deleteBookmark(board_num, mem_num);
+			ajaxMap.put("result", "cancel");
 		}
-		
-		// 현재 추천수 구하는 함수 실행
-		int recom_count = dao.recomCount(board_num);
-		
-		// JSON 형식으로 비동기 전송을 위해 문자열 Map 생성
-		Map<String, String> mapAjax = new HashMap<String, String>();
-		mapAjax.put("count", String.valueOf(recom_count));
-		mapAjax.put("duplication", String.valueOf(duplication));
 		
 		// JSON 형식의 문자열 데이터로 변환
 		ObjectMapper mapper = new ObjectMapper();
-		String ajaxData = mapper.writeValueAsString(mapAjax);
+		String ajaxData = mapper.writeValueAsString(ajaxMap);
 		
 		request.setAttribute("ajaxData", ajaxData);
 		

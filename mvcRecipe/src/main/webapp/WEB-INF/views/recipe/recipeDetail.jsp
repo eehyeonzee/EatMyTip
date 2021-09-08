@@ -34,15 +34,49 @@
 				cache:false,
 				timeout:30000,
 				success:function(param){	// param을 통해 데이터 전송받음
-					$("#rec_count").text(param.count);
+					if(param.duplication == 0){
+						$("#rec_count").text(param.count);
+						$("#rec_btn").css("background-color", "red");
+					}else{
+						$("#rec_count").text(param.count);
+						$("#rec_btn").css("background-color", "white");
+					}
 				},
 				error : function(request,status,error){		// 에러메세지 반환
 					idChecked = 0;
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
-			}) 
-		}); // end of clickEvent
-		//$("#rec_count").text(rec_count);
+			})
+		}); // end of RecomclickEvent
+		
+		// 찜버튼 클릭시
+		$("#bookmark_btn").click(function(){
+			$.ajax({
+				url:"recipeBookmark.do",
+				type:"post",
+				data:{			// 전송할 데이터
+					board_num : ${ recipe.board_num },
+					mem_num : ${ recipe.mem_num }
+				},
+				dataType:"json",
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					if(param.result == "addition"){
+						$("#bookmark_btn").css("background-color", "yellow");
+						alert("레시피가 찜목록에 추가되었습니다.");
+					}else{
+						$("#bookmark_btn").css("background-color", "white");
+						alert("레시피 찜하기가 취소되었습니다. ");
+					}
+				},
+				error : function(request,status,error){		// 에러메세지 반환
+					idChecked = 0;
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+			})
+		});
+		
 	});
 </script>
 </head>
@@ -67,7 +101,7 @@
 	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/heart.svg"></span>
 		</button>
 	<%-- 찜기능 --%>	 
-		<button id="swapHeart" class="btn btn-outline-warning">
+		<button id="bookmark_btn" class="btn btn-outline-warning">
 	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/bookmark.svg"></span>
 		</button>
 	</c:if>

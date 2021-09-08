@@ -571,6 +571,7 @@ public class RecipeDAO {
 		}finally {
 			// 자원 정리
 			DBUtil.executeClose(null, pstmt, conn);
+			DBUtil.executeClose(null, pstmt2, conn);
 		}
 	}
 	
@@ -615,6 +616,125 @@ public class RecipeDAO {
 		}
 		return count;
 	}
+	
+	/**
+	 * @Method 메소드명  : addBookmark
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 북마크 테이블에 북마크 추가 메소드
+	 */
+	public void addBookmark(int board_num, int mem_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+	
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "insert into bookmark (book_num, board_num, mem_num) values (bookmark_seq.nextval,?,?)";
+					
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+									
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, mem_num);			
+			
+			// SQL문 실행
+			pstmt.executeUpdate();			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+
+	/**
+	 * @Method 메소드명  : deleteBookmark
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 북마크 삭제
+	 */
+	public void deleteBookmark(int board_num, int mem_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+	
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "delete from bookmark where board_num = ? and mem_num = ?";
+					
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+									
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, mem_num);			
+			
+			// SQL문 실행
+			pstmt.executeUpdate();			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	
+	/**
+	 * @Method 메소드명  : bookmarkCheck
+	 * @작성일     : 2021. 9. 8. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 회원이 이미 북마크를 했는지 체크
+	 */
+	public int bookmarkCheck(int board_num, int mem_num)throws Exception{
+		int check = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "select count(*) from bookmark where board_num = ? and mem_num = ?";
+			
+			// pstmt 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			pstmt.setInt(2, mem_num);
+			
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				check = rs.getInt(1);
+			}
+					
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return check;
+	}
+	
+	
+	
 	// 글수정
 	// 글삭제
 }
