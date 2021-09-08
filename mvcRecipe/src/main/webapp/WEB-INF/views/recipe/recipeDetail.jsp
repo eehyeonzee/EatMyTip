@@ -96,12 +96,17 @@
 	<b> IPAdress </b> &nbsp;${ recipe.ip }
 	<%-- 추천 및 찜기능 --%> 
 	<div class="btn_click">
+	<%-- 작성자인 경우에만 버튼 보이도록 함 --%>
 	<c:if test="${ mem_num == recipe.mem_num }">
-		<button id="rec_btn" class="btn btn-outline-danger">
-	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/heart.svg"></span>
-		</button>
+		
+			<button id="rec_btn" class="btn btn-outline-danger" 
+			style="background-color: <c:if test="${ recommBtnCheck == 0 }">white;</c:if><c:if test="${ recommBtnCheck == 1 }">red;</c:if>">
+		    	<span class="badge"><img src="${pageContext.request.contextPath}/images/heart.svg"></span>
+			</button>
+		
 	<%-- 찜기능 --%>	 
-		<button id="bookmark_btn" class="btn btn-outline-warning">
+		<button id="bookmark_btn" class="btn btn-outline-warning"
+		style="background-color: <c:if test="${ bookmarkBtnCheck == 0 }">white;</c:if><c:if test="${ bookmarkBtnCheck == 1 }">yellow;</c:if>">
 	    	<span class="badge"><img src="${pageContext.request.contextPath}/images/bookmark.svg"></span>
 		</button>
 	</c:if>

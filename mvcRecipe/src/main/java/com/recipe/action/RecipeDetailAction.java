@@ -35,8 +35,22 @@ public class RecipeDetailAction implements Action {
 		// HTML을 허용하지 않으면서 줄바꿈 처리
 		recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
 		
+		// 찜하기 버튼과 북마크 버튼 유효성 체크를 위해 변수 지정
+		int recommBtnCheck = 0;
+		int bookmarkBtnCheck = 0;
+		
+		// 북마크 유효성 체크 1일 경우 중복 0일경우 미중복
+		bookmarkBtnCheck = dao.bookmarkCheck(board_num, recipe.getMem_num());
+		
+		// 찜하기 버튼 유효성 체크 1일 경우 중복 0일 경우 미중복
+		recommBtnCheck = dao.recomDuplicationCheck(board_num, recipe.getMem_num());
+		
 		// 한건의 레코드 반환
 		request.setAttribute("recipe", recipe);
+		
+		// 찜하기와 북마크 중복 체크 값 반환
+		request.setAttribute("bookmarkBtnCheck", bookmarkBtnCheck);
+		request.setAttribute("recommBtnCheck", recommBtnCheck);
 		
 		// 디테일 페이지로 이동
 		return "/WEB-INF/views/recipe/recipeDetail.jsp";
