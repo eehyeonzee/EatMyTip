@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"> 
 <!-- 네브바 최 상단 잇마이팁 부분 -->
 <nav class="navbar navbar-expand-md justify-content-center" style="background-color: #FFF; padding-top:40px; padding-bottom:0px; margin:0px; position:0;">
   <a href="../main/main.do"><img src="../images/logo.png" height="80px" width="200px"></a>
