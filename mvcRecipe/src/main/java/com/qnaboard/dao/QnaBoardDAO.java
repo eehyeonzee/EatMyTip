@@ -132,9 +132,9 @@ public class QnaBoardDAO {
 			conn = getConnection();
 			
 			//SQL문 작성
-			sql = "select * from (select a.*, rownum rnum from "
-					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
-					+ "where rnum >=? and rnum <=?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qnaboard "
+					+ "ORDER BY num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			//?에 데이터 바인딩

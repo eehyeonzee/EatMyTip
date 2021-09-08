@@ -20,7 +20,7 @@ import com.controller.Action;
  * @작성자       : 나윤경
  * @프로그램 설명 : 고객센터 게시판 목록 액션
  */
-public class ListAction implements Action{
+public class QnaListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,7 +33,7 @@ public class ListAction implements Action{
 		
 		//페이지 처리
 		//currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"list.do");
+		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"QnaList.do");
 		
 		List<QnaBoardVO> list = null;
 		if(count>0) {
@@ -46,7 +46,7 @@ public class ListAction implements Action{
 		request.setAttribute("pagingHtml", page.getPagingHtml());		
 
 		//JSP 경로 반환
-		return "/WEB-INF/views/qnaboard/list.jsp";
+		return "/WEB-INF/views/qnaboard/QnaList.jsp";
 	}
 
 }

@@ -2,6 +2,7 @@ package com.qnaboard.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
 import com.qnaboard.dao.QnaBoardDAO;
@@ -14,10 +15,13 @@ import com.qnaboard.vo.QnaBoardVO;
  * @작성자       : 나윤경
  * @프로그램 설명 : 고객센터 게시판 글 작성
  */
-public class WriteAction implements Action{
+public class QnaWriteAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
+		Integer mem_num = (Integer)session.getAttribute("mem_num");
 		
 		//전송된 데이터 인코딩 처리
 		request.setCharacterEncoding("utf-8");
@@ -36,7 +40,7 @@ public class WriteAction implements Action{
 		dao.write(qnaboardVO);
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/qnaboard/write.jsp";
+		return "/WEB-INF/views/qnaboard/QnaWrite.jsp";
 	}
 
 }

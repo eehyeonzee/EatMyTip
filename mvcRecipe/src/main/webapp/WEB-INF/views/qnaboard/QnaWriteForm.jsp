@@ -27,6 +27,10 @@
 				<input type="text" name="qna_title" id="qna_title" size="30" maxlength="50">
 			</li>
 			<li>
+				<label for="qna_id">아이디</label>
+				<input type="text" name="qna_id" id="qna_id" value="${qnaboard.qna_id}"  size="12" maxlength="12">
+			</li>
+			<li>
 				<label for="qna_passwd">비밀번호</label>
 				<input type="password" name="qna_passwd" id="qna_passwd" size="12" maxlength="12">
 			</li>
@@ -37,7 +41,7 @@
 		</ul>
 		<div class="align-center">
 			<input type="submit" value="글 작성">
-			<input type="button" value="목록" onclick="location.href='list.do'">
+			<input type="button" value="목록" onclick="location.href='QnaList.do'">
 		</div>	
 	</form>
 
