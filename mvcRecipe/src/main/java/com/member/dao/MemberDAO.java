@@ -128,7 +128,7 @@ public class MemberDAO {
 	// 회원 상세 정보
 	/**
 	 * @Method 메소드명  : getMember
-	 * @작성일     : 2021. 9. 7. 
+	 * @작성일     : 2021. 9. 8. 
 	 * @작성자     : 박용복
 	 * @Method 설명 : 회원 상세 정보 조회
 	 */
@@ -141,7 +141,7 @@ public class MemberDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM member m JOIN member_detail d ON m.mem_num = d.mem_num WHERE m.mem_num = ?";
+			sql = "SELECT d.mem_num, id, auth, name, passwd, email, phone, to_char(birthday, 'yyyy-MM-dd') as birthday, passkey, photo, join_date FROM member m JOIN member_detail d ON m.mem_num = d.mem_num WHERE m.mem_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem_num);
 			

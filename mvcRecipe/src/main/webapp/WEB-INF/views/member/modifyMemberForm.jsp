@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- 
- * 작성일 : 2021. 9. 7.
+ * 작성일 : 2021. 9. 8.
  * 작성자 : 박용복
  * 설명 : 회원 정보 수정 form
- * 수정일 : 2021. 9. 7.
+ * 수정일 : 2021. 9. 8.
 --%>
 <!DOCTYPE html>
 <html>
