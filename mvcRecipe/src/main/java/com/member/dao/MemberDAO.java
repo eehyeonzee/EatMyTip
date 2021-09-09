@@ -482,4 +482,52 @@ public class MemberDAO {
 		
 		return list;
 	}
+
+	public List<RecipeVO> getBookMarkRecipeList(int start, int end, int mem_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<RecipeVO> list = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql = "SELECT * FROM(SELECT a.*, rownum rnum FROM (SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num JOIN bookmark o ON b.board_num = o.board_num ORDER BY b.board_num DESC) a)WHERE rnum >= ? AND rnum <= ? AND mem_num = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, mem_num);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<RecipeVO>();
+			
+			while(rs.next()) {
+				RecipeVO recipe = new RecipeVO();
+				recipe.setBoard_num(rs.getInt("board_num"));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setContent(rs.getString("content"));
+				recipe.setHits(rs.getInt("hits"));
+				recipe.setRecom_count(rs.getInt("recom_count"));
+				recipe.setReport_date(rs.getDate("report_date"));
+				recipe.setModify_date(rs.getDate("modify_date"));
+				recipe.setIp(rs.getString("ip"));
+				recipe.setFilename(rs.getString("filename"));
+				recipe.setCategory(rs.getString("category"));
+				recipe.setMem_num(rs.getInt("mem_num"));
+				recipe.setId(rs.getString("id"));
+				recipe.setBook_num(rs.getInt("book_num"));
+				
+				list.add(recipe);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return list;
+	}
 }

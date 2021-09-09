@@ -50,7 +50,7 @@ public class MyBookmarkListAction implements Action{
 							
 				// 총 레코드가 0이 아닐 때 list에 값을 담는다
 				if(count > 0) {
-					list = dao.getTotalRecipeList(page.getStartCount(), page.getEndCount(), id);
+					list = dao.getBookMarkRecipeList(page.getStartCount(), page.getEndCount(), mem_num);
 				}
 							
 				// list와 총 페이지, 페이지 하단부분 넘겨주기
