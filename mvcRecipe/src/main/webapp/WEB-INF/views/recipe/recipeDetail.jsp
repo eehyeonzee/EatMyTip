@@ -77,6 +77,42 @@
 			})
 		});
 		
+		
+		// 댓글 기능쪽 자바스크립트
+		var currentPage;
+		var count;
+		var rowCount;
+		
+		
+		// 댓글 등록
+		
+		// 댓글 작성 폼 초기화
+		function initForm(){
+			$("textarea").val("");
+			$("#re_first .letter-count").text("300/300");
+		}
+		
+		// textarea에 내용 입력시 글자수 체크
+		$(document).on("keyup","textarea",function(){
+			 // 입력한 글자 구함
+	         var inputLength = $(this).val().length;
+	         
+	         if(inputLength > 300){   // 300자를 넘어선 경우
+	            $(this).val($(this).val().substring(0,300));
+	         }else{   // 300자 이하
+	            var remain = 300 - inputLength;
+	            remain += '/300';
+	            if($(this).attr('id') == 're_content'){ 
+	               // 등록폼 글자수   후손선택자라 중간에 공백이 있음
+	               $('#re_first .letter-count').text(remain);
+	            }else{
+	               // 수정폼 글자수
+	               $('#mre_first .letter-count').text(remain);
+	            }
+	         }
+
+		});
+		
 	});
 </script>
 </head>
@@ -122,13 +158,48 @@
 	<p align="center">
 		${ recipe.content }
 	</p>
+	
 	<hr size="2" noshade width="100%">
-	<div align="right">
+	<%-- 댓글 목록 출력 시작 --%>
+	<div id="output"></div>
+	<div class="paging-button" style="display: none;">
+		<input type="button" value="다음글 보기">
+	</div>
+	<div id="loading" style="display: none;">
+		<img src="${pageContext.request.contextPath }/images/ajax-loader.gif" >
+	</div>
+	<%-- 댓글 목록 출력 끝 --%>
+	<%-- 댓글 시작 --%>
+	<div id="reply_div">
+		<span class="re-title">댓글 달기</span>
+		<div align="center">
+		<form id="re_form">
+			<input type="hidden" name="board_num" value="${ recipe.board_num }" id="board_num">
+			<input type="hidden" name="mem_num" value="${ mem_num }" id="mem_num">
+			<textarea name="re_content" id="re_content" class="rep-content"
+				<c:if test="${ empty mem_num }">disabled="disabled"</c:if>
+			><c:if test="${ empty mem_num }">로그인 해야 작성할 수 있습니다.</c:if></textarea>
+			<c:if test="${!empty mem_num }">
+			<div id="re_first">
+				<span class="letter-count">300/300</span>
+			</div>
+			<div id="re_second">
+				<input type="submit" value="등록">
+			</div>
+			</c:if>
+		</form>
+		</div>
+	</div>
+	<hr size="2" noshade width="100%">
+	<%-- 하단 목록,수정,삭제 --%>
+	<input type="button" value="목록" style="color: black; background-color: white; border-color: #d5dfe8" 
+			onclick="location.href='recipeList.do'">
+	<div style="float: right;">
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 		수정일 : ${ recipe.modify_date }
 			<c:if test="${ mem_num == recipe.mem_num }">
-				<input type="button" value= "수정" onclick="location.href='#'">
-				<input type="button" value= "삭제" id="delete_btn">
+				<input type="button" value= "수정" onclick="location.href='#'" style="color: black; background-color: white; border-color: #d5dfe8">
+				<input type="button" value= "삭제" id="delete_btn" style="color: red; background-color: white; border-color: #d5dfe8">
 				<script type="text/javascript">
 					var delete_btn = document.getElementById("delete_btn");
 					// 이벤트 연결
@@ -140,9 +211,8 @@
 					};
 				</script>
 			</c:if>
-			<input type="button" value="목록" onclick="location.href='recipeList.do'">
 	</div>
-	<br>
+	<div style="padding-bottom: 50px;"></div>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
