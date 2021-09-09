@@ -41,7 +41,7 @@
 <body>
 <div class="container">
 	<h2>공지사항 수정하기</h2>
-	<form id="modify_form" action="newsModify.do" method="post">
+	<form id="modify_form" action="newsModify.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="news_num" id="news_num" value="${news.news_num}">
 		<div class="form-group">
 			<label for="title">제목</label>
@@ -51,12 +51,10 @@
 			<label for="content">내용</label>
 			<textarea class="form-control" id="content" rows="20" name="content">${news.news_content}</textarea>
 		</div>
-		<!-- 파일오류나서 지워둠 
 		<div class="form-group">
 			<label for="filename">파일</label>
 			<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg" value="${news.news_file}">
 		</div>
-		-->
 		  <button type="submit" class="btn btn-primary mb-2">수정 등록</button>	
 	</form>
 </div>
