@@ -85,7 +85,29 @@
 		
 		
 		// 댓글 등록
-		
+		$.ajax({
+				type:"post",
+				data:form_data,
+				url:"recipeReplyWrite.do",
+				dataType:"json",
+				cache : false,
+				timeout:30000,
+				success:function(param){
+					if(param.result == "logout"){
+						alert("로그인 해야 작성할 수 있습니다.");
+					}else if(param.result == "success"){
+						// 폼 초기화 함수 호출
+						initForm();
+						// 댓글 작성이 성공하면 새로 삽입한 글을 포함해서 첫번째 페이지의 게시글을 다시 호출함
+						selectData(1);
+					}else{
+						alert("등록시 오류 발생");
+					}
+				},
+				error : function(request,status,error){		// 에러메세지 반환
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+			});
 		// 댓글 작성 폼 초기화
 		function initForm(){
 			$("textarea").val("");
