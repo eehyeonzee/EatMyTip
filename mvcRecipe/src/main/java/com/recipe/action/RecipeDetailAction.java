@@ -2,6 +2,7 @@ package com.recipe.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
 import com.recipe.dao.RecipeDAO;
@@ -19,6 +20,10 @@ public class RecipeDetailAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// 세션을 통해 현재 로그인한 멤버 확인
+		HttpSession session = request.getSession();
+		Integer mem_num = (Integer)session.getAttribute("mem_num");
 		
 		// 글 번호 반환
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
@@ -40,10 +45,10 @@ public class RecipeDetailAction implements Action {
 		int bookmarkBtnCheck = 0;
 		
 		// 북마크 유효성 체크 1일 경우 중복 0일경우 미중복
-		bookmarkBtnCheck = dao.bookmarkCheck(board_num, recipe.getMem_num());
+		bookmarkBtnCheck = dao.bookmarkCheck(board_num, mem_num);
 		
 		// 찜하기 버튼 유효성 체크 1일 경우 중복 0일 경우 미중복
-		recommBtnCheck = dao.recomDuplicationCheck(board_num, recipe.getMem_num());
+		recommBtnCheck = dao.recomDuplicationCheck(board_num, mem_num);
 		
 		// 한건의 레코드 반환
 		request.setAttribute("recipe", recipe);

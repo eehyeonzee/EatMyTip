@@ -28,7 +28,7 @@
 				type:"post",				// 전송 데이터 타입
 				data:{						// 보낼 데이터
 					board_num : ${ recipe.board_num },
-					mem_num : ${ recipe.mem_num }
+					mem_num : ${ mem_num }
 				},
 				dataType:"json",			// 보내는 데이터 타입
 				cache:false,
@@ -56,7 +56,7 @@
 				type:"post",
 				data:{			// 전송할 데이터
 					board_num : ${ recipe.board_num },
-					mem_num : ${ recipe.mem_num }
+					mem_num : ${ mem_num }
 				},
 				dataType:"json",
 				cache:false,
