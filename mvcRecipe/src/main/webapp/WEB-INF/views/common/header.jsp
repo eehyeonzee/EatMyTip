@@ -34,7 +34,7 @@
       <a class="nav-link" href="${pageContext.request.contextPath}/member/myWriteList.do">내가 쓴 글 보기</a>
     </li>
     <li class="nav-item mr-5"  style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="#">북마크</a>
+      <a class="nav-link" href="${pageContext.request.contextPath}/member/myBookmarkList.do">북마크</a>
     </li>
     <li class="nav-item"  style="font-size: 13pt; font-weight: bold;">
       <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>

@@ -1,7 +1,7 @@
 <%-- 
  작성자 : 박용복
  작성일 : 2021-09-09
- 설명 : 내가 작성한 글 게시판
+ 설명 : 내가 북마크한 게시판
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>내가 작성한 글</title>
+<title>내가 저장한 글</title>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
