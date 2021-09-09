@@ -3,8 +3,11 @@ package com.member.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.member.vo.MemberVO;
+import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 
 /**
@@ -388,5 +391,95 @@ public class MemberDAO {
 		}finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
+	}
+	
+	/**
+	 * @Method 메소드명  : getRecipeCount
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 아이디 별 게시글 count 조회
+	 */
+	public int getRecipeCount(String id)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		MemberVO member = null;
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT COUNT(id) id FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();	
+			
+			if(rs.next()) {
+				member = new MemberVO();
+				count = rs.getInt(1);
+				
+				member.setId(rs.getString("id"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+	
+	/**
+	 * @Method 메소드명  : getTotalRecipeList
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 작성한 글 조회
+	 */
+	public List<RecipeVO> getTotalRecipeList(int start, int end, String id)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<RecipeVO> list = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+					+ "(SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num ORDER BY b.board_num DESC) a) "
+					+ "WHERE rnum >=? AND rnum <= ? AND id = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			pstmt.setString(3, id);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<RecipeVO>();
+			
+			while(rs.next()) {
+				RecipeVO recipe = new RecipeVO();
+				recipe.setBoard_num(rs.getInt("board_num"));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setContent(rs.getString("content"));
+				recipe.setHits(rs.getInt("hits"));
+				recipe.setRecom_count(rs.getInt("recom_count"));
+				recipe.setReport_date(rs.getDate("report_date"));
+				recipe.setModify_date(rs.getDate("modify_date"));
+				recipe.setIp(rs.getString("ip"));
+				recipe.setFilename(rs.getString("filename"));
+				recipe.setCategory(rs.getString("category"));
+				recipe.setMem_num(rs.getInt("mem_num"));
+				recipe.setId(rs.getString("id"));
+				
+				list.add(recipe);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return list;
 	}
 }
