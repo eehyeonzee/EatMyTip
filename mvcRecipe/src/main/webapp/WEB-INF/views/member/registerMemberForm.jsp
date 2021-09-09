@@ -126,14 +126,19 @@
 			var strStart_date = $('#birthday').val();
 			
 			var startDate = new Date(strStart_date);
+			var startYyyy = startDate.getFullYear();
+			var startmm = startDate.getMonth() + 1;
+			var startDd = startDate.getDate();
+			var startDay = new Date(startYyyy, startmm, startDd);
+			
 			var now = new Date();         		  // 현재 날짜
 			var nowYyyy = now.getFullYear();
 			var nowmm = now.getMonth() + 1;       // 1월 == 0
 			var nowDd = now.getDate();
 			var nowDate = new Date(nowYyyy, nowmm, nowDd);   
 
-			if(nowDate.getTime() > startDate) {
-				alert('생년월일을 제대로 입력하세요!');
+			if(nowDate.getTime() < startDay.getTime()) {
+				alert('생년월일을 제대로 입력해주세요!');
 				return false;
 			}
 		});
