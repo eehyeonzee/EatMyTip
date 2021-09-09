@@ -237,7 +237,7 @@
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 		수정일 : ${ recipe.modify_date }
 			<c:if test="${ mem_num == recipe.mem_num }">
-				<input type="button" value= "수정" onclick="location.href='#'" style="color: black; background-color: white; border-color: #d5dfe8">
+				<input type="button" value= "수정"  onclick="location.href='recipeModifyForm.do?board_num=${recipe.board_num}'" style="color: black; background-color: white; border-color: #d5dfe8">
 				<input type="button" value= "삭제" id="delete_btn" style="color: red; background-color: white; border-color: #d5dfe8">
 				<script type="text/javascript">
 					var delete_btn = document.getElementById("delete_btn");
@@ -245,7 +245,7 @@
 					delete_btn.onclick=function(){
 						var choice = confirm("삭제하시겠습니까?");
 						if(choice){
-							location.replace("#");
+							location.replace("recipeDelete.do?board_num=${recipe.board_num}");
 						}
 					};
 				</script>

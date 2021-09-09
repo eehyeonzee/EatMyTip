@@ -11,7 +11,7 @@ import com.controller.Action;
  * @FileName  : RecipeWriteFormAction.java
  * @작성일       : 2021. 9. 7. 
  * @작성자       : 이현지
- * @프로그램 설명 : 레시피 글 작성 폼 액션 클래스
+ * @프로그램 설명 : 레시피 글작성 폼 액션 클래스
  */
 public class RecipeWriteFormAction implements Action{
 

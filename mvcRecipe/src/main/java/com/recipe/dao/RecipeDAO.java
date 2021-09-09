@@ -774,6 +774,81 @@ public class RecipeDAO {
 		}
 	}
 	
-	// 글수정
-	// 글삭제
+	/**
+	 * @Method 메소드명  : updateRecipe
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 이현지
+	 * @Method 설명 : 글 수정하기
+	 */
+	
+	public void updateRecipe(RecipeVO recipe) throws Exception {
+		// 수정 가능 : category, title, content, filename, ip, modify_date
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션풀로부터 커넥션 할당받음
+			conn = DBUtil.getConnection();
+			
+			// SQL문 작성
+			sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setString(1, recipe.getCategory());
+			pstmt.setString(2, recipe.getTitle());
+			pstmt.setString(3, recipe.getContent());
+			pstmt.setString(4, recipe.getFilename());
+			pstmt.setString(5, recipe.getIp());
+			pstmt.setInt(6, recipe.getBoard_num());
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * @Method 메소드명  : recipeDelete
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 이현지
+	 * @Method 설명 : 글 삭제하기
+	 */
+	
+	public void deleteRecipe(int board_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션풀로부터 커넥션 할당받음
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "DELETE FROM recipe_board WHERE board_num=?";
+			
+			// PreparedStatment 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
 }

@@ -5,19 +5,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
-import com.oreilly.servlet.MultipartRequest;
 import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeVO;
-import com.util.FileUtil;
 
 /**
  * @Package Name   : com.recipe.action
- * @FileName  : RecipeWriteAction.java
+ * @FileName  : RecipeModifyFormAction.java
  * @작성일       : 2021. 9. 7. 
  * @작성자       : 이현지
- * @프로그램 설명 : 레시피 글작성 액션 클래스
+ * @프로그램 설명 : 레시피 글수정 폼 액션 클래스
  */
-public class RecipeWriteAction implements Action{
+
+public class RecipeModifyFormAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,25 +29,17 @@ public class RecipeWriteAction implements Action{
 			return "redirect:/member/loginForm.do";
 		}
 		
-		// 로그인 한 경우
-		MultipartRequest multi = FileUtil.createFile(request);
+		// 글번호 전달
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		
-		// 자바빈(VO) 생성
-		RecipeVO recipe = new RecipeVO();
-		recipe.setCategory(multi.getParameter("category"));
-		recipe.setTitle(multi.getParameter("title"));
-		recipe.setContent(multi.getParameter("content"));
-		recipe.setFilename(multi.getFilesystemName("filename"));
-		recipe.setIp(request.getRemoteAddr()); // 우리가 보낸 데이터 아님
-		recipe.setMem_num(mem_num);
-		
-		// RecipeDAO 호출
 		RecipeDAO dao = RecipeDAO.getInstance();
-		// 글 작성
-		dao.insertRecipe(recipe);
+		RecipeVO recipe = dao.getRecipeBoard(board_num);
+		
+		// request에 데이터 저장
+		request.setAttribute("recipe", recipe);
 		
 		// JSP 경로 반환
-		return "/WEB-INF/views/recipe/recipeWrite.jsp";
+		return "/WEB-INF/views/recipe/recipeModifyForm.jsp";
 	}
 
 }
