@@ -17,6 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>페이지명</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type ="text/javascript">
 	$(document).ready(function() {
 		$('#photo_btn').click(function() {
@@ -104,7 +105,7 @@
 					<input type = "button" value = "수정" id = "photo_btn">
 				</div>
 				<div id = "photo_choice" style = "display:none;">
-					<input type = "file" id = "photo" accept = "image/gif,image/png,image/jepg"><br>
+					<input type = "file" id = "photo" accept = "image/gif,image/png,image/jpeg"><br>
 					<input type = "button" value = "전송" id = "photo_submit">
 					<input type = "button" value = "취소" id = "photo_reset">
 				</div>

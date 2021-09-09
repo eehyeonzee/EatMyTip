@@ -180,15 +180,17 @@
 					$(param.list).each(function(index,item){	// item을 이용해서 배열형식인 list 값을 뽑아온다
 						//each() 메서드는 매개 변수로 받은 것을 사용해 for in 반복문과 같이 배열이나 객체의 요소를 검사할 수 있는 메서드
 						var output = "<div class='item'>";
-								output += "<h4>" + item.id + "<h4>";
+								
+								output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 35px; width:40;" /></div>'
+								output += "<span><h4>" + item.id + "<h4></span>";
 								output += "<div class='sub-item'>";
-									output += "<p>" + item.comm_con + "</p>";
-									output += item.comm_date;
+									output += "<p style='font-size:16px;'>" + item.comm_con + "</p>";
+									output += "<span style='font-size:14px;'>" + item.comm_date + "</span>";
 									// 로그인한 회원번호와 작성자의 회원번호 일치 여부 체크
 									if($("#mem_num").val() == item.mem_num){
 										// 댓글 번호와 회원번호를 속성을 통해 값을 준다. (커스텀 데이터 속성을 만들어서) 이걸로인해 수정이나 삭제 처리가 쉽다.
-										output += " <input type='button' data-renum='" + item.comm_num + "' data-memnum='"+item.mem_num+"' value='수정' class='modify-btn'>";		// 댓글번호와 작성자 번호 속성을 만들었다 data-만들속성명
-										output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
+										output += " <input type='button' data-renum='" + item.comm_num + "' data-memnum='"+item.mem_num+"' value='수정' style='font-size:14px;' class='modify-btn'>";		// 댓글번호와 작성자 번호 속성을 만들었다 data-만들속성명
+										output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" style="font-size:14px;" class="delete-btn">';
 									}
 									output += "<hr size='1' noshade width='100%'>";
 								output += "</div>";
@@ -268,13 +270,13 @@
 	
 	<hr size="2" noshade width="100%">
 	<%-- 댓글 목록 출력 시작 --%>
-	<div id="output"></div>
-	<div class="paging-button" style="display: none;">
-		<input type="button" value="다음글 보기">
-	</div>
-	<div id="loading" style="display: none;">
-		<img src="${pageContext.request.contextPath }/images/ajax-loader.gif" >
-	</div>
+		<div id="output"></div>
+		<div class="paging-button" style="display: none;">
+			<input type="button" value="다음글 보기">
+		</div>
+		<div id="loading" style="display: none;">
+			<img src="${pageContext.request.contextPath }/images/ajax-loader.gif" >
+		</div>
 	<%-- 댓글 목록 출력 끝 --%>
 	<%-- 댓글 시작 --%>
 	<div id="reply_div">

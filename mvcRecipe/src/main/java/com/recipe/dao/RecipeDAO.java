@@ -836,12 +836,14 @@ public class RecipeDAO {
 				// 目池记 钱肺何磐 目池记 且寸
 				conn = DBUtil.getConnection();
 				// SQL巩 累己
-				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.comm_num, "
-					+ "TO_CHAR(b.comm_date,'YYYY-MM-DD HH24:MI:SS') comm_date, "
-					+ "TO_CHAR(b.comm_modifydate,'YYYY-MM-DD HH24:MI:SS') comm_modifydate, "
-					+ "b.comm_con, b.board_num, b.mem_num, m.id FROM comments b "
-					+ "JOIN member m ON b.mem_num=m.mem_num WHERE b.board_num=? ORDER BY b.comm_num DESC)a) "
-					+ "WHERE rnum >=? and rnum <=?";
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum "
+						+ "FROM (SELECT b.comm_num,TO_CHAR(b.comm_date,'YYYY-MM-DD HH24:MI:SS') comm_date, "
+						+ "TO_CHAR(b.comm_modifydate,'YYYY-MM-DD HH24:MI:SS') comm_modifydate, "
+						+ "b.comm_con, b.board_num, b.mem_num, m.id, md.photo "
+						+ "FROM comments b JOIN member m ON b.mem_num=m.mem_num "
+						+ "JOIN member_detail md ON md.mem_num = m.mem_num "
+						+ "WHERE b.board_num=? ORDER BY b.comm_num DESC)a) "
+						+ "WHERE rnum >=? and rnum <=?";
 				
 				// PreparedStatement 按眉 积己
 				pstmt = conn.prepareStatement(sql);
@@ -866,6 +868,7 @@ public class RecipeDAO {
 					reply.setBoard_num(rs.getInt("board_num"));
 					reply.setMem_num(rs.getInt("mem_num"));
 					reply.setId(rs.getString("id"));
+					reply.setPhoto(rs.getString("photo"));
 					
 					list.add(reply);
 				}

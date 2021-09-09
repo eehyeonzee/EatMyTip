@@ -11,6 +11,8 @@ public class RecipeCommendsVO {
 	private String comm_modifydate;
 	private String id;
 	private int auth;
+	private String photo;
+	
 	public int getComm_num() {
 		return comm_num;
 	}
@@ -70,6 +72,12 @@ public class RecipeCommendsVO {
 	}
 	public void setAuth(int auth) {
 		this.auth = auth;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 	
