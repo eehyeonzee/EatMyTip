@@ -9,6 +9,8 @@ import java.util.List;
 import com.recipe.vo.RecipeCommendsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
+import com.util.DurationFromNow;
+import com.util.StringUtil;
 
 public class RecipeDAO {
 	// 싱글턴 패턴
@@ -694,7 +696,6 @@ public class RecipeDAO {
 		}
 	}
 	
-	
 	/**
 	 * @Method 메소드명  : bookmarkCheck
 	 * @작성일     : 2021. 9. 8. 
@@ -743,6 +744,12 @@ public class RecipeDAO {
 	
 	// ------------ 댓글 부분
 	
+	/**
+	 * @Method 메소드명  : insertRecipeCommend
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 게시판 댓글 등록 메소드
+	 */
 	public void insertRecipeCommend(RecipeCommendsVO recipeReply)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -773,6 +780,110 @@ public class RecipeDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
+	
+	/**
+	 * @Method 메소드명  : getRecipeReplyBoardCount
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 댓글 갯수 반환 메소드
+	 */
+	public int getRecipeReplyBoardCount(int board_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "select count(*) from comments b join member m on b.mem_num=m.mem_num where b.board_num=?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문을 실행해서 결과행을 rs에 담는다
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
+	
+	// 댓글 목록
+		public List<RecipeCommendsVO> getRecipeListReplyBoard(int start, int end, int board_num)throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<RecipeCommendsVO> list = null;
+			String sql = null;
+			
+			try {
+				// 커넥션 풀로부터 커넥션 할당
+				conn = DBUtil.getConnection();
+				// SQL문 작성
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.comm_num, "
+					+ "TO_CHAR(b.comm_date,'YYYY-MM-DD HH24:MI:SS') comm_date, "
+					+ "TO_CHAR(b.comm_modifydate,'YYYY-MM-DD HH24:MI:SS') comm_modifydate, "
+					+ "b.comm_con, b.board_num, b.mem_num, m.id FROM comments b "
+					+ "JOIN member m ON b.mem_num=m.mem_num WHERE b.board_num=? ORDER BY b.comm_num DESC)a) "
+					+ "WHERE rnum >=? and rnum <=?";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				
+				// ? 에 데이터 바인딩
+				pstmt.setInt(1, board_num);
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				
+				// SQL문을 실행해서 결과행들을 rs에 담는다
+				rs = pstmt.executeQuery();
+				
+				list = new ArrayList<RecipeCommendsVO>();
+				
+				while(rs.next()) {
+					RecipeCommendsVO reply = new RecipeCommendsVO();
+					reply.setComm_num(rs.getInt("comm_num"));
+					// 날짜 -> 1분전, 1시간전, 1일전 형식
+					reply.setComm_date(DurationFromNow.getTimeDiffLabel(rs.getString("comm_date")));
+					reply.setComm_modifydate(DurationFromNow.getTimeDiffLabel(rs.getString("comm_modifydate")));
+					reply.setComm_con(StringUtil.useBrNoHtml(rs.getString("comm_con")));
+					reply.setBoard_num(rs.getInt("board_num"));
+					reply.setMem_num(rs.getInt("mem_num"));
+					reply.setId(rs.getString("id"));
+					
+					list.add(reply);
+				}
+				
+			}catch(Exception e) {
+				throw new Exception(e);
+			}finally {
+				// 자원정리
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return list;
+			
+			
+		}
+	
+	
+	
+	
 	
 	/**
 	 * @Method 메소드명  : updateRecipe
@@ -815,6 +926,7 @@ public class RecipeDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
 	
 	/**
 	 * @Method 메소드명  : recipeDelete

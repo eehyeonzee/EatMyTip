@@ -151,6 +151,74 @@
 
 		});
 		
+		// 댓글 목록
+		function selectData(pageNum){
+			currentPage = pageNum;
+			if(pageNum == 1){
+				// 처음 호출시는 해당 ID의 div의 내부 내용물을 제거
+				$("#output").empty();
+			}
+			// 로딩 이미지 노출
+			$("#loading").show();
+			
+			$.ajax({
+				type:"post",
+				data:{
+					pageNum : pageNum, 
+					board_num : $("#board_num").val()
+					},
+				url:"recipeReplyList.do",
+				dataType:"json",
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					// 로딩이미지 감추기
+					$("#loading").hide();
+					count = param.count;
+					rowCount = param.rowCount;
+					
+					$(param.list).each(function(index,item){	// item을 이용해서 배열형식인 list 값을 뽑아온다
+						//each() 메서드는 매개 변수로 받은 것을 사용해 for in 반복문과 같이 배열이나 객체의 요소를 검사할 수 있는 메서드
+						var output = "<div class='item'>";
+								output += "<h4>" + item.id + "<h4>";
+								output += "<div class='sub-item'>";
+									output += "<p>" + item.comm_con + "</p>";
+									output += item.comm_date;
+									// 로그인한 회원번호와 작성자의 회원번호 일치 여부 체크
+									if($("#mem_num").val() == item.mem_num){
+										// 댓글 번호와 회원번호를 속성을 통해 값을 준다. (커스텀 데이터 속성을 만들어서) 이걸로인해 수정이나 삭제 처리가 쉽다.
+										output += " <input type='button' data-renum='" + item.comm_num + "' data-memnum='"+item.mem_num+"' value='수정' class='modify-btn'>";		// 댓글번호와 작성자 번호 속성을 만들었다 data-만들속성명
+										output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
+									}
+									output += "<hr size='1' noshade width='100%'>";
+								output += "</div>";
+							output += "</div>";
+							
+							 // 문서 객체 추가
+			                 $('#output').append(output);
+					});
+					
+					//page button 처리
+					if(currentPage >= Math.ceil(count/rowCount)){
+						// 다음 페이지가 없음
+						$(".paging-button").hide();
+					}else{
+						// 다음 페이지가 존재
+						$(".paging-button").show();
+					}
+				},
+				error : function(request,status,error){		// 에러메세지 반환
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+			});
+		}
+		
+		// 페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭시 데이터 추가)
+		$(".paging-button input").click(function(){
+			selectData(currentPage + 1);
+		});	
+		
+		selectData(1);
 	});
 </script>
 </head>
