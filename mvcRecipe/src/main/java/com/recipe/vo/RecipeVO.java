@@ -15,6 +15,7 @@ public class RecipeVO {
 	private String filename; // 파일명
 	private String category; // 종류
 	private	int mem_num; // 회원번호
+	private int book_num; // 북마크 번호
 	
 	// join을 위해 id 명시
 	private String id;
@@ -113,6 +114,14 @@ public class RecipeVO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getBook_num() {
+		return book_num;
+	}
+
+	public void setBook_num(int book_num) {
+		this.book_num = book_num;
 	}
 	
 }

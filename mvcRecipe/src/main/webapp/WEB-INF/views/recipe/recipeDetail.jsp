@@ -75,7 +75,7 @@
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
 			})
-		});
+		}); // end of Bookmark
 		
 		
 		// 댓글 기능쪽 자바스크립트
@@ -83,31 +83,47 @@
 		var count;
 		var rowCount;
 		
+		$("#re_form").submit(function(event){	// 폼에 있는 이벤트 제거하기 위해 인자값 넣음
+			if($("#re_content").val().trim() == ""){
+				alert("내용을 입력하세요!");
+				$("#re_content").val("").focus();
+				return false;
+			}
+			
+			// form 이하의 태그에 입력한 데이터를 모두 읽어옴
+			var form_data = $(this).serialize();
 		
-		// 댓글 등록
-		$.ajax({
-				type:"post",
-				data:form_data,
-				url:"recipeReplyWrite.do",
-				dataType:"json",
-				cache : false,
-				timeout:30000,
-				success:function(param){
-					if(param.result == "logout"){
-						alert("로그인 해야 작성할 수 있습니다.");
-					}else if(param.result == "success"){
-						// 폼 초기화 함수 호출
-						initForm();
-						// 댓글 작성이 성공하면 새로 삽입한 글을 포함해서 첫번째 페이지의 게시글을 다시 호출함
-						selectData(1);
-					}else{
-						alert("등록시 오류 발생");
+		
+			// ajax를 통해 댓글 등록 처리
+			$.ajax({
+					type:"post",
+					data:form_data,
+					url:"recipeReplyWrite.do",
+					dataType:"json",
+					cache : false,
+					timeout:30000,
+					success:function(param){
+						if(param.result == "logout"){
+							alert("로그인 해야 작성할 수 있습니다.");
+						}else if(param.result == "success"){
+							// 폼 초기화 함수 호출
+							initForm();
+							// 댓글 작성이 성공하면 새로 삽입한 글을 포함해서 첫번째 페이지의 게시글을 다시 호출함
+							selectData(1);
+						}else{
+							alert("등록시 오류 발생");
+						}
+					},
+					error : function(request,status,error){		// 에러메세지 반환
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
-				},
-				error : function(request,status,error){		// 에러메세지 반환
-					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-				}
-			});
+				});
+			
+			// 기본 이벤트 제거하는 부분    이거는 꼭 넣어주어야 한다. 이게 빠지면 서밋이 되버림
+			event.preventDefalut();
+			
+		});	// end of reply
+		
 		// 댓글 작성 폼 초기화
 		function initForm(){
 			$("textarea").val("");
@@ -154,8 +170,9 @@
 	<b> IPAdress </b> &nbsp;${ recipe.ip }
 	<%-- 추천 및 찜기능 --%> 
 	<div class="btn_click">
-	<%-- 작성자인 경우에만 버튼 보이도록 함 --%>
-	<c:if test="${ mem_num == recipe.mem_num }">
+	<%-- 로그인 한 경우에만 버튼 보이도록 함 --%>
+	<%-- 추천기능 --%>
+	<c:if test="${ !empty mem_num }">
 		
 			<button id="rec_btn" class="btn btn-outline-danger" 
 			style="background-color: <c:if test="${ recommBtnCheck == 0 }">white;</c:if><c:if test="${ recommBtnCheck == 1 }">red;</c:if>">

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.recipe.vo.RecipeCommendsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 
@@ -393,6 +394,8 @@ public class RecipeDAO {
 	}
 	
 	
+	// ---------------------------- 조회수
+	
 	/**
 	 * @Method 메소드명  : updateHitsCount
 	 * @작성일     : 2021. 9. 8. 
@@ -428,6 +431,7 @@ public class RecipeDAO {
 		}
 	}
 	
+	// ----------------------추천
 	
 	/**
 	 * @Method 메소드명  : recomDuplicationCheck
@@ -617,6 +621,8 @@ public class RecipeDAO {
 		return count;
 	}
 	
+	// --------------------북마크
+	
 	/**
 	 * @Method 메소드명  : addBookmark
 	 * @작성일     : 2021. 9. 8. 
@@ -734,6 +740,39 @@ public class RecipeDAO {
 	}
 	
 	
+	
+	// ------------ 댓글 부분
+	
+	public void insertRecipeCommend(RecipeCommendsVO recipeReply)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "insert into comments (comm_num, comm_con, mem_num, board_num) "
+					+ "values (comments_seq.nextval,?,?,?)";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setString(1, recipeReply.getComm_con());
+			pstmt.setInt(2, recipeReply.getMem_num());
+			pstmt.setInt(3, recipeReply.getBoard_num());
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	
 	// 글수정
 	// 글삭제
