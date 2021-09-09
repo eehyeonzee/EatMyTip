@@ -5,7 +5,7 @@
  * 작성일 : 2021. 9. 7.
  * 작성자 : 박용복
  * 설명 : 회원 가입 페이지
- * 수정일 : 2021. 9. 7.
+ * 수정일 : 2021. 9. 9.
 --%>
 <html>
 <head>
@@ -122,6 +122,20 @@
 				$('#passwd').val('').focus();
 				return false;
 			}
+			
+			var strStart_date = $('#birthday').val();
+			
+			var startDate = new Date(strStart_date);
+			var now = new Date();         		  // 현재 날짜
+			var nowYyyy = now.getFullYear();
+			var nowmm = now.getMonth() + 1;       // 1월 == 0
+			var nowDd = now.getDate();
+			var nowDate = new Date(nowYyyy, nowmm, nowDd);   
+
+			if(nowDate.getTime() > startDate) {
+				alert('생년월일을 제대로 입력하세요!');
+				return false;
+			}
 		});
 		
 		// 비밀번호 확인 일치 여부 체크
@@ -179,7 +193,7 @@
 		</div>
 		<div class = "form-group row">
 			<label for = "birthday" class = "col-sm-2 col-form-label">생년월일</label>
-			<input type = "date" class = "form-control" name = "birthday" id = "birthday">
+			<input type = "date" class = "form-control" name = "birthday" id = "birthday" max = "today">
 		</div>
 		<div class = "form-group row">
 			<label class = "col-sm-5 col-form-label">비밀번호 힌트 : 가장 좋아하는 요리는?</label>
