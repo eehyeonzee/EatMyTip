@@ -75,7 +75,7 @@
         <a class="nav-link" href="${pageContext.request.contextPath}/recipe/recipeList.do" style="color:black;">모두의 레시피</a>
       </li>
       <li class="nav-item mx-5" style="padding: 10px; font-size: 17pt; font-weight: bold;">
-        <a class="nav-link" href="#" style="color:black;">베스트 레시피</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/bestRecipe/bestRecipeList.do" style="color:black;">베스트 레시피</a>
       </li>
       <li class="nav-item mx-5" style="padding: 10px; font-size: 17pt; font-weight: bold;">
         <a class="nav-link" href="${pageContext.request.contextPath}/qnaboard/qnaList.do" style="color:black;">고객센터</a>

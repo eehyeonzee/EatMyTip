@@ -13,6 +13,13 @@ import com.controller.Action;
 import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeCommendsVO;
 
+/**
+ * @Package Name   : com.recipe.action
+ * @FileName  : RecipeReplyUpdateAction.java
+ * @작성일       : 2021. 9. 10. 
+ * @작성자       : 오상준
+ * @프로그램 설명 : 모두의 레시피 댓글 업데이트 액션
+ */
 public class RecipeReplyUpdateAction implements Action {
 
 	@Override

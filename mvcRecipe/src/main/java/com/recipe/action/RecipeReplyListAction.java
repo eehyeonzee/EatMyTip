@@ -15,6 +15,13 @@ import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeCommendsVO;
 import com.util.PagingUtil;
 
+/**
+ * @Package Name   : com.recipe.action
+ * @FileName  : RecipeReplyListAction.java
+ * @작성일       : 2021. 9. 9. 
+ * @작성자       : 오상준
+ * @프로그램 설명 : 레시피 목록 ajax방식으로 리턴하는 액션
+ */
 public class RecipeReplyListAction implements Action {
 
 	@Override
