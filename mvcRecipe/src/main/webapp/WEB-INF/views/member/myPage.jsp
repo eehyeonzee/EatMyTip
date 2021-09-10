@@ -36,7 +36,8 @@
 				reader.readAsDataURL(my_photo);
 				
 				reader.onload = function() {
-					photo_path = $('.my-photo').attr('src', reader.result);
+					photo_path = $('.my-photo').attr('src');
+					$('.my-photo').attr('src', reader.result);
 				};
 			}
 		});
@@ -94,10 +95,10 @@
 		<ul>
 			<li>
 				<c:if test = "${empty member.photo}">
-					<img src = "#" width = "100" height = "100" class = "">
+					<img src = "#" width = "100" height = "100" class = "my-photo">
 				</c:if>
 				<c:if test = "${!empty member.photo}">
-					<img src = "${pageContext.request.contextPath}/upload/${member.photo}" width = "100" height = "100" class = "">
+					<img src = "${pageContext.request.contextPath}/upload/${member.photo}" width = "100" height = "100" class = "my-photo">
 				</c:if>
 			</li>
 			<li>
