@@ -37,7 +37,6 @@ public class NewsDAO {
 
 	
 	
-	
 	/**
 	 * @Method 메소드명  : insertNews
 	 * @작성일     : 2021. 9. 7. 
@@ -195,6 +194,7 @@ public class NewsDAO {
 				news.setNews_content(rs.getString("news_content"));
 				news.setNews_hits(rs.getInt("news_hits"));
 				news.setNews_file(rs.getString("news_file"));
+				news.setMem_num(rs.getInt("mem_num"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -308,7 +308,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : getListReplyNews
 	 * @작성일     : 2021. 9. 9. 
 	 * @작성자     : 신혜지
-	 * @Method 설명 : 댓글 리스트 뽑는 중
+	 * @Method 설명 : 댓글 리스트 뽑음
 	 */
 	public List<NewsCommentsVO> getListCommentsNews(int start, int end, int news_num) throws Exception{
 		Connection conn = null;
@@ -367,6 +367,32 @@ public class NewsDAO {
 			throw new Exception(e);
 		}finally {
 			//자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * @Method 메소드명  : updateCommentsNews
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 신혜지
+	 * @Method 설명 : 댓글 수정하는 메서드
+	 */
+	public void updateCommentsNews(NewsCommentsVO newsComments)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE comments set comm_con=?, comm_modifydate=sysdate WHERE comm_num=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, newsComments.getComm_con());
+			pstmt.setInt(2, newsComments.getComm_num());
+			pstmt.executeUpdate();
+			
+			}catch(Exception e) {
+			throw new Exception(e);
+			}finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
