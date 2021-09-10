@@ -19,11 +19,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
 	$(function(){
-		// ------------------------- 추천수 출력
-		$("#rec_count").text("${recipe.recom_count}");
-		
-		//-------------------------- 댓글수 출력
-		$("#comm_count").text("${comm}");
 		
 		// ------------------------ 추천 버튼
 		// 추천 버튼 클릭시 추천 추가 또는 제거
@@ -426,10 +421,10 @@
 	<%-- 추천수 및 댓글 수 출력 --%>
 	<div style="height: 100px;">
 	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
-	댓글  <b style="color: red"><span id="comm_count"></span></b>
+	댓글  <b style="color: red">${comm}<span id="comm_count"></span></b>
 	</span>&nbsp;
 	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
-	추천  <b style="color: red"><span id="rec_count"></span></b>
+	추천  <b style="color: red">${recipe.recom_count}<span id="rec_count"></span></b>
 	</span>
 	</div>
 	
@@ -466,7 +461,7 @@
 	<hr size="2" noshade width="100%">
 	<%-- 하단 목록,수정,삭제 --%>
 	<input type="button" value="목록" style="color: black; background-color: white; border-color: #d5dfe8" 
-			onclick="location.href='recipeList.do'">
+			onclick="history.go(-1)">
 	<div style="float: right;">
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 		수정일 : ${ recipe.modify_date }

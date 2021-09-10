@@ -16,9 +16,8 @@ public class RecipeVO {
 	private String category; // 종류
 	private	int mem_num; // 회원번호
 	private int book_num; // 북마크 번호
-	
-	// join을 위해 id 명시
-	private String id;
+	private int comm_count; // 댓글 객수
+	private String id;  // join을 위해 id 명시
 	
 	public int getBoard_num() {
 		return board_num;
@@ -123,5 +122,15 @@ public class RecipeVO {
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
+
+	public int getComm_count() {
+		return comm_count;
+	}
+
+	public void setComm_count(int comm_count) {
+		this.comm_count = comm_count;
+	}
+
+	
 	
 }
