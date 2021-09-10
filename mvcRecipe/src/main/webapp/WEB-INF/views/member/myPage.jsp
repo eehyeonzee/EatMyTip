@@ -125,6 +125,14 @@
 			<li><input type = "button" value = "회원 정보 수정" onclick = "location.href='modifyMemberForm.do'">
 		</ul>
 	</div>
+	<c:if test = "${member.auth == 3}">
+	<div class = "">
+		<h3>관리자 페이지</h3>
+		<div>
+			<input type = "button" value = "가입 회원 정보 조회" onclick = "location.href='adminMemberView.do'">
+		</div>
+	</div>
+	</c:if>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
