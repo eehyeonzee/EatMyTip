@@ -19,8 +19,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
 	$(function(){
-		//var rec_count = {recipe.recom_count};
+		// ------------------------- 추천수 출력
 		$("#rec_count").text("${recipe.recom_count}");
+		
+		//-------------------------- 댓글수 출력
+		$("#comm_count").text("${comm}");
+		
+		// ------------------------ 추천 버튼
 		// 추천 버튼 클릭시 추천 추가 또는 제거
 		$("#rec_btn").click(function(){
 			$.ajax({
@@ -48,6 +53,8 @@
 				}
 			})
 		}); // end of RecomclickEvent
+		
+		//------------------ 찜버튼
 		
 		// 찜버튼 클릭시
 		$("#bookmark_btn").click(function(){
@@ -82,6 +89,8 @@
 		var currentPage;
 		var count;
 		var rowCount;
+		
+		// --------------- 댓글 등록
 		
 		$("#re_form").submit(function(event){	// 폼에 있는 이벤트 제거하기 위해 인자값 넣음
 			if($("#re_content").val().trim() == ""){
@@ -149,9 +158,10 @@
 	            }
 	         }
 
-		});
+		}); // end of insertRecommemts
 		
-		// 댓글 목록
+		
+		// ---------------  댓글 목록
 		function selectData(pageNum){
 			currentPage = pageNum;
 			if(pageNum == 1){
@@ -213,12 +223,157 @@
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
 			});
-		}
+		} // end of RecommentsList
 		
 		// 페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭시 데이터 추가)
 		$(".paging-button input").click(function(){
 			selectData(currentPage + 1);
-		});	
+		});	 
+		
+		
+		// --------------- 댓글 수정
+		
+		// -------- 댓글 수정 버튼 클릭시 수정 폼 노출
+		$(document).on("click", ".modify-btn", function(){
+			
+			// 댓글 번호
+			var comm_num = $(this).attr("data-renum");
+			// 작성자 회원번호
+			var writer_num = $(this).attr("data-memnum");
+			// 댓글 내용
+			var content = $(this).parent().find("p").html().replace(/<br>/gi, "\n");		
+			// this는 수정버튼 부모태그로 가서 p태그를 찾고 내용을 가져온다 br/gi 태그는 \n으로 변경한다. i의 의미는 대소문자 구분 x g의 의미는 전체
+			
+			// 댓글 수정 폼 UI
+			var modifyUI = "<form id='mre_form'>";
+				modifyUI += "	<input type='hidden' name='comm_num' id='mre_num' value='" + comm_num + "'>";
+				modifyUI += "	<input type='hidden' name='writer_num' id='muser_num' value='" + writer_num + "'>";
+				modifyUI += "	<textarea rows='3' cols='50' name='comm_con' id='mre_content' class='rep-content'>" + content + "</textarea>";
+				modifyUI += "	<div id='mre_first'><span class='letter-count'>300/300</span></div>";
+				modifyUI += "	<div id='mre_second' align='right'>";
+				modifyUI += "		<input type='submit' value='수정'>";
+				modifyUI += "		<input type='button' value='취소' class='re-reset'>";
+				modifyUI += "	<div>";
+				modifyUI += "	<hr size='1' noshade width='96%'>";		
+				modifyUI += "</form>";
+			
+				// 이전에 이미 수정하는 댓글이 있을 경우 수정버튼을 클릭하면 숨김 sub-item을 환원시키고 수정폼을 초기화 한다
+				initModifyForm();
+				// 수정 버튼을 감싸고 있는 div
+				$(this).parent().hide(); // 수정버튼의 부모태그 sub-item 숨기기
+				
+				// 수정 폼을 수정하고자 하는 데이터가 있는 div에 노출
+				$(this).parents(".item").append(modifyUI); // 수정버튼의 부모들 중에 class가 item인 태그에 append
+		
+				// 입력한 글자수 셋팅
+				var inputLength = $("#mre_content").val().length;
+				var remain = 300 - inputLength;
+				remain += "/300";
+				
+				// 문서 객체에 반영
+				$("#mre_first .letter-count").text(remain);
+		}); // end of recommentsUpdateClick
+		
+		
+		// 수정 폼에서 취소 버튼 클릭시 수정폼 초기화
+		$(document).on('click','.re-reset',function(){
+         initModifyForm();
+      	})
+		
+		// 댓글 수정 폼 초기화
+		function initModifyForm(){
+			$(".sub-item").show();	// sub-item을 보여주고
+			$("#mre_form").remove(); 	// 폼 초기화
+		}
+		
+		
+		// ----------------- 댓글 수정
+		$(document).on("submit","#mre_form", function(event){
+			if($("#mre_content").val().trim() == ""){
+				alert("내용을 입력하세요!");
+				$("#re_content").val("").focus();
+				return false;
+			}
+			
+			// 폼에 입력한 데이터 변환
+			var form_data = $(this).serialize();
+					
+			// 댓글 수정
+			$.ajax({
+				type:"post",
+				url:"recipeReplyUpdate.do",
+				data: form_data,
+				dataType:"json",
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					if(param.result == "logout"){
+						alert("로그인해야 수정할 수 있습니다.")
+					}else if(param.result == "success"){
+						// 전송을 누르면 전송되지 않고 그대로 화면에 읽어와서 표시되도록
+						// 부모로 올라가서 p태그를 찾아서 내용을 넣어준다. 그리고 html 태그 불허용을 했기때문에 바꾸는 작업처리
+						$('#mre_form').parent().find('p').html($('#mre_content').val().replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/gi,'<br>'));
+						// 수정폼 삭제 및 초기화
+						initModifyForm();
+					}else if(param.result == "wrongAccess"){
+						alert("타인의 글을 수정할 수 없습니다.");
+					}else{
+						alert("DAO수정시 오류 발생");
+					}
+				},
+				error : function(request,status,error){		// 에러메세지 반환
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+			});
+			// 기본 이벤트 제거하는 부분    이거는 꼭 넣어주어야 한다. 이게 빠지면 서밋이 되버림
+			event.preventDefault();
+		});
+		
+		
+		// --------------- 댓글 삭제
+		$(document).on("click",".delete-btn",function(){
+			// 확인 / 취소 선택창
+			var check = confirm('삭제하시겠습니까?'); 
+			
+			if(check){
+			 	//확인 눌렀을시 실행문
+				// 댓글 번호
+				var comm_num = $(this).attr("data-renum");
+				// 작성자 회원번호
+				var writer_num = $(this).attr("data-memnum");
+				
+				$.ajax({
+					type:"post",
+					url:"recipeReplyDelete.do",
+					data:{
+						comm_num : comm_num,
+						user_num : writer_num					
+					},
+					dataType:"json",
+					cache:false,
+					timeout:30000,
+					success:function(param){
+						if(param.result == "logout"){
+							alert("로그인해야 삭제할 수 있습니다.")
+						}else if(param.result == "success"){
+							alert("댓글이 삭제되었습니다.");
+							selectData(1);
+						}else if(param.result == "wrongAccess"){
+							alert("타인의 글을 삭제할 수 없습니다.");
+						}else{
+							alert("삭제시 오류 발생");
+						}
+					},
+					error : function(request,status,error){		// 에러메세지 반환
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+					}
+				});
+			
+			}else {
+				
+			}
+		});
+		
 		
 		selectData(1);
 	});
@@ -233,7 +388,6 @@
 	<hr size="2" noshade width="100%">
 	<b>작성자 </b> &nbsp;${ recipe.id } | <b>작성일</b> ${ recipe.report_date } 
 	<span style="float: right;">
-		<b style="color: red">추천수 : </b> <span id="rec_count"></span>&nbsp;
 		<b>조회수 : </b> ${ recipe.hits }
 	</span>
 	<hr size="2" noshade width="100%">
@@ -269,10 +423,20 @@
 	</p>
 	
 	<hr size="2" noshade width="100%">
+	<%-- 추천수 및 댓글 수 출력 --%>
+	<div style="height: 100px;">
+	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
+	댓글  <b style="color: red"><span id="comm_count"></span></b>
+	</span>&nbsp;
+	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
+	추천  <b style="color: red"><span id="rec_count"></span></b>
+	</span>
+	</div>
+	
 	<%-- 댓글 목록 출력 시작 --%>
 		<div id="output"></div>
 		<div class="paging-button" style="display: none;">
-			<input type="button" value="다음글 보기">
+			<input type="button" value="다음 댓글">
 		</div>
 		<div id="loading" style="display: none;">
 			<img src="${pageContext.request.contextPath }/images/ajax-loader.gif" >

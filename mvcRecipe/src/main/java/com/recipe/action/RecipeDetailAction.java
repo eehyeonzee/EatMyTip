@@ -28,6 +28,8 @@ public class RecipeDetailAction implements Action {
 		
 		int recommBtnCheck = 0;
 		int bookmarkBtnCheck = 0;
+		// 댓글 수 받기
+		int comm = 0;
 		
 		  if(mem_num == null) {//로그인 되지 않은 경우
 			RecipeDAO dao = RecipeDAO.getInstance();
@@ -41,9 +43,12 @@ public class RecipeDetailAction implements Action {
 			// HTML을 허용하지 않으면서 줄바꿈 처리
 			recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
 			
-			// 찜하기와 북마크 중복 체크 값 반환
+			comm = dao.getRecipeReplyBoardCount(board_num);
+			
+			// 찜하기와 북마크 중복 체크, 댓글수 값 반환
 			request.setAttribute("bookmarkBtnCheck", bookmarkBtnCheck);
 			request.setAttribute("recommBtnCheck", recommBtnCheck);
+			request.setAttribute("comm", comm);
 			
 			// 한건의 레코드 반환
 			request.setAttribute("recipe", recipe);
@@ -75,12 +80,16 @@ public class RecipeDetailAction implements Action {
 			// 찜하기 버튼 유효성 체크 1일 경우 중복 0일 경우 미중복
 			recommBtnCheck = dao.recomDuplicationCheck(board_num, mem_num);
 			
+			// 댓글수 반환 메소드 실행
+			comm = dao.getRecipeReplyBoardCount(board_num);
+			
 			// 한건의 레코드 반환
 			request.setAttribute("recipe", recipe);
 			
-			// 찜하기와 북마크 중복 체크 값 반환
+			// 찜하기와 북마크 중복 체크, 댓글수 값 반환
 			request.setAttribute("bookmarkBtnCheck", bookmarkBtnCheck);
 			request.setAttribute("recommBtnCheck", recommBtnCheck);
+			request.setAttribute("comm", comm);
 			
 			// 디테일 페이지로 이동
 			return "/WEB-INF/views/recipe/recipeDetail.jsp";

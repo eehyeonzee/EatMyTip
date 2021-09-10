@@ -61,6 +61,87 @@ public class RecipeDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
+	/**
+	 * @Method 메소드명  : updateRecipe
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 이현지
+	 * @Method 설명 : 글 수정하기
+	 */
+	
+	public void updateRecipe(RecipeVO recipe) throws Exception {
+		// 수정 가능 : category, title, content, filename, ip, modify_date
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션풀로부터 커넥션 할당받음
+			conn = DBUtil.getConnection();
+			
+			// SQL문 작성
+			sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setString(1, recipe.getCategory());
+			pstmt.setString(2, recipe.getTitle());
+			pstmt.setString(3, recipe.getContent());
+			pstmt.setString(4, recipe.getFilename());
+			pstmt.setString(5, recipe.getIp());
+			pstmt.setInt(6, recipe.getBoard_num());
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	
+	/**
+	 * @Method 메소드명  : recipeDelete
+	 * @작성일     : 2021. 9. 7. 
+	 * @작성자     : 이현지
+	 * @Method 설명 : 글 삭제하기
+	 */
+	
+	public void deleteRecipe(int board_num) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			// 커넥션풀로부터 커넥션 할당받음
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "DELETE FROM recipe_board WHERE board_num=?";
+			
+			// PreparedStatment 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	
+	//-------------------레시피 디테일
 
 	
 	/**
@@ -824,7 +905,13 @@ public class RecipeDAO {
 		return count;
 	}
 	
-	// 댓글 목록
+	
+		/**
+		 * @Method 메소드명  : getRecipeListReplyBoard
+		 * @작성일     : 2021. 9. 10. 
+		 * @작성자     : 오상준
+		 * @Method 설명 : 댓글 목록 리스트 반환 메소드
+		 */
 		public List<RecipeCommendsVO> getRecipeListReplyBoard(int start, int end, int board_num)throws Exception{
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -884,86 +971,76 @@ public class RecipeDAO {
 			
 		}
 	
-	
-	
-	
-	
 	/**
-	 * @Method 메소드명  : updateRecipe
-	 * @작성일     : 2021. 9. 7. 
-	 * @작성자     : 이현지
-	 * @Method 설명 : 글 수정하기
+	 * @Method 메소드명  : updateRecipeCommend
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 게시판 댓글 업데이트 메소드
 	 */
-	
-	public void updateRecipe(RecipeVO recipe) throws Exception {
-		// 수정 가능 : category, title, content, filename, ip, modify_date
+		
+	public void updateRecipeCommend(RecipeCommendsVO comm)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
-			// 커넥션풀로부터 커넥션 할당받음
+			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			
 			// SQL문 작성
-			sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+			sql = "UPDATE comments SET comm_con = ?, comm_modifydate = SYSDATE WHERE comm_num=?";
 			
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
-			pstmt.setString(1, recipe.getCategory());
-			pstmt.setString(2, recipe.getTitle());
-			pstmt.setString(3, recipe.getContent());
-			pstmt.setString(4, recipe.getFilename());
-			pstmt.setString(5, recipe.getIp());
-			pstmt.setInt(6, recipe.getBoard_num());
+			
+			// ? 에 데이터 바인딩
+			pstmt.setString(1, comm.getComm_con());
+			pstmt.setInt(2, comm.getComm_num());
 			
 			// SQL문 실행
 			pstmt.executeUpdate();
 			
 		}catch(Exception e) {
 			throw new Exception(e);
-		
 		}finally {
 			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	
+		
 	
 	/**
-	 * @Method 메소드명  : recipeDelete
-	 * @작성일     : 2021. 9. 7. 
-	 * @작성자     : 이현지
-	 * @Method 설명 : 글 삭제하기
+	 * @Method 메소드명  : deleteRecipeCommend
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 게시판 댓글 삭제 메소드
 	 */
 	
-	public void deleteRecipe(int board_num) throws Exception {
+	public void deleteRecipeCommend(int comm_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
-			// 커넥션풀로부터 커넥션 할당받음
+			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 			// SQL문 작성
-			sql = "DELETE FROM recipe_board WHERE board_num=?";
+			sql = "delete from comments where comm_num = ?";
 			
-			// PreparedStatment 객체 생성
+			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
-			pstmt.setInt(1, board_num);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, comm_num);
+			
 			
 			// SQL문 실행
 			pstmt.executeUpdate();
 			
 		}catch(Exception e) {
 			throw new Exception(e);
-		
 		}finally {
 			// 자원정리
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
-	
 }
