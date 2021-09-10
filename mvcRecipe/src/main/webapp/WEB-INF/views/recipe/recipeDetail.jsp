@@ -120,7 +120,7 @@
 				});
 			
 			// 기본 이벤트 제거하는 부분    이거는 꼭 넣어주어야 한다. 이게 빠지면 서밋이 되버림
-			event.preventDefalut();
+			event.preventDefault();
 			
 		});	// end of reply
 		
