@@ -2,7 +2,7 @@ package com.qnaboard.vo;
 
 import java.sql.Date;
 
-//09.06 ³ªÀ±°æ
+
 
 public class QnaBoardVO {
 	private int qna_num;

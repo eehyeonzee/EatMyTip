@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <%-- 
  * 작성일 : 2021. 9. 6.
  * 작성자 : 나윤경
@@ -13,22 +14,62 @@
 <title>글 작성</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type="text/javascript">
-	
+//유효성 체크
+window.onload=function(){
+	var form = document.getElementById('qnawrite_form');
+	//이벤트 연결
+	form.onsubmit=function(){
+		var qna_title = document.getElementById('qna_title');
+		if(qna_title.value.trim()==''){
+			alert('제목을 입력하세요!');
+			qna_title.focus();
+			qna_title.value = '';
+			return false;
+		}
+		var qna_id = document.getElementById('qna_id');
+		if(qna_id.value.trim()==''){
+			alert('작성자 입력하세요!');
+			qna_id.focus();
+			qna_id.value = '';
+			return false;
+		}
+		var qna_passwd = document.getElementById('qna_passwd');
+		if(qna_passwd.value.trim()==''){
+			alert('비밀번호를 입력하세요!');
+			qna_passwd.focus();
+			qna_passwd.value = '';
+			return false;
+		}
+		var qna_content = document.getElementById('qna_content');
+		if(qna_content.value.trim()==''){
+			alert('내용을 입력하세요!');
+			qna_content.focus();
+			qna_content.value = '';
+			return false;
+		}
+	};
+};
 
 </script>
 </head>
 <body>
 <div class="page-main">
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<h2>글 작성</h2>
-	<form id="write_form" action="write.do" method="post">
+	<form id="qnawrite_form" action="qnaWrite.do" method="post">
 		<ul>
 			<li>
 				<label for="qna_title">제목</label>
 				<input type="text" name="qna_title" id="qna_title" size="30" maxlength="50">
 			</li>
 			<li>
-				<label for="qna_id">작성자</label>
-				<input type="text" name="qna_id" value="${qnaboard.qna_id }" readonly/>
+				<label for="qna_id">닉네임</label>
+				<c:if test="${empty mem_num }">
+					<input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" placeholder="닉네임을 입력하세요">
+				</c:if>
+				<c:if test="${!empty mem_num }">
+					<input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${mem_id }" readonly>
+				</c:if>
 			</li>
 			<li>
 				<label for="qna_passwd">비밀번호</label>
@@ -47,4 +88,5 @@
 
 </div>
 </body>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

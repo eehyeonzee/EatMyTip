@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import com.qnaboard.vo.QnaBoardVO;
 import com.util.DBUtil;
 
+
 public class QnaBoardDAO {
 	//싱글턴 패턴
 	private static QnaBoardDAO instance = new QnaBoardDAO();
@@ -166,10 +167,91 @@ public class QnaBoardDAO {
 	}
 	
 	
-	//글 상세
+	/**
+	 * @Method 메소드명  : getQnaBoard
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 : 고객센터 게시판 상세페이지
+	 */
+	public QnaBoardVO getQnaBoard(int qna_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		QnaBoardVO qnaboard = null;
+		String sql =null;
+		
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "SELECT * FROM qna_board WHERE qna_num=?";
+			
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			//?에 데이터 바인딩
+			pstmt.setInt(1, qna_num);
+			
+			//SQL문 실행해서 결과행을 ResultSet에 담음
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				qnaboard = new QnaBoardVO();
+				qnaboard.setQna_num(rs.getInt("qna_num"));
+				qnaboard.setQna_title(rs.getString("qna_title"));
+				qnaboard.setQna_content(rs.getString("qna_content"));
+				qnaboard.setQna_date(rs.getDate("qna_date"));
+				qnaboard.setQna_id(rs.getString("qna_id"));
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			//자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return qnaboard;
+	}
+	
+	
+	
 	
 	//글 수정
+	public void modify(QnaBoardVO qnaboardVO)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			//커넥션풀로부터 커넥션을 할당
+			conn = getConnection();
+			
+			//SQL문 작성
+			sql = "UPDATE qnaboard SET qna_title=?, qna_content=?, qna_ip=? WHERE qna_num=?";
+			
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			//?에 데이터 바인딩
+			pstmt.setString(1, qnaboardVO.getQna_title());
+			pstmt.setString(2, qnaboardVO.getQna_content());
+			pstmt.setString(3, qnaboardVO.getQna_ip());
+			pstmt.setInt(4, qnaboardVO.getQna_num());
+			
+			//SQL문 실행
+			pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			//자원정리
+			executeClose(null, pstmt, conn);
+		}
+	}
+	
 	
 	//글 삭제
+	
 	
 }
