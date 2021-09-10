@@ -20,6 +20,9 @@
 </c:if>
 <c:if test="${!empty mem_num && auth == 1}">
   <ul class="navbar-nav mr-5">
+ 	<li class="nav-item mr-5"  style="font-size: 13pt; font-weight: bold;">
+      	<a class = "nav-link">정지 회원입니다! 고객센터를 이용해주세요!</a>
+    </li>
     <li class="nav-item"  style="font-size: 13pt; font-weight: bold;">
       <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
     </li>
@@ -42,14 +45,20 @@
   </ul>
 </c:if>
 <c:if test="${!empty mem_num && auth == 3}">
-  <ul class="navbar-nav mr-5">
-    <li class="nav-item mr-5" style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="../member/loginForm.do">관리자 정보보기</a>
-    </li>
-    <li class="nav-item "  style="font-size: 13pt; font-weight: bold;">
-      <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
-    </li>
-  </ul>
+	<ul class="navbar-nav mr-5">
+	    <li class="nav-item mr-5" style="font-size: 13pt; font-weight: bold;">
+	      <a class="nav-link" href="${pageContext.request.contextPath}/member/myPage.do">관리자 페이지</a>
+	    </li>
+	    <li class="nav-item mr-5"  style="font-size: 13pt; font-weight: bold;">
+	      <a class="nav-link" href="${pageContext.request.contextPath}/member/myWriteList.do">내가 쓴 글 보기</a>
+	    </li>
+	    <li class="nav-item mr-5"  style="font-size: 13pt; font-weight: bold;">
+	      <a class="nav-link" href="${pageContext.request.contextPath}/member/myBookmarkList.do">북마크</a>
+	    </li>
+	    <li class="nav-item"  style="font-size: 13pt; font-weight: bold;">
+	      <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
+	    </li>
+  	</ul>
 </c:if>
 </nav>
 <!-- 공지사항, 레시피, 베스트레시피, 고객센터 링크 거는 곳 -->

@@ -17,7 +17,7 @@ public class MemberVO {
 	private Date join_date;
 	
 	public boolean isCheckedPassword(String memberPassword) {
-		if(auth > 1 && passwd.equals(memberPassword)) {
+		if(auth > 0 && passwd.equals(memberPassword)) {
 			return true;
 		}
 		return false;
