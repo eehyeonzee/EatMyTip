@@ -22,7 +22,15 @@ public class NewsVO {
 	private Date news_modi;
 	private String news_file;
 	private String name;
+	private String news_category;
 	
+	
+	public String getNews_category() {
+		return news_category;
+	}
+	public void setNews_category(String news_category) {
+		this.news_category = news_category;
+	}
 	public String getname() {
 		return name;
 	}

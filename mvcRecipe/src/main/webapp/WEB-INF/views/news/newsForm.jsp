@@ -33,6 +33,12 @@
 				$('#content').val('');
 				return false;
 			}
+			if($('input:radio[name=category]').is(':checked')=='') {
+				alert('카테고리를 선택하세요!');
+				$('#category').focus();
+				$('#category').val('');
+				return false;
+			}
 		});
 	});
 </script>
@@ -42,6 +48,19 @@
 <div class="container">
 	<h2>공지사항 쓰기</h2>
 	<form id="news_form" action="newsWrite.do" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+			<h6>카테고리</h6>
+			<input type="radio" id="news" name="category" value="공지사항">
+			<label for="news">공지사항</label>
+			<input type="radio" id="recipe" name="category" value="레시피">
+			<label for="news">레시피</label>
+			<input type="radio" id="bestrecipe" name="category" value="베스트레시피">
+			<label for="news">베스트레시피</label>
+			<input type="radio" id="event" name="category" value="이벤트">
+			<label for="news">이벤트</label>
+			<input type="radio" id="qna" name="category" value="문의사항">
+			<label for="news">문의사항</label><br>
+		</div>
 		<div class="form-group">
 			<label for="title">제목</label>
 			<input type="text" class="form-control" name="title" id="title">

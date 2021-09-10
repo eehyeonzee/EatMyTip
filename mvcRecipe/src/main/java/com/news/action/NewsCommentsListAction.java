@@ -29,15 +29,21 @@ public class NewsCommentsListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		request.setCharacterEncoding("utf-8");
+		
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum==null) {
 			pageNum = "1";
 		}
+		
 		int news_num = Integer.parseInt(request.getParameter("news_num"));
+		
 		int rowCount = 10;
+		
 		NewsDAO dao = NewsDAO.getInstance();
 		int count = dao.getNewsCommentsCount(news_num);
+		
 		
 		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,rowCount,1,null);
 		
@@ -56,6 +62,7 @@ public class NewsCommentsListAction implements Action{
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 		
 		request.setAttribute("ajaxData", ajaxData);
+		
 		return "/WEB-INF/views/common/ajax_view.jsp";
 	}
 

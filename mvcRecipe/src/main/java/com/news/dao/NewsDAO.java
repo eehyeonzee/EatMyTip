@@ -21,9 +21,12 @@ import com.util.DurationFromNow;
  * @FileName  : NewsDAO.java
  * @작성일       : 2021. 9. 7. 
  * @작성자       : 신혜지
- * @프로그램 설명 : 
+ * @프로그램 설명 : 공지사항 DAO
  */
+
+
 public class NewsDAO {
+	
 	private static NewsDAO instance = new NewsDAO();
 	
 	public static NewsDAO getInstance() {
@@ -42,18 +45,20 @@ public class NewsDAO {
 	 * @Method 설명 : 공지사항에 올라갈 정보를 담고 있습니다.
 	 */
 	public void insertNews(NewsVO news) throws Exception{
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
 		conn = DBUtil.getConnection();
-		sql="insert into NEWS_BOARD VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, ?,'공지사항')";
+		sql="insert into NEWS_BOARD VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, ?,?)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,news.getNews_title());
 		pstmt.setString(2,news.getNews_content());
 		pstmt.setInt(3,news.getMem_num());
 		pstmt.setString(4,news.getNews_file());
+		pstmt.setString(5, news.getNews_category());
 		pstmt.executeQuery();
 		}catch(Exception e){
 			throw new Exception(e);
@@ -118,12 +123,14 @@ public class NewsDAO {
 				NewsVO news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
 				news.setNews_title(rs.getString("news_title"));
+				news.setNews_category(rs.getString("news_category"));
 				news.setNews_content(rs.getString("news_content"));
 				news.setname(rs.getString("name"));
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
 				list.add(news);
+				
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -151,6 +158,7 @@ public class NewsDAO {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
+			
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
@@ -180,6 +188,7 @@ public class NewsDAO {
 				news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
 				news.setname(rs.getString("name"));
+				news.setNews_category(rs.getString("news_category"));
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
@@ -278,13 +287,14 @@ public class NewsDAO {
 		ResultSet rs = null;
 		int count = 0;
 		String sql = null;
+		
 		try {
 			conn = DBUtil.getConnection();
 			sql = "SELECT COUNT(*) FROM comments WHERE news_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, news_num);
 			rs=pstmt.executeQuery();
-			if(rs!=null) {
+			if(rs.next()) {
 				count = rs.getInt(1);
 			}
 		}catch(Exception e) {
@@ -334,6 +344,14 @@ public class NewsDAO {
 		}
 		return list;
 	}
+	
+	
+	/**
+	 * @Method 메소드명  : deleteCommentsNews
+	 * @작성일     : 2021. 9. 10. 
+	 * @작성자     : 신혜지
+	 * @Method 설명 : 댓글 삭제하는 메서드 
+	 */
 	public void deleteCommentsNews(int comm_num) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;

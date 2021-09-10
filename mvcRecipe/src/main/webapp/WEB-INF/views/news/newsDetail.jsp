@@ -20,66 +20,6 @@
 		var currentPage;
 		var count;
 		var rowCount;
-		//댓글 목록
-		function selectData(pageNum){
-			currentPage = pageNum;
-			if(pageNum == 1){
-				//처음 호출시는 해당 ID의 div의 내부 내용물을 제거
-				$('#output').empty();
-			}
-			
-			//로딩이미지 노출
-		$('#loading').show();
-		
-		$.ajax({
-			type:'post',
-			data:{pageNum:pageNum,board_num:$('#news_num').val()},
-			url:'newsCommentsList.do',
-			dataType:'json',
-			cache:false,
-			timeout:30000,
-			success:function(param){
-				//댓글 불러오기 성공하면 로딩 이미지 감춰줌
-				$('#loading').hide();
-				count = param.count;
-				rowCount = param.rowCount;
-				
-				$(param.list).each(function(index,item){
-					var output = '<div class="item">'
-					output += '<h4>' + item.name + '<h4>';
-					output += '<div class="sub-item">';
-					output += '<p>' + item.comm_con + '</p>';
-					output += item.comm_date;
-					//작성자인지 멤버넘버 확인 그런데, auth도 받아서 관리자면 삭제가능하게하자
-					if($('#mem_num').val() == item.mem_num){
-						output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
-						output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
-					}
-					output += '<hr size="1" noshade width="100%">';
-					output += '</div>';
-					output += '</div>';
-					
-					$('#output').append(output);
-				});
-				//페이지 버튼 처리함
-				if(currentPage>=Math.ceil(count/rowCount)){
-					//다음 페이지가 없음
-					$('.paging-button').hide();
-				}else{
-					//다음 페이지가 존재
-					$('.paging-button').show();
-				}
-			},
-			error:function(){
-				alert('리스트 뽑기 네트워크 오류 발생');
-			}
-		});
-	}
-		
-		//페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭시 데이터 추가)
-		$('.paging-button input').click(function(){
-			selectData(currentPage + 1);
-		});
 		//댓글 등록
 		$('#news_comment_form').submit(function(){
 			if($('#re_content').val() == ''){
@@ -148,7 +88,68 @@
 				}
 			}
 		});
-	
+		//댓글 목록
+		function selectData(pageNum){
+			currentPage = pageNum;
+			
+			if(pageNum == 1){
+				//처음 호출시는 해당 ID의 div의 내부 내용물을 제거
+				$('#output').empty();
+			}
+			
+			//로딩이미지 노출
+		$('#loading').show();
+		
+		$.ajax({
+			type:'post',
+			data:{pageNum:pageNum,news_num:$('#news_num').val()},
+			url:'newsCommentsList.do',
+			dataType:'json',
+			cache:false,
+			timeout:30000,
+			success:function(param){
+				//댓글 불러오기 성공하면 로딩 이미지 감춰줌
+				$('#loading').hide();
+				count = param.count;
+				rowCount = param.rowCount;
+				
+				$(param.list).each(function(index,item){
+					var output = '<div class="item">'
+					output += '<span style="font-size:14pt;">' + item.name + '<span>';
+					output += '<div class="sub-item">';
+					output += '<p>' + item.comm_con + '</p>';
+					output += '<span>'+item.comm_date+'</span>';
+					//작성자인지 멤버넘버 확인 그런데, auth도 받아서 관리자면 삭제가능하게하자
+					if($('#mem_num').val() == item.mem_num){
+						output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
+						output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
+					}
+					output += '<hr size="1" noshade width="100%">';
+					output += '</div>';
+					output += '</div>';
+					
+					$('#output').append(output);
+				});
+				//페이지 버튼 처리함
+				if(currentPage>=Math.ceil(count/rowCount)){
+					//다음 페이지가 없음
+					$('.paging-button').hide();
+				}else{
+					//다음 페이지가 존재
+					$('.paging-button').show();
+				}
+			},
+			error:function(){
+				alert('리스트 뽑기 네트워크 오류 발생');
+			}
+		});
+	}
+		
+		//페이지 처리 이벤트 연결(다음 댓글 보기 버튼 클릭시 데이터 추가)
+		$('.paging-button input').click(function(){
+			selectData(currentPage + 1);
+		});
+		selectData(1);
 	});
 </script>
 <meta charset="UTF-8">
@@ -163,9 +164,12 @@
 			<h3>게시판 글 상세</h3>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col mt-2">
+	<div class="row mt-2">
+		<div class="col">
 			<span>글 제목: ${news.news_title}</span>
+		</div>
+		<div class="col">
+			<span>카테고리: ${news.news_category}</span>
 		</div>
 	</div>
 	<div class="row mt-2">
@@ -201,11 +205,10 @@
 		</div>
 	</div>
 	</c:if>
-</div>
 	
-	<div id="container">
+	<div>
 		<span>댓글달기</span>
-		<form id="news_comment_form" action="" method="post">
+		<form id="news_comment_form">
 			<input type="hidden" name="news_num" value="${news.news_num}" id="news_num">
 			<input type="hidden" name="mem_num" value="${news.mem_num}" id="mem_num">
 			<input type="hidden" name="auth" value="${auth}" id="auth">
@@ -232,6 +235,7 @@
 	<div id="loading" style="display:none;">
 		<img src="${pageContext.request.contextPath}/images/ajax-loader.gif">
 	</div>
+</div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

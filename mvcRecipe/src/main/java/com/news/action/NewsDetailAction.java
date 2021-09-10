@@ -26,16 +26,17 @@ public class NewsDetailAction implements Action {
 		HttpSession session = request.getSession();
 		Integer auth =(Integer)session.getAttribute("auth");
 		Integer mem_num =(Integer)session.getAttribute("mem_num");
-		int num = Integer.parseInt(request.getParameter("news_num"));
+		int user_num = Integer.parseInt(request.getParameter("news_num"));
 		NewsDAO dao=NewsDAO.getInstance();
-		dao.updateCount(num);
-		NewsVO news=dao.getNews(num);
+		dao.updateCount(user_num);
+		NewsVO news=dao.getNews(user_num);
 		news.setNews_title(StringUtil.useNoHtml(news.getNews_title()));
 		news.setNews_content(StringUtil.useBrNoHtml(news.getNews_content()));
 		
 		request.setAttribute("news", news);
 		request.setAttribute("auth", auth);
 		request.setAttribute("mem_num", mem_num);
+		request.setAttribute("user_num",user_num);
 		return "/WEB-INF/views/news/newsDetail.jsp";
 	}
 

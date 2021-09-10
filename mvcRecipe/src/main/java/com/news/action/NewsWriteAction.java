@@ -33,6 +33,7 @@ public class NewsWriteAction implements Action{
 		news.setNews_title(multi.getParameter("title"));
 		news.setNews_content(multi.getParameter("content"));
 		news.setMem_num(mem_num);
+		news.setNews_category(multi.getParameter("category"));
 		news.setNews_file(multi.getFilesystemName("filename"));
 		
 		NewsDAO dao= NewsDAO.getInstance();

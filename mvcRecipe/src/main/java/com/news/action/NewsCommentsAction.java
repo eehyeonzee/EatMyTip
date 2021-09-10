@@ -34,7 +34,7 @@ public class NewsCommentsAction implements Action{
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
 		if(mem_num == null){
 			mapAjax.put("result","logout");
-		}else {
+		}else { //로그인 된 경우에
 			NewsCommentsVO commentsVO = new NewsCommentsVO();
 			commentsVO.setComm_con(request.getParameter("re_content"));
 			commentsVO.setNews_num(Integer.parseInt(request.getParameter("news_num")));
@@ -45,6 +45,7 @@ public class NewsCommentsAction implements Action{
 			mapAjax.put("result", "success");
 		}
 		ObjectMapper mapper = new ObjectMapper();
+		
 		String ajaxData = mapper.writeValueAsString(mapAjax);
 		request.setAttribute("ajaxData", ajaxData);
 		
