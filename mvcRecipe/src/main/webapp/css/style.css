@@ -27,9 +27,10 @@
 	margin-top: -5px;
 }
 
-
-
-
+/* 리스트 기본 불릿 제거 */
+ul{
+	list-style:none;
+}
 
 /*댓글쪽*/
 div#reply_div {

@@ -4,7 +4,8 @@
  * 작성일 : 2021. 9. 6.
  * 작성자 : 이현지
  * 설명 : 레시피 글작성 폼
- * 수정일 : 
+ * 수정일 : 2021. 9. 10
+ * 설명 : summernote 추가
 --%>
 <!DOCTYPE html>
 <html>
@@ -14,8 +15,11 @@
 <title>레시피 글작성</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote-lite.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/summernote/summernote-lite.js"></script>
+<script src="${pageContext.request.contextPath}/js/summernote/lang/summernote-ko-KR.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		// 이벤트 연결
@@ -32,12 +36,38 @@
 				return false;
 			}
 			
-			if($('#content').val().trim() == '') {
+			if($('#summernote').val().trim() == '') {
 				alert('내용을 입력하세요!');
-				$('#content').val('').focus();
+				$('#summernote').val('').focus();
 				return false;
 			}
-			// 이미지 미리보기..... 할까 말까
+		});
+		
+		// summernote 에디터
+		$('#summernote').summernote({
+			height: 300, // 에디터 높이
+			minHeight: null, // 최소 높이
+			maxHeight: null, // 최대 높이
+			focus: true, // 에디터 로딩 후 포커스
+			lang: "ko-KR", // 한글 설정
+			placeholder: '내용 입력', // placeholder 설정
+			
+			// 툴바 설정
+			toolbar: [
+				// [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		});
 	});
 </script>
@@ -64,7 +94,7 @@
 			</li>
 			<li>
 				<label for="content">내용</label>
-				<textarea rows="5" cols="50" name="content" id="content"></textarea>
+				<textarea id="summernote" name="content"></textarea>
 			</li>
 			<li>
 				<label for="filename">파일</label>
@@ -72,8 +102,8 @@
 			</li>
 		</ul>
 		<div>
-			<input type="submit" value="등록">
-			<input type="button" value="목록" onclick="location.href='recipeList.do'">
+			<input type="submit" value="등록" class="btn btn-outline-dark">
+			<input type="button" value="목록" class="btn btn-outline-dark" onclick="location.href='recipeList.do'">
 		</div>
 	</form>
 </div>
