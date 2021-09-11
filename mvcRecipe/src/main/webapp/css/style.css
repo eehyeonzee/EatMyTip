@@ -1,4 +1,18 @@
 @charset "UTF-8";
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+.contents-wrap {
+   min-height:53.3%;
+   position:relative;
+   padding-bottom:30px;/* footer height */
+}
+footer {
+	position:absoulte;
+}
 .content{
 	font: 400 14px 'NotoSansKR';
 }

@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -38,7 +39,7 @@
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
 <!-- container 시작 -->
-<div class = "container-fluid" style = "width:90%">
+<div class = "container-fluid contents-wrap" style = "width:90%">
 	<div class="text-center col-sm-30 my-5">
 		<div align = "left">
 			<h3>로그인</h3>
@@ -46,7 +47,7 @@
 	<form id = "login_form" action = "login.do" method = "post">
 		<table align = "center">
 			<tr>
-				<td height = "80px"><label for = "id" class = "col-sm-20 col-form-label">아이디</label></td> 
+				<td height = "40px"><label for = "id" class = "col-sm-20 col-form-label">아이디</label></td> 
 				<td><input type = "text" name = "id" id = "id" class = "col-sm-12 form-control" maxlength = "12"></td>
 			</tr>
 			<tr>
