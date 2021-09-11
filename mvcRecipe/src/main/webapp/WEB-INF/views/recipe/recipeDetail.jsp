@@ -20,6 +20,9 @@
 <script type="text/javascript">
 	$(function(){
 		
+		$("#rec_count").html("${recipe.recom_count}");
+		$("#comm_count").html("${comm}");
+		
 		// ------------------------ 추천 버튼
 		// 추천 버튼 클릭시 추천 추가 또는 제거
 		$("#rec_btn").click(function(){
@@ -186,7 +189,11 @@
 						//each() 메서드는 매개 변수로 받은 것을 사용해 for in 반복문과 같이 배열이나 객체의 요소를 검사할 수 있는 메서드
 						var output = "<div class='item'>";
 								
-								output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 35px; width:40;" /></div>'
+								if(item.photo != null){
+									output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 35px; width:40;" /></div>'
+								}else{
+									output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/images/logo.png" style="height: 35px; width:40;" /></div>'
+								}
 								output += "<span><h4>" + item.id + "<h4></span>";
 								output += "<div class='sub-item'>";
 									output += "<p style='font-size:16px;'>" + item.comm_con + "</p>";
@@ -421,10 +428,10 @@
 	<%-- 추천수 및 댓글 수 출력 --%>
 	<div style="height: 100px;">
 	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
-	댓글  <b style="color: red">${comm}<span id="comm_count"></span></b>
+	댓글  <b style="color: red"><span id="comm_count"><c:if test="${ empty mem_num }">${comm}</c:if></span></b>
 	</span>&nbsp;
 	<span style="width:50px; height:35px; padding : 2px, 3px, 2px, 3px; border-style : ridge; border-width:2px; background-color: #edf4f5;">
-	추천  <b style="color: red">${recipe.recom_count}<span id="rec_count"></span></b>
+	추천  <b style="color: red"><c:if test="${ empty mem_num }">${recipe.recom_count}</c:if><span id="rec_count"></span></b>
 	</span>
 	</div>
 	
@@ -465,7 +472,7 @@
 	<div style="float: right;">
 		<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
 		수정일 : ${ recipe.modify_date }
-			<c:if test="${ mem_num == recipe.mem_num }">
+			<c:if test="${ mem_num == recipe.mem_num || auth == 3}">
 				<input type="button" value= "수정"  onclick="location.href='recipeModifyForm.do?board_num=${recipe.board_num}'" style="color: black; background-color: white; border-color: #d5dfe8">
 				<input type="button" value= "삭제" id="delete_btn" style="color: red; background-color: white; border-color: #d5dfe8">
 				<script type="text/javascript">

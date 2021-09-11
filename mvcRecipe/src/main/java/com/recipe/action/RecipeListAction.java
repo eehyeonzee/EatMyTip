@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
 import com.recipe.dao.RecipeDAO;
+import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.PagingUtil;
 
@@ -26,6 +27,7 @@ public class RecipeListAction implements Action {
 		// 로그인 정보 가져오기
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
+		Integer auth = (Integer)session.getAttribute("auth");
 		
 		// 검색 조건 체크를 위해 변수 할당
 		String search = request.getParameter("search");
@@ -37,13 +39,28 @@ public class RecipeListAction implements Action {
 		request.setAttribute("search", search);
 		request.setAttribute("division", division);
 		request.setAttribute("mem_num", mem_num);
+		request.setAttribute("auth", auth);
+		
+		// 공지사항 게시글 수 체크
+		RecipeDAO dao = RecipeDAO.getInstance();
+		int news_count = dao.getRecipeNewsCount();
+		
+		List<RecipeNewsVO> news_list = null;
+		if(news_count > 0) {
+			news_list = dao.getRecipeNewsList(1, 5);
+		}
+		
+		request.setAttribute("news_count", news_count);
+		request.setAttribute("news_list", news_list);
+		
+		// -------- 레시피 게시판 출력
 		
 		// 검색 조건 체크 null이라면 일반 페이지 처리
 		if(division == null) {
 			String pageNum = request.getParameter("pageNum");
 			if(pageNum==null) pageNum = "1";
 			
-			RecipeDAO dao = RecipeDAO.getInstance();
+			dao = RecipeDAO.getInstance();
 			int count = dao.getRecipeCount();	// 총 레코드 수
 			
 			// 페이지 처리
@@ -71,7 +88,7 @@ public class RecipeListAction implements Action {
 				String pageNum = request.getParameter("pageNum");
 				if(pageNum==null) pageNum = "1";
 					
-				RecipeDAO dao = RecipeDAO.getInstance();
+				dao = RecipeDAO.getInstance();
 				int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 						
 				// 페이지 처리
@@ -100,7 +117,7 @@ public class RecipeListAction implements Action {
 				String pageNum = request.getParameter("pageNum");
 				if(pageNum==null) pageNum = "1";
 					
-				RecipeDAO dao = RecipeDAO.getInstance();
+				dao = RecipeDAO.getInstance();
 				int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 						
 				// 페이지 처리
@@ -128,7 +145,7 @@ public class RecipeListAction implements Action {
 				String pageNum = request.getParameter("pageNum");
 				if(pageNum==null) pageNum = "1";
 					
-				RecipeDAO dao = RecipeDAO.getInstance();
+				dao = RecipeDAO.getInstance();
 				int count = dao.getRecipeCount(division, search);	// 검색조건에 부합한 총 레코드 수
 						
 				// 페이지 처리

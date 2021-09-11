@@ -74,7 +74,42 @@
 		</div>
 		<%-- 구분선 --%>
 		 <hr size="2" noshade width="100%">
+		 <!-- 공지사항에 게시글이 없을 경우 없다는 표시 -->
+	<c:if test="${count == 0}">
+		<div class="container mt-5">
+			<h3>등록된 게시물이 없습니다.</h3>
+		</div>
+	</c:if>
+<!-- 공지사항에 게시글이 있을 경우 리스트를 출력 -->
+	<c:if test="${news_count > 0}">
+		<div class="container-fluid mt-3 mb-5">
+			<table class="table">
+				<thead>
+					<tr>
+						<td>no</td>
+						<td>카테고리</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>조회수</td>
+						<td>작성일</td>
+					</tr>
+					<c:forEach var="news" items="${news_list}">
+						<tr>
+							<td>${news.news_num}</td>
+							<td>${news.news_category}</td>
+							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.writer}</td>
+							<td>${news.news_hits}</td>
+							<td>${news_.news_date}</td>
+						</tr>
+					</c:forEach>
+				</thead>
+			</table>
+		</div>
+	</c:if>
 		 
+		 <%-- 구분선 --%>
+		 <hr size="2" noshade width="100%">
 	</div>
       </div> 
      

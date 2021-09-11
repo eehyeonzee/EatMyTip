@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.recipe.vo.RecipeCommendsVO;
+import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.DurationFromNow;
@@ -1309,5 +1310,89 @@ public class RecipeDAO {
 			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt3, conn);
 		}
+	}
+	
+	
+	//---------------------------- 모두의 레시피 공지사항 처리
+	
+	/**
+	 * @Method 메소드명  : getRecipeNewsCount
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 공지사항 총 갯수 수 반환
+	 */
+	public int getRecipeNewsCount() throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql="SELECT COUNT(*) FROM news_board WHERE news_category='레시피'";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count =rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+	
+	/**
+	 * @Method 메소드명  : getRecipeNewsList
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 레시피 공지사항 리스트 반환
+	 */
+	
+	public List<RecipeNewsVO> getRecipeNewsList(int start, int end)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<RecipeNewsVO> list = null;
+		try {
+			conn = DBUtil.getConnection();
+			sql= "SELECT * FROM (SELECT a.*,rownum rnum FROM "
+					+ "(SELECT * FROM news_board b JOIN member m ON b.mem_num = m.mem_num ORDER BY news_num DESC)a) "
+					+ "WHERE rnum>=? AND rnum<=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+		
+			rs=pstmt.executeQuery();
+			list = new ArrayList<RecipeNewsVO>();
+			while(rs.next()) {
+				RecipeNewsVO recipe_News = new RecipeNewsVO();
+				recipe_News.setNews_num(rs.getInt("news_num"));
+				recipe_News.setNews_title(rs.getString("news_title"));
+				recipe_News.setNews_category(rs.getString("news_category"));
+				recipe_News.setNews_content(rs.getString("news_content"));
+				recipe_News.setNews_date(rs.getDate("news_date"));
+				recipe_News.setNews_modi(rs.getDate("news_modi"));
+				recipe_News.setNews_hits(rs.getInt("news_hits"));
+				recipe_News.setWriter("관리자");
+				
+				list.add(recipe_News);
+				
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {		
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list; 
 	}
 }

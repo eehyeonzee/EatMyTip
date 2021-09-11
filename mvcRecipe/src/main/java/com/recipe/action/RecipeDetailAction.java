@@ -24,6 +24,7 @@ public class RecipeDetailAction implements Action {
 		// 세션을 통해 현재 로그인한 멤버 확인
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
+		Integer auth = (Integer)session.getAttribute("auth");
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		
 		int recommBtnCheck = 0;
@@ -39,9 +40,9 @@ public class RecipeDetailAction implements Action {
 			RecipeVO recipe = dao.getRecipeBoard(board_num);
 			
 			// HTML을 허용하지 않음
-			recipe.setTitle(StringUtil.useBrNoHtml(recipe.getTitle()));
+			recipe.setTitle(StringUtil.useBrHtml(recipe.getTitle()));
 			// HTML을 허용하지 않으면서 줄바꿈 처리
-			recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
+			recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
 			
 			comm = dao.getRecipeReplyBoardCount(board_num);
 			
@@ -90,6 +91,7 @@ public class RecipeDetailAction implements Action {
 			request.setAttribute("bookmarkBtnCheck", bookmarkBtnCheck);
 			request.setAttribute("recommBtnCheck", recommBtnCheck);
 			request.setAttribute("comm", comm);
+			request.setAttribute("auth", auth);
 			
 			// 디테일 페이지로 이동
 			return "/WEB-INF/views/recipe/recipeDetail.jsp";
