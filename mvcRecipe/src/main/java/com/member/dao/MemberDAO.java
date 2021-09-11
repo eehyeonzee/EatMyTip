@@ -613,4 +613,60 @@ public class MemberDAO {
 		
 		return list;
 	}
+	
+	// 관리자 메뉴 정지 회원 설정
+	
+	/**
+	 * @Method 메소드명  : stopMember
+	 * @작성일     : 2021. 9. 11. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 */
+	
+	public void stopAdminMember(int mem_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE member SET auth = 1 WHERE mem_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	// 관리자 메뉴 회원 탈퇴 설정
+	
+	/**
+	 * @Method 메소드명  : stopMember
+	 * @작성일     : 2021. 9. 11. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 */
+	
+	public void deleteAdminMember(int mem_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE member SET auth = 0 WHERE mem_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem_num);
+			
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }

@@ -38,22 +38,31 @@
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
 <!-- container 시작 -->
-<div class = "container" style = "width:100%">
+<div class = "container-fluid" style = "width:90%">
+	<div class="text-center col-sm-12 my-5">
+		<div align = "left">
+			<h3>로그인</h3>
+		</div>
 	<form id = "login_form" action = "login.do" method = "post">
 		<table>
 			<tr>
-				<td>아이디 <input type = "text" name = "id" id = "id" maxlength = "12"></td>
-				<td colspan = "2"><input type = "submit" value = "로그인"></td>
+				<td height = "80px"><label for = "id" class = "col-sm-10 col-form-label">아이디</label></td> 
+				<td><input type = "text" name = "id" id = "id" class = "col-sm-12 form-control" maxlength = "12"></td>
+				<td class = "col-sm-2" rowspan = "2"><input type = "submit" class = "btn btn-primary" value = "로그인"></td>
 			</tr>
 			<tr>
-				<td>비밀번호 <input type = "password" name = "passwd" id = "passwd" maxlength = "12"></td>
+				<td height = "80px"><label for = "passwd" class = "col-sm-10 col-form-label">비밀번호</label></td>
+				<td><input type = "password" name = "passwd" id = "passwd" class = "col-sm-12 form-control" maxlength = "12"></td>
+			</tr>
+			<tr>
+				<td  colspan = "3" align = "center">
+					<input type = "button" value = "아이디 찾기" class = "btn btn-primary" onclick = "location.href='idSearchForm.do'">
+					<input type = "button" value = "비밀번호 찾기" class = "btn btn-primary" onclick = "location.href='passwdSearchForm.do'">
+				</td>
 			</tr>
 		</table>
-		<div>
-			<input type = "button" value = "아이디 찾기" onclick = "location.href='idSearchForm.do'">
-			<input type = "button" value = "비밀번호 찾기" onclick = "location.href='passwdSearchForm.do'">
-		</div>
 	</form>
+	</div>
 </div>
 <!-- container 끝 -->
 <jsp:include page = "/WEB-INF/views/common/footer.jsp" />

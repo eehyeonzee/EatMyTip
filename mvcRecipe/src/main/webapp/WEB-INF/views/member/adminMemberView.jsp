@@ -4,7 +4,7 @@
 <%-- 
  * 작성일 : 2021. 9. 10.
  * 작성자 : 박용복
- * 설명 : 
+ * 설명 : 관리자 관리 뷰
  * 수정일 : 2021. 9. 10.
 --%>
 <!DOCTYPE html>
@@ -17,7 +17,17 @@
 <title>관리자 페이지 - 회원 정보 조회</title>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type ="text/javascript">
-	
+	$(document).ready(function() {
+		$("#stop_btn").click(function(){
+		    value_list = [];
+		    $("input[name='authChan']:checked").each(function(){
+		        var checked_value = $(this).val();
+		        value_list.push(checked_value);
+		    });
+		    location.href='${pageContext.request.contextPath}/main/StopAdminMemberAction.do';
+		});
+
+	});
 
 </script>
 </head>
@@ -28,6 +38,7 @@
 	<div class = "">
 		<input type = "button" value = "뒤로 가기" onclick = "location.href='myPage.do'">
 		<input type = "button" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'"> 
+		<input type = "button" value = "회원 정지" id = "stop_btn" name = "stop_btn"> 
 	</div>
 	<c:if test = "${count == 0}">
 	<div class = "">
@@ -67,7 +78,15 @@
 						}
 					</script>
 				</td>
-				<td><input type = "checkbox" class = "oneCheckBox" name = "auth_change" id = "auth_change"></td>
+				<td>
+					<script>
+						var auth = ${member.auth};
+						if(auth != 3) {
+							var output = '<input type = "checkbox" name = "authChan" id = "authChan">';
+							document.write(output);
+						}
+					</script>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
