@@ -98,7 +98,7 @@
 			</li>
 			<li>
 				<label for="filename">파일</label>
-				<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
+				<input type="file" name="filename" id="filename" multiple accept="image/gif,image/png,image/jpeg">
 			</li>
 		</ul>
 		<div>
