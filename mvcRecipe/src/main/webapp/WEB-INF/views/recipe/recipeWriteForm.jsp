@@ -50,7 +50,7 @@
 			maxHeight: null, // 최대 높이
 			focus: true, // 에디터 로딩 후 포커스
 			lang: "ko-KR", // 한글 설정
-			placeholder: '내용 입력', // placeholder 설정
+			placeholder: '내용을 입력하세요', // placeholder 설정
 			
 			// 툴바 설정
 			toolbar: [
@@ -76,36 +76,50 @@
 <body>
 <!-- container 시작 -->
 <div class="container" style="width:100%">
-	<h2>레시피 작성</h2><%-- 임시(나중에 삭제) --%>
+	<br><br>
+	<h2>레시피 작성</h2>
+	<hr size="1" noshade width="100%">
 	<form id="write_form" action="recipeWrite.do" method="post" enctype="multipart/form-data">
 		<ul>
 			<li>
-				<label for="category">카테고리</label>
+				<br>
+				<p>
+				<label for="category"></label>
 				<select name="category" id="category">
-					<option value="">선택하세요</option>
+					<option value="">카테고리 선택</option>
 					<option value="식사">식사</option>
 					<option value="간식">간식</option>
 					<option value="음료">음료</option>
 				</select>
+				</p>
 			</li>
 			<li>
-				<label for="title">제목</label>
-				<input type="text" name="title" id="title" maxlength="50">
+				<div>
+				<label for="title"></label>
+				<input type="text" name="title" id="title" class="input2" maxlength="50" placeholder="제목을 입력하세요">
+				<span class="underline"></span>
+				</div>
 			</li>
 			<li>
-				<label for="content">내용</label>
+				<div>
+				<label for="content"></label>
 				<textarea id="summernote" name="content"></textarea>
+				</div>
 			</li>
 			<li>
-				<label for="filename">파일</label>
-				<input type="file" name="filename" id="filename" multiple accept="image/gif,image/png,image/jpeg">
+				<div>
+				<label for="filename"></label>
+				<input type="file" name="filename" id="filename" class="form-control-file border" accept="image/gif,image/png,image/jpeg">
+				</div>
 			</li>
 		</ul>
-		<div>
-			<input type="submit" value="등록" class="btn btn-outline-dark">
+		<br>
+		<div align="center">
+			<input type="submit" value="등록" class="btn btn-outline-dark">&nbsp;
 			<input type="button" value="목록" class="btn btn-outline-dark" onclick="location.href='recipeList.do'">
 		</div>
 	</form>
+	<br><br>
 </div>
 <!-- container 끝 -->
 </body>

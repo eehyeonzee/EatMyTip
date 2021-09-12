@@ -98,7 +98,7 @@
 	            </div>
 	            <%-- 사진파일이 없는 경우 --%>
 	            <c:if test="${ empty recipe.filename }">
-	            	<img src="${pageContext.request.contextPath}/images/logo.png" style="height: 270px;" />
+	            	<img src="${pageContext.request.contextPath}/images/basic.png" style="height: 270px;" />
 	            </c:if>
 	            <%-- 사진파일이 있는 경우 --%>
 	            <c:if test="${ !empty recipe.filename }">

@@ -100,3 +100,38 @@ form#mre_form {
    border : none;
    margin : 5px;
 }
+
+/* input2 스타일 */
+.input2 {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #CCC;
+  color: #555;
+  box-sizing: border-box;
+  font-family: 'Arvo';
+  font-size: 18px;
+  height: 50px;
+  left: 100px;
+  margin: 1px 3px 0 -100px;
+  padding: 10px 0px;
+  position: relative;
+  top: 50%;
+  width: 500px;
+}
+
+.underline {
+  background-color: dodgerblue;
+  display: inline-block;
+  height: 2px;
+  left: 100px;
+  margin-top: 5px;
+  position: absolute;
+  top: 185px;
+  -webkit-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+  width: 202px;
+}
+
+
