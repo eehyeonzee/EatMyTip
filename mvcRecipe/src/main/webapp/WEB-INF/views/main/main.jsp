@@ -25,10 +25,11 @@
 	<!-- 공지 ｜ 레시피 -->
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
+			<!-- 공지 시작 -->
 			<div class="text-center col-md-6 my-5 mt-5">
-				<a class=" btn btn-light btn-lg" href="../news/newsList.do">공지사항&이벤트</a>
+				<a class=" btn btn-light btn-lg" href="../news/newsList.do">공지사항 &amp; 이벤트</a>
 				<hr style="width:80%">
-				<span> 공지사항 </span>
+				<span>새로운 소식을 알려드립니다.</span>
 				<table class="table mt-5">
 					<thead>
 						<tr>
@@ -68,46 +69,65 @@
 						</tr>
 				</table>
 			</div>
+			<!-- 공지 끝 -->
+			<!-- 모두의 레시피 시작 -->
 			<div class="text-center col-md-6 my-5">
-				<a class=" btn btn-light btn-lg" href="${pageContext.request.contextPath}/recipe/recipeList.do">신규레시피</a>
+				<a class=" btn btn-light btn-lg" href="${pageContext.request.contextPath}/recipe/recipeList.do">신규 레시피</a>
 				<hr style="width:80%">
-				<span> 레시피게시판</span>
+				<span>갓 올라온 따끈한 레시피들을 만나보세요.</span>
 				<div class="row mt-5">
+				<%-- 등록된 게시물이 없는 경우 --%>
+				<c:if test="${count == 0}">
+					<div align="center">
+						등록된 게시물이 없습니다.
+					</div>
+				</c:if>
+				<!-- 카드 시작 -->
+				<%-- 게시물이 있는 경우 --%>
+				<c:if test="${recipe_count > 0}">
+					<!-- 반복문 시작 -->
+					<c:forEach var="recipe" items="${recipeList}">
 					<div class="col-4">
-						<div class="card">
-							<div class="card-header">작성자</div>
-							<img src="../images/img1.jpg" alt="" />
+						<b>No.${recipe.board_num}</b>
+						<span style="float: right; font-size: 14px;">
+						조회 ${recipe.hits}
+						</span>
+						<div class="card" style="height: 500px;">
+							<div class="card-header">
+								${recipe.id} 님
+								<span style="float: right;">
+								추천 <b style="color: #f76f31;">${recipe.recom_count}</b>
+								</span>
+							</div>
+							<%-- 이미지가 없는 경우 --%>
+							<c:if test="${empty recipe.filename}">
+								<img src="${pageContext.request.contextPath}/images/basic.png" style="height: 270px;" />
+							</c:if>
+							<%-- 이미지가 있는 경우 --%>
+							<c:if test="${!empty recipe.filename}">
+								<img src="${pageContext.request.contextPath}/upload/${recipe.filename}" style="height: 270px;" />
+							</c:if>
 							<div class="card-body">
-								<p class="card-text">제목</p>
-								<a href="#" class="btn btn-primary">More</a>
+								<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}" class="btn btn-outline-dark">${recipe.title}</a></h5>
+								<div class="box">
+									<div class="content">
+										<p class="card-text">${recipe.content}</p>
+									</div>
+								</div>
+								<br>
 							</div>
 						</div>
 					</div>
-					<div class="col-4">
-						<div class="card">
-							<div class="card-header">작성자</div>
-							<img src="../images/img1.jpg" alt="" />
-							<div class="card-body">
-								<p class="card-text">제목</p>
-								<a href="#" class="btn btn-primary">More</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-4">
-						<div class="card">
-							<div class="card-header">작성자</div>
-							<img src="../images/img1.jpg" alt="" />
-							<div class="card-body">
-								<p class="card-text">제목</p>
-								<a href="#" class="btn btn-primary">More</a>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
+					<!-- 반복문 끝 -->
+				</c:if>
+				<!-- 카드 끝 -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 베스트 레시피 -->
+	<!-- 모두의 레시피 끝 -->
+	<!-- 베스트 레시피 시작-->
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
 			<div class="text-center col-md-12 mt-1 mb-5">
@@ -125,9 +145,9 @@
 		</c:if>
 		<!-- 카드 시작 -->
 		<%-- 게시물이 있는 경우 --%>
-		<c:if test="${count > 0}">
+		<c:if test="${bestRecipe_count > 0}">
 			<!-- 반복문 시작 -->
-			<c:forEach var="recipe" items="${list}">
+			<c:forEach var="recipe" items="${bestRecipeList}">
 			<div class="col-3">
 				<b>No.${recipe.board_num}</b>
 				<span style="float: right; font-size: 14px;">
@@ -149,7 +169,7 @@
 						<img src="${pageContext.request.contextPath}/upload/${recipe.filename}" style="height: 270px;" />
 					</c:if>
 					<div class="card-body">
-						<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}">${recipe.title}</a></h5>
+						<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}" class="btn btn-outline-dark">${recipe.title}</a></h5>
 						<div class="box">
 							<div class="content">
 								<p class="card-text">${recipe.content}</p>
@@ -165,7 +185,8 @@
 		<!-- 카드 끝 -->
 		</div>
 	</div>
-	<!-- 이벤트 -->
+	<!-- 베스트 레시피 끝 -->
+	<!-- 이벤트 시작-->
 	<div class="container-fluid mt-5 pt-3 mb-5 pb-3">
 			<div class="row" style="width: 100%">
 			<div class="text-center col-md-12">
@@ -179,6 +200,7 @@
 		<div class="col-4"><img src="../images/event_sm3.png"></div>
 	</div>
 	</div>
+	<!-- 이벤트 끝 -->
 	<!-- container 끝 -->
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
