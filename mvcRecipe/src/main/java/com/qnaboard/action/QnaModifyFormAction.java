@@ -16,7 +16,7 @@ public class QnaModifyFormAction implements Action{
 		int qna_num = Integer.parseInt(request.getParameter("qna_num"));
 		
 		QnaBoardDAO dao = QnaBoardDAO.getInstance();
-		QnaBoardVO qnaboardVO = dao.getQnaBoard(qna_num);
+		QnaBoardVO qnaboardVO = dao.getQnaBoardDetail(qna_num);
 		
 		//request에 데이터 저장
 		request.setAttribute("qnaboardVO", qnaboardVO);

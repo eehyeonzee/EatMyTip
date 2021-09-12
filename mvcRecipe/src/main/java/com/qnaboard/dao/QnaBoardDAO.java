@@ -3,16 +3,15 @@ package com.qnaboard.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import com.qnaboard.vo.QnaBoardVO;
+import com.recipe.vo.RecipeCommendsVO;
 import com.util.DBUtil;
+import com.util.DurationFromNow;
+import com.util.StringUtil;
 
 
 public class QnaBoardDAO {
@@ -24,35 +23,21 @@ public class QnaBoardDAO {
 	}
 	
 	private QnaBoardDAO() {}
-	
-	//context.xml에서 설정 정보를 읽어들여 커넥션풀로부터 커넥션을 할당
-	private Connection getConnection()throws Exception{
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/xe");
-		return ds.getConnection();
-	}
-	//자원정리
-	private void executeClose(ResultSet rs, PreparedStatement pstmt, Connection conn) {
-		if(rs!=null)try {rs.close();}catch(SQLException e) {}
-		if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
-		if(conn!=null)try {conn.close();}catch(SQLException e) {}
-	}
-	
 
 	/**
-	 * @Method 메소드명  : write
+	 * @Method 메소드명  : QnaBoardWrite
 	 * @작성일     : 2021. 9. 6. 
 	 * @작성자     : 나윤경
 	 * @Method 설명 : 고객센터 게시판 글 작성
 	 */
-	public void write(QnaBoardVO qnaboard)throws Exception{
+	public void QnaBoardWrite(QnaBoardVO qnaboard)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
 			sql = "INSERT INTO qna_board (qna_num, qna_title, qna_content, qna_id, qna_passwd, qna_ip, qna_date) "
@@ -73,17 +58,17 @@ public class QnaBoardDAO {
 			throw new Exception(e);
 		}finally {
 			//자원정리
-			executeClose(null, pstmt, conn);
+			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
 	
 	/**
-	 * @Method 메소드명  : getCount
+	 * @Method 메소드명  : getQnaBoardCount
 	 * @작성일     : 2021. 9. 6. 
 	 * @작성자     : 나윤경
 	 * @Method 설명 : 고객센터 게시판 총 레코드 수
 	 */
-	public int getCount()throws Exception{
+	public int getQnaBoardCount()throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -92,7 +77,7 @@ public class QnaBoardDAO {
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
 			sql="SELECT COUNT(*) FROM qna_board";
@@ -109,19 +94,19 @@ public class QnaBoardDAO {
 			throw new Exception(e);
 		}finally {
 			//자원 정리
-			executeClose(rs, pstmt, conn);
+			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		return count;
 	}
 
 	
 	/**
-	 * @Method 메소드명  : getList
+	 * @Method 메소드명  : getQnaBoardList
 	 * @작성일     : 2021. 9. 6. 
 	 * @작성자     : 나윤경
 	 * @Method 설명 : 고객센터 게시판 글 목록
 	 */
-	public List<QnaBoardVO> getListBoard(int startRow, int endRow)throws Exception {
+	public List<QnaBoardVO> getQnaBoardList(int startRow, int endRow)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -130,7 +115,7 @@ public class QnaBoardDAO {
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
 			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qna_board "
@@ -168,12 +153,12 @@ public class QnaBoardDAO {
 	
 	
 	/**
-	 * @Method 메소드명  : getQnaBoard
+	 * @Method 메소드명  : getQnaBoardDetail
 	 * @작성일     : 2021. 9. 9. 
 	 * @작성자     : 나윤경
 	 * @Method 설명 : 고객센터 게시판 상세페이지
 	 */
-	public QnaBoardVO getQnaBoard(int qna_num)throws Exception{
+	public QnaBoardVO getQnaBoardDetail(int qna_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -203,6 +188,7 @@ public class QnaBoardDAO {
 				qnaboard.setQna_content(rs.getString("qna_content"));
 				qnaboard.setQna_date(rs.getDate("qna_date"));
 				qnaboard.setQna_id(rs.getString("qna_id"));
+				qnaboard.setQna_passwd(rs.getString("qna_passwd"));
 			}
 			
 		}catch(Exception e) {
@@ -218,14 +204,20 @@ public class QnaBoardDAO {
 	
 	
 	//글 수정
-	public void modify(QnaBoardVO qnaboardVO)throws Exception{
+	/**
+	 * @Method 메소드명  : qnaBoardModify
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 :
+	 */
+	public void qnaBoardModify(QnaBoardVO qnaboardVO)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
 			sql = "UPDATE qnaboard SET qna_title=?, qna_content=?, qna_ip=? WHERE qna_num=?";
@@ -246,12 +238,230 @@ public class QnaBoardDAO {
 			throw new Exception(e);
 		}finally {
 			//자원정리
-			executeClose(null, pstmt, conn);
+			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
 	
 	
-	//글 삭제
+	/**
+	 * @Method 메소드명  : qnaBoardDelete
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 :고객센터 게시판 글 삭제
+	 */
+	public void qnaBoardDelete(int qna_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			//커넥션풀로부터 커넥션 할당받음
+			conn = DBUtil.getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			// 무결성 제약조건으로 인해 문의번호가 일치한 댓글 테이블에서 값 전체 삭제
+			
+			sql = "DELETE FROM comments WHERE qna_num=?";
+			
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			//?에 데이터 바인딩
+			pstmt.setInt(1, qna_num);
+			
+			//SQL문 실행
+			pstmt.executeUpdate();
 	
+			// 고객센터 문의 게시글 삭제
+			
+			//SQL문 작성
+			sql = "DELETE FROM qna_board WHERE qna_num=?";
+			
+			//PreparedStatement 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+			
+			//?에 데이터 바인딩
+			pstmt2.setInt(1, qna_num);
+			
+			//SQL문 실행
+			pstmt2.executeUpdate();
+			
+			
+			conn.commit();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			//자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 	
+	/**
+	 * @Method 메소드명  : insertQnACommend
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 : 고객센터 댓글 달기
+	 */
+	public void insertQnACommend(RecipeCommendsVO qnaReply)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "insert into comments (comm_num, comm_con, qna_num) "
+					+ "values (comments_seq.nextval,?,?)";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setString(1, qnaReply.getComm_con());
+			pstmt.setInt(2, qnaReply.getQna_num());
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	/**
+	 * @Method 메소드명  : getQnaReplyBoardCount
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 : 고객센터 게시판 댓글 개수
+	 */
+	public int getQnaReplyBoardCount(int qna_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "select count(*) as count from comments where qna_num = ?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, qna_num);
+			
+			// SQL문을 실행해서 결과행을 rs에 담는다
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
+	
+	/**
+	 * @Method 메소드명  : getQnaListReplyBoard
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 나윤경
+	 * @Method 설명 : 고객센터 게시판 댓글 목록
+	 */
+	public List<RecipeCommendsVO> getQnaListReplyBoard(int start, int end, int qna_num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<RecipeCommendsVO> list = null;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum "
+					+ "FROM (SELECT comm_num,TO_CHAR(comm_date,'YYYY-MM-DD HH24:MI:SS') comm_date,"
+					+ " comm_con, qna_num FROM comments WHERE qna_num=? ORDER BY comm_num DESC)a) "
+					+ "WHERE rnum >=? and rnum <=?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, qna_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			
+			// SQL문을 실행해서 결과행들을 rs에 담는다
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<RecipeCommendsVO>();
+			
+			while(rs.next()) {
+				RecipeCommendsVO reply = new RecipeCommendsVO();
+				reply.setComm_num(rs.getInt("comm_num"));
+				// 날짜 -> 1분전, 1시간전, 1일전 형식
+				reply.setComm_date(DurationFromNow.getTimeDiffLabel(rs.getString("comm_date")));
+				reply.setComm_con(StringUtil.useBrNoHtml(rs.getString("comm_con")));
+				reply.setQna_num(rs.getInt("qna_num"));
+				
+				list.add(reply);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list;	
+	}
+	
+	public void deleteQnaCommend(int comm_num)throws Exception{
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		
+		try {
+			
+			// 댓글 번호가 일치하는 댓글 삭제
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+			// SQL문 작성
+			sql = "delete from comments where comm_num = ?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, comm_num);
+			
+			// SQL문 실행
+			pstmt.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
 }
+	

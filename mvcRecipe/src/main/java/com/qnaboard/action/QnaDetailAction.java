@@ -21,10 +21,10 @@ public class QnaDetailAction implements Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		//글 번호 반환
-		int qna_num = Integer.parseInt(request.getParameter("qna_num")); 
+		Integer qna_num = Integer.parseInt(request.getParameter("qna_num")); 
 		
 		QnaBoardDAO dao = QnaBoardDAO.getInstance();
-		QnaBoardVO qnaboard = dao.getQnaBoard(qna_num);
+		QnaBoardVO qnaboard = dao.getQnaBoardDetail(qna_num);
 		
 		//HTML을 허용하지 않음
 		qnaboard.setQna_title(StringUtil.useNoHtml(qnaboard.getQna_title()));

@@ -12,8 +12,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 목록</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>고객센터 게시판 목록</title>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 </head>
 <body>
 <div class="page-main">
@@ -36,25 +40,27 @@
 	
 	<!-- 게시물이 있는 경우 -->
 	<c:if test="${count>0 }">
-	<table>
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			
-		</tr>
-		<c:forEach var="qnaboard" items="${list }">
-		<tr>
-			<td>${qnaboard.qna_num}</td>
-			<td><a href="detail.do?num=${qnaboard.qna_num}">${qnaboard.qna_title}</a></td>
-			<td>${qnaboard.qna_id}</td>
-			<td>${qnaboard.qna_date}</td>
-		</tr>
-		</c:forEach>
-	
-	</table>
-	<div class="align-center">
+	<div class="container-fluid mt-3 mb-5">
+		<table class="table">
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				
+			</tr>
+			<c:forEach var="qnaboard" items="${list }">
+			<tr>
+				<td>${qnaboard.qna_num}</td>
+				<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}">${qnaboard.qna_title}</a></td>
+				<td>${qnaboard.qna_id}</td>
+				<td>${qnaboard.qna_date}</td>
+			</tr>
+			</c:forEach>
+		
+		</table>
+	</div>
+	<div align="center">
 		${pagingHtml }
 	</div>
 	

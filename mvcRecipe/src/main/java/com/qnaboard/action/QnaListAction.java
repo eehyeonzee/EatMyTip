@@ -29,7 +29,7 @@ public class QnaListAction implements Action{
 		if(pageNum==null) pageNum="1";
 		
 		QnaBoardDAO dao = QnaBoardDAO.getInstance();
-		int count = dao.getCount();
+		int count = dao.getQnaBoardCount();
 		
 		//페이지 처리
 		//currentPage,count,rowCount,pageCount,url
@@ -37,7 +37,7 @@ public class QnaListAction implements Action{
 		
 		List<QnaBoardVO> list = null;
 		if(count>0) {
-			list = dao.getListBoard(page.getStartCount(), page.getEndCount());
+			list = dao.getQnaBoardList(page.getStartCount(), page.getEndCount());
 		}
 		
 		//request에 데이터 저장

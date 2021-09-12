@@ -25,7 +25,7 @@ public class QnaModifyAction implements Action{
 		QnaBoardDAO dao = QnaBoardDAO.getInstance();
 		
 		//비밀번호 인증을 위해 한 건의 레코드를 자바빈에 담아서 반환
-		QnaBoardVO qnaboard = dao.getQnaBoard(qnaboardVO.getQna_num());
+		QnaBoardVO qnaboard = dao.getQnaBoardDetail(qnaboardVO.getQna_num());
 		boolean check =false;
 		if(qnaboard!=null) {
 			//비밀번호 일치 여부 체크
@@ -33,7 +33,7 @@ public class QnaModifyAction implements Action{
 		}
 		if(check) {	//인증 성공
 			//글 수정
-			dao.modify(qnaboardVO);
+			dao.qnaBoardModify(qnaboardVO);
 		}
 		//request에 데이터 저장
 		request.setAttribute("check", check);
