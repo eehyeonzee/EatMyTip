@@ -24,13 +24,13 @@ public class DeleteMemberAction implements Action{
 		
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
+		String id = (String)session.getAttribute("id");
 		
 		if(mem_num == null) {
 			return "redirect:/member/loginForm.do";
 		}
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = request.getParameter("id");
 		String passwd = request.getParameter("passwd");
 		
 		String mem_id = (String)session.getAttribute("id");

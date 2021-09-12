@@ -62,12 +62,14 @@
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
 <div class = "container contents-wrap" style = "width:90%">
-	<div class="text-left col-sm-50 my-5 md-10">
-		<h2>회원 탈퇴</h2>
+	<div class="text-left col-sm-20 my-5">
+		<div align = "left">
+			<h2>회원 탈퇴</h2>
+		</div>
 		<form action = "deleteMember.do" method = "post" id = "delete_form">
 			<ul class = "list-group">
 				<li class = "list-group-item">
-					<label for = "id">아이디</label>
+					<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
 					: ${member.id}
 				</li>
 				<li class = "list-group-item">
@@ -80,9 +82,10 @@
 					<span id = "message_id"></span>
 				</li>
 			</ul>
-			<div class = "">
-				<input type = "submit" value = "회원 탈퇴">
-				<input type = "button" value = "뒤로 가기" onclick = "location.href='myPage.do'"> 
+			<br>
+			<div class = "align-left">
+				<input type = "submit" class = "btn btn-outline-dark" value = "회원 탈퇴">
+				<input type = "button" class = "btn btn-outline-dark" value = "뒤로 가기" onclick = "location.href='myPage.do'"> 
 			</div>
 		</form>
 	</div>
