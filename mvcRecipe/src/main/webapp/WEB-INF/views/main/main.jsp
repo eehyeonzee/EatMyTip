@@ -133,7 +133,7 @@
 			<div class="text-center col-md-12 mt-1 mb-5">
 				<a class=" btn btn-light btn-lg" href="${pageContext.request.contextPath}/bestRecipe/bestRecipeList.do">베스트 레시피</a>
 				<hr>
-				<span>잇마이팁 가족들의 추천을 가장 많이 받은 그 레시피!</span>
+				<span>잇마이팁 가족들에게 가장 많은 추천을 받은 그 레시피!</span>
 			</div>
 		</div>
 		<div class="row mb-5 ml-5 mr-5">
