@@ -164,7 +164,7 @@ public class NewsDAO {
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_content(rs.getString("news_content"));
-				news.setId(rs.getString("包府磊"));
+				news.setId("包府磊");
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
@@ -242,7 +242,7 @@ public class NewsDAO {
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_content(rs.getString("news_content"));
-				news.setId(rs.getString("包府磊"));
+				news.setId("包府磊");
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
@@ -303,7 +303,7 @@ public class NewsDAO {
 			if(rs.next()) {
 				news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
-				news.setId(rs.getString("包府磊"));
+				news.setId("包府磊");
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_date(rs.getDate("news_date"));

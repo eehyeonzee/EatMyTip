@@ -77,7 +77,7 @@
 							<td>${news.news_num}</td>
 							<td>${news.news_category}</td>
 							<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
-							<td>${news.id}</td>
+							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.id}</td>
 							<td>${news.news_hits}</td>
 							<td>${news.news_modi}</td>
 						</tr>
