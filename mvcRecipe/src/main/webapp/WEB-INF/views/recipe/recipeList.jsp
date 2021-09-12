@@ -62,13 +62,17 @@
 				<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</c:if>
 		<%-- 로그인 되어 있다면 글쓰기 클릭스 글쓰기 폼으로 이동 --%>
-		<c:if test="${ !empty mem_num }">
+		<c:if test="${ !empty mem_num && (auth == 2 || auth == 3) }">
 				<form action="recipeWriteForm.do">
 					<input type="hidden" value="${ mem_num }" name="mem_num">
 					<input type="submit" value="글쓰기">
 					<input type="button" value ="목록" onclick="location.href='recipeList.do'">
 					<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 				</form>
+		</c:if>
+		<c:if test="${ auth == 1 }">
+			<input type="button" value ="목록" onclick="location.href='recipeList.do'">
+			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</c:if>
       </span>
 		</div>
@@ -100,7 +104,7 @@
 							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
 							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.writer}</td>
 							<td>${news.news_hits}</td>
-							<td>${news_.news_date}</td>
+							<td>${news.news_date}</td>
 						</tr>
 					</c:forEach>
 				</thead>
@@ -113,6 +117,7 @@
 	</div>
       </div> 
      
+     <%-- 카드시작 --%>
       <div class="row my-5 ml-5 mr-5">
       <%-- 등록된 게시물이 없는 경우 --%>
       <c:if test="${ count == 0 }">

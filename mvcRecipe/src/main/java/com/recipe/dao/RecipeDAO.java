@@ -116,29 +116,83 @@ public class RecipeDAO {
 	
 	public void deleteRecipe(int board_num) throws Exception {
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt1 = null;		// 글번호 일치한 댓글 전체 삭제
+		PreparedStatement pstmt2 = null;		// 글번호 일치한 찜하기 전체 삭제
+		PreparedStatement pstmt3 = null;		// 글번호 일치한 추천 전체 삭제
+		PreparedStatement pstmt4 = null;		// 글번호 일치한 게시글 삭제
 		String sql = null;
 		
 		try {
 			// 커넥션풀로부터 커넥션 할당받음
 			conn = DBUtil.getConnection();
+			
+			// 오토커밋 중지
+			conn.setAutoCommit(false);
+			
+			// 1. 무결성 제약조건 위반으로 인해 댓글 테이블에서 글번호가 일치한 모든 행(댓글) 삭제
+			
+			// SQL문 작성
+			sql = "DELETE FROM comments WHERE board_num=?";
+						
+			// PreparedStatment 객체 생성
+			pstmt1 = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt1.setInt(1, board_num);
+						
+			// SQL문 실행
+			pstmt1.executeUpdate();
+			
+			// 2. 무결성 제약조건 위반으로 인해 추천 테이블에서 글번호가 일치한 모든 행(추천) 삭제
+			
+			// SQL문 작성
+			sql = "DELETE FROM recommend WHERE board_num=?";
+									
+			// PreparedStatment 객체 생성
+			pstmt2 = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt2.setInt(1, board_num);
+								
+			// SQL문 실행
+			pstmt2.executeUpdate();			
+		
+			
+			// 3. 무결성 제약조건 위반으로 인해 북마크 테이블에서 글번호가 일치한 모든 행(북마크) 삭제
+			
+			// SQL문 작성
+			sql = "DELETE FROM bookmark WHERE board_num=?";
+									
+			// PreparedStatment 객체 생성
+			pstmt3 = conn.prepareStatement(sql);
+			// ?에 데이터 바인딩
+			pstmt3.setInt(1, board_num);
+									
+			// SQL문 실행
+			pstmt3.executeUpdate();
+			
+			// 4. 레시피 테이블에서 글번호가 일치하는 (글)행 삭제
+			
 			// SQL문 작성
 			sql = "DELETE FROM recipe_board WHERE board_num=?";
 			
 			// PreparedStatment 객체 생성
-			pstmt = conn.prepareStatement(sql);
+			pstmt4 = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
-			pstmt.setInt(1, board_num);
+			pstmt4.setInt(1, board_num);
 			
 			// SQL문 실행
-			pstmt.executeUpdate();
+			pstmt4.executeUpdate();
 			
+			// 커밋
+			conn.commit();
 		}catch(Exception e) {
 			throw new Exception(e);
 		
 		}finally {
-			// 자원정리
-			DBUtil.executeClose(null, pstmt, conn);
+			// 자원정리.
+			DBUtil.executeClose(null, pstmt1, null);
+			DBUtil.executeClose(null, pstmt2, null);
+			DBUtil.executeClose(null, pstmt3, null);
+			DBUtil.executeClose(null, pstmt4, conn);
 		}
 	}
 	
@@ -542,48 +596,49 @@ public class RecipeDAO {
 			// 검색 조건이 제목인 경우
 			if(division.equals("제목")) {
 				// SQL문장 작성
-				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
-						+ "where rnum >=? and rnum <=? and title LIKE ? ";
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+						+ "(SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num WHERE title LIKE ? ORDER BY b.board_num desc) a) "
+						+ "WHERE rnum >=? AND rnum <=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				
 				
 				
 			// 검색조건이 내용인 경우
 			}else if(division.equals("내용")){
 				// SQL문장 작성
-				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
-						+ "where rnum >=? and rnum <=? and content LIKE ?";
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+						+ "(SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num WHERE content LIKE ? ORDER BY b.board_num desc) a) "
+						+ "WHERE rnum >=? AND rnum <=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 			
 			// 검색 조건이 작성자인 경우
 			}else {
 				// SQL문장 작성
-				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
-						+ "where rnum >=? and rnum <=? and id LIKE ?";
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
+						+ "(SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num WHERE id LIKE ? ORDER BY b.board_num desc) a) "
+						+ "WHERE rnum >=? AND rnum <=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 			}
 			// 조건문 종료
 			

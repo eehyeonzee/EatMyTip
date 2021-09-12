@@ -150,8 +150,8 @@ public class NewsDAO {
 		List<NewsVO> list = null;
 		try {
 			conn = DBUtil.getConnection();
-			sql= "SELECT * FROM (SELECT a.*,rownum rnum FROM"
-				+"(SELECT * FROM news_board b JOIN member_detail m ON b.mem_num = m.mem_num ORDER BY news_num DESC)a) WHERE rnum>=? AND rnum<=?";
+			sql= "select * from (select a.*, rownum rnum from "
+					+ "(select * from News_board order by news_num desc) a) where rnum >=? and rnum <=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
@@ -164,7 +164,7 @@ public class NewsDAO {
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_content(rs.getString("news_content"));
-				news.setname(rs.getString("name"));
+				news.setId(rs.getString("관리자"));
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
@@ -203,49 +203,34 @@ public class NewsDAO {
 			if(division.equals("제목")) {
 				// SQL문장 작성
 				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
-						+ "where rnum >=? and rnum <=? and news_title LIKE ? ";
+						+ "(select * from News_board  where news_title LIKE ? order by news_num desc) a) "
+						+ "where rnum >=? and rnum <=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 				
 				
 			// 검색조건이 내용인 경우
-			}else if(division.equals("내용")){
+			}else{
 				// SQL문장 작성
 				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
-						+ "where rnum >=? and rnum <=? and news_content LIKE ?";
+						+ "(select * from News_board  where news_content LIKE ? order by news_num desc) a) "
+						+ "where rnum >=? and rnum <=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 			
-			// 검색 조건이 작성자인 경우
-			}else {
-				// SQL문장 작성
-				sql = "select * from (select a.*, rownum rnum from "
-						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
-						+ "where rnum >=? and rnum <=? and name LIKE ?";
-				
-				// PreparedStatement 객체 생성
-				pstmt = conn.prepareStatement(sql);
-				
-				// ? 에 데이터 바인딩
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				pstmt.setString(3, "%" + search + "%");
-			}
-			// 조건문 종료
+			} // 조건문 종료
 			
 			// sql 문을 실행하고 rs에 결과행 담기
 			rs = pstmt.executeQuery();
@@ -257,7 +242,7 @@ public class NewsDAO {
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_content(rs.getString("news_content"));
-				news.setname(rs.getString("name"));
+				news.setId(rs.getString("관리자"));
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
@@ -311,14 +296,14 @@ public class NewsDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql="SELECT * FROM news_board b JOIN member_detail m ON b.mem_num = m.mem_num WHERE news_num=?";
+			sql="SELECT * FROM news_board b JOIN member m ON b.mem_num = m.mem_num WHERE news_num=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
-				news.setname(rs.getString("name"));
+				news.setId(rs.getString("관리자"));
 				news.setNews_category(rs.getString("news_category"));
 				news.setNews_title(rs.getString("news_title"));
 				news.setNews_date(rs.getDate("news_date"));

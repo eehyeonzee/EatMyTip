@@ -398,7 +398,7 @@
 	<div class="btn_click">
 	<%-- 로그인 한 경우에만 버튼 보이도록 함 --%>
 	<%-- 추천기능 --%>
-	<c:if test="${ !empty mem_num }">
+	<c:if test="${ !empty mem_num && auth != 1}">
 		
 			<button id="rec_btn" class="btn btn-outline-danger" 
 			style="background-color: <c:if test="${ recommBtnCheck == 0 }">white;</c:if><c:if test="${ recommBtnCheck == 1 }">red;</c:if>">
@@ -413,6 +413,7 @@
 	</c:if>
 	</div>
 	<br>
+	<%-- 글부분 --%>
 	<hr size="2" noshade width="100%">
 	<!-- 상세글 내용 -->
 		<c:if test="${ !empty recipe.filename }">
@@ -452,9 +453,9 @@
 			<input type="hidden" name="board_num" value="${ recipe.board_num }" id="board_num">
 			<input type="hidden" name="mem_num" value="${ mem_num }" id="mem_num">
 			<textarea name="re_content" id="re_content" class="rep-content"
-				<c:if test="${ empty mem_num }">disabled="disabled"</c:if>
-			><c:if test="${ empty mem_num }">로그인 해야 작성할 수 있습니다.</c:if></textarea>
-			<c:if test="${!empty mem_num }">
+				<c:if test="${ empty mem_num || auth == 1 }">disabled="disabled"</c:if>
+			><c:if test="${ empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 있습니다.</c:if></textarea>
+			<c:if test="${!empty mem_num && auth != 1}">
 			<div id="re_first">
 				<span class="letter-count">300/300</span>
 			</div>
@@ -487,6 +488,7 @@
 				</script>
 			</c:if>
 	</div>
+	
 	<div style="padding-bottom: 50px;"></div>
 </div>
 </body>

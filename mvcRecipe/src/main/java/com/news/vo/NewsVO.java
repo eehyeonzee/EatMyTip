@@ -21,7 +21,7 @@ public class NewsVO {
 	private Date news_date;
 	private Date news_modi;
 	private String news_file;
-	private String name;
+	private String id;
 	private String news_category;
 	
 	
@@ -31,11 +31,12 @@ public class NewsVO {
 	public void setNews_category(String news_category) {
 		this.news_category = news_category;
 	}
-	public String getname() {
-		return name;
+	
+	public String getId() {
+		return id;
 	}
-	public void setname(String name) {
-		this.name = name;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public int getNews_num() {
 		return news_num;

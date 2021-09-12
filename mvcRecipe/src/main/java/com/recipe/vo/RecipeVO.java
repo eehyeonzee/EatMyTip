@@ -19,6 +19,7 @@ public class RecipeVO {
 	private int comm_count; // ´ñ±Û °´¼ö
 	private String id;  // joinÀ» À§ÇØ id ¸í½Ã
 	
+	
 	public int getBoard_num() {
 		return board_num;
 	}

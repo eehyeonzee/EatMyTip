@@ -257,7 +257,7 @@
 			<span>조회수: ${news.news_hits}</span>
 		</div>
 		<div class="col">
-			<span>작성자: ${news.name}</span>
+			<span>작성자: ${news.id}</span>
 		</div>
 		<div class="col">
 			<span>작성일: ${news.news_date}</span>

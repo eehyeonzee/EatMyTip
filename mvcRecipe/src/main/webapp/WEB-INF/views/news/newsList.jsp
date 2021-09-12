@@ -43,7 +43,6 @@
 			<select name="division">
 				<option value="제목">제목</option>
 				<option value="내용">내용</option>
-				<option value="작성자">작성자</option>
 			</select>
 			<input type="hidden" value="${mem_num}" name="mem_num"> <input
 				type="search" id="search" name="search">
@@ -78,7 +77,7 @@
 							<td>${news.news_num}</td>
 							<td>${news.news_category}</td>
 							<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
-							<td>${news.name}</td>
+							<td>${news.id}</td>
 							<td>${news.news_hits}</td>
 							<td>${news.news_modi}</td>
 						</tr>
