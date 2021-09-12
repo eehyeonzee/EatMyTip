@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<div class="container">
+<div class="container-fluid">
   	<div id="carousel" class="carousel slide" data-ride="carousel">
   		<ol class="carousel-indicators">
   			<!-- active는 한번만 써야 함 -->
@@ -17,7 +17,7 @@
   			
   		<div class="carousel-inner">
   			<div class="carousel-item active">
-  				<img src="../images/main1.jpg" class="d-block w-100">
+  				<img src="../images/event1.png" class="d-block w-100">
   				<div class="carousel-caption d-none d-md-block">
 	  				<!-- <h5>슬라이드 제목1</h5>
 	  				<p>무슨 사진 넣을까여어ㅓㅓ</p> -->
@@ -25,7 +25,7 @@
   			</div>
   				
   			<div class="carousel-item">
-  				<img src="../images/main2.png" class="d-block w-100">
+  				<img src="../images/event2.png" class="d-block w-100">
   				<div class="carousel-caption d-none d-md-block">
 	  				<!-- <h5>슬라이드 제목2</h5>
 	  				<p>맛있는 거어어ㅓㅓ</p> -->
@@ -33,7 +33,7 @@
   			</div>
   				
   			<div class="carousel-item">
-  				<img src="../images/main3.png" class="d-block w-100">
+  				<img src="../images/event3.png" class="d-block w-100">
   				<div class="carousel-caption d-none d-md-block">
 	  				<!-- <h5>슬라이드 제목3</h5>
 	  				<p>맛있는 게 뭔데에에ㅔ</p> -->
