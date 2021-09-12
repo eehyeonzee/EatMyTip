@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>회원 정보 수정</title>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="../js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script type="text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -68,13 +69,14 @@
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "">
+<div class = "containter" style = "width:90%">
+	<div class="col-sm-12 my-5">
 	<h2>회원 정보 수정</h2>
 	<form action = "modifyMember.do" method = "post" id = "modify_form">
 		<ul>
 			<li>
-				<label for = "id">아이디</label>
-				: ${member.id} &emsp;
+				<label for = "id" class = "col-sm-2 col-form-label">아이디 : ${member.id}</label>
+				&emsp;
 				<input type = "button" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
 			</li>
 			<li>
@@ -119,6 +121,7 @@
 			<input type = "button" value = "뒤로가기" onclick = "location.href='myPage.do'">
 		</div>
 	</form>
+	</div>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

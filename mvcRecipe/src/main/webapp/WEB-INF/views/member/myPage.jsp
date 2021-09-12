@@ -12,10 +12,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>페이지명</title>
+<title>마이 페이지</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type ="text/javascript">
@@ -88,51 +89,59 @@
 </head>
 <body>
 <!-- 본문 -->
-<div class = "">
-	<h2>회원정보</h2>
-	<div class = "">
-		<h3>프로필 사진</h3>
-		<ul>
-			<li>
-				<c:if test = "${empty member.photo}">
-					<img src = "#" width = "100" height = "100" class = "my-photo">
-				</c:if>
-				<c:if test = "${!empty member.photo}">
-					<img src = "${pageContext.request.contextPath}/upload/${member.photo}" width = "100" height = "100" class = "my-photo">
-				</c:if>
-			</li>
-			<li>
-				<div class = "">
-					<input type = "button" value = "수정" id = "photo_btn">
-				</div>
-				<div id = "photo_choice" style = "display:none;">
-					<input type = "file" id = "photo" accept = "image/gif,image/png,image/jpeg"><br>
-					<input type = "button" value = "전송" id = "photo_submit">
-					<input type = "button" value = "취소" id = "photo_reset">
-				</div>
-			</li>
-		</ul>
+<div class = "container-fluid" style = "width:90%">
+	<div class="text-center col-sm-12 my-5">
+	<div align = "left">
+		<h3>회원정보</h3>
 	</div>
-	<div class = "">
-		<h3>개인 정보 수정</h3>
-		<ul>
-			<li>아이디 : ${member.id}</li>
-			<li>이름 : ${member.name}</li>
-			<li>전화번호 : ${member.phone}</li>
-			<li>이메일 : ${member.email}</li>
-			<li>생일 : ${member.birthday}</li>
-			<li>가입일 : ${member.join_date}</li>
-			<li><input type = "button" value = "회원 정보 수정" onclick = "location.href='modifyMemberForm.do'">
-		</ul>
-	</div>
+	<div class = "container row">
+		<div class = "mypage-div">
+			<h3>프로필 사진</h3>
+			<ul>
+				<li>
+					<c:if test = "${empty member.photo}">
+						<img src = "#" width = "100" height = "100" class = "my-photo">
+					</c:if>
+					<c:if test = "${!empty member.photo}">
+						<img src = "${pageContext.request.contextPath}/upload/${member.photo}" width = "100" height = "100" class = "my-photo">
+					</c:if>
+				</li>
+				<li>
+				<br>
+					<div>
+						<input type = "button" class="btn btn-outline-dark" value = "수정" id = "photo_btn">
+					</div>
+					<div id = "photo_choice" style = "display:none;">
+						<input type = "file" id = "photo" accept = "image/png,image/jpeg"><br>
+						<input type = "button" class="btn btn-outline-dark" value = "전송" id = "photo_submit">
+						<input type = "button" class="btn btn-outline-dark" value = "취소" id = "photo_reset">
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class = "mypage-div">
+			<h3>개인 정보 수정</h3>
+			<ul class = "list-group">
+				<li class="list-group-item">아이디 : ${member.id}</li>
+				<li class="list-group-item">이름 : ${member.name}</li>
+				<li class="list-group-item">전화번호 : ${member.phone}</li>
+				<li class="list-group-item">이메일 : ${member.email}</li>
+				<li class="list-group-item">생일 : ${member.birthday}</li>
+				<li class="list-group-item">가입일 : ${member.join_date}</li>
+			</ul>
+			<br>
+			<input type = "button" class="btn btn-outline-dark" value = "회원 정보 수정" onclick = "location.href='modifyMemberForm.do'">
+		</div>
 	<c:if test = "${member.auth == 3}">
-	<div class = "">
+	<div class = "mypage-div">
 		<h3>관리자 페이지</h3>
 		<div>
-			<input type = "button" value = "가입 회원 정보 조회" onclick = "location.href='adminMemberView.do'">
+			<input type = "button" class="btn btn-outline-dark" value = "가입 회원 정보 조회" onclick = "location.href='adminMemberView.do'">
 		</div>
 	</div>
 	</c:if>
+	</div>
+	</div>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

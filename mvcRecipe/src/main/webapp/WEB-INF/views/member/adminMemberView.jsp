@@ -36,9 +36,10 @@
 <div class = "">
 	<h2>가입한 회원 목록</h2>
 	<div class = "">
-		<input type = "button" value = "뒤로 가기" onclick = "location.href='myPage.do'">
-		<input type = "button" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'"> 
-		<input type = "button" value = "회원 정지" id = "stop_btn" name = "stop_btn"> 
+		<input type = "button" class = "btn btn-outline-dark" value = "뒤로 가기" onclick = "location.href='myPage.do'">
+		<input type = "button" class = "btn btn-outline-dark" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'"> 
+		<input type = "button" class = "btn btn-outline-dark" value = "회원 정지" id = "stop_btn" name = "stop_btn">
+		<input type = "button" class = "btn btn-outline-dark" value = "회원 탈퇴" id = "delete_btn" name = "delete_btn"> 
 	</div>
 	<c:if test = "${count == 0}">
 	<div class = "">

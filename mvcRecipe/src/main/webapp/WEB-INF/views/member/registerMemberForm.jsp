@@ -179,7 +179,7 @@
 			<div class = "form-group row">
 				<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
 				<input type = "text" class = "col-sm-4 form-control mr-4" name = "id" id = "id" maxlength = "12">
-				<input type = "button" class = "btn btn-primary" value = "ID 중복체크" id = "id_check">
+				<input type = "button" class = "btn btn-outline-dark" value = "ID 중복체크" id = "id_check">
 				<span id = "message_id"></span>
 			</div>
 			<div class = "form-group row">
@@ -217,7 +217,7 @@
 			</div>
 			<div class = "form-group row">
 				<div class = "text-center col-sm-10">
-					<button type = "submit" class = "btn btn-primary">회원 가입</button>
+					<button type = "submit" class = "btn btn-outline-dark">회원 가입</button>
 				</div>
 			</div>
 		</form>

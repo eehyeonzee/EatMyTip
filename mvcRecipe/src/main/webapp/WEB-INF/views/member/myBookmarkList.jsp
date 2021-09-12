@@ -49,7 +49,7 @@
       <div class="row" style="width :100%">
       <div class="text-center col-md-12 my-5">
       <div align="center">
-		<h3>모두의 레시피</h3>
+		<h3>내가 저장한 글</h3>
 	  </div>
 		<%-- 로그인 되어 있다면 글쓰기 클릭스 글쓰기 폼으로 이동 --%>
 		<c:if test="${ !empty mem_num }">

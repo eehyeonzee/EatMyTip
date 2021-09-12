@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>로그인</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
@@ -56,9 +56,9 @@
 			</tr>
 			<tr>
 				<td colspan = "2" align = "center">
-					<input type = "submit" class = "btn btn-primary" value = "로그인">
-					<input type = "button" value = "아이디 찾기" class = "btn btn-primary" onclick = "location.href='idSearchForm.do'">
-					<input type = "button" value = "비밀번호 찾기" class = "btn btn-primary" onclick = "location.href='passwdSearchForm.do'">
+					<input type = "submit" class = "btn btn-outline-dark" value = "로그인">
+					<input type = "button" value = "아이디 찾기" class = "btn btn-outline-dark" onclick = "location.href='idSearchForm.do'">
+					<input type = "button" value = "비밀번호 찾기" class = "btn btn-outline-dark" onclick = "location.href='passwdSearchForm.do'">
 				</td>
 			</tr>
 		</table>
