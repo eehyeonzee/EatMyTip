@@ -27,8 +27,6 @@ public class FileUtil {
 		// 해당 파일이 절대 경로에 업로드 된다.
 								// request, 경로,		 파일사이즈	,	 인코딩 타입, 		중복시 처리 여부
 		return new MultipartRequest(request, upload, MAX_SIZE, ENCODING_TYPE, new DefaultFileRenamePolicy());
-		
-		
 	}
 	
 	// 파일 삭제

@@ -4,14 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<script
-	src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>메인화면</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+
+
+</script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
@@ -19,7 +22,7 @@
 	<div class="container-fluid mt-5 mb-5">
 		<jsp:include page="/WEB-INF/views/main/carousel.jsp" />
 	</div>
-	<!-- 공지 - 레시피 -->
+	<!-- 공지 ｜ 레시피 -->
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
 			<div class="text-center col-md-6 my-5 mt-5">
@@ -104,77 +107,65 @@
 			</div>
 		</div>
 	</div>
+	<!-- 베스트 레시피 -->
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
 			<div class="text-center col-md-12 mt-1 mb-5">
 				<a class=" btn btn-light btn-lg" href="${pageContext.request.contextPath}/bestRecipe/bestRecipeList.do">베스트 레시피</a>
 				<hr>
-				<span> 많은 사용자에게 추천을 많이 받은 레시피</span>
+				<span>잇마이팁 가족들의 추천을 가장 많이 받은 그 레시피!</span>
 			</div>
 		</div>
 		<div class="row mb-5 ml-5 mr-5">
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img1.jpg" alt="" />
+		<%-- 등록된 게시물이 없는 경우 --%>
+		<c:if test="${count == 0}">
+			<div align="center">
+				등록된 게시물이 없습니다.
+			</div>
+		</c:if>
+		<!-- 카드 시작 -->
+		<%-- 게시물이 있는 경우 --%>
+		<c:if test="${count > 0}">
+			<!-- 반복문 시작 -->
+			<c:forEach var="recipe" items="${list}">
+			<div class="col-3">
+				<b>No.${recipe.board_num}</b>
+				<span style="float: right; font-size: 14px;">
+				조회 ${recipe.hits}
+				</span>
+				<div class="card" style="height: 500px;">
+					<div class="card-header">
+						${recipe.id} 님
+						<span style="float: right;">
+						추천 <b style="color: #f76f31;">${recipe.recom_count}</b>
+						</span>
+					</div>
+					<%-- 이미지가 없는 경우 --%>
+					<c:if test="${empty recipe.filename}">
+						<img src="${pageContext.request.contextPath}/images/basic.png" style="height: 270px;" />
+					</c:if>
+					<%-- 이미지가 있는 경우 --%>
+					<c:if test="${!empty recipe.filename}">
+						<img src="${pageContext.request.contextPath}/upload/${recipe.filename}" style="height: 270px;" />
+					</c:if>
 					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
+						<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}">${recipe.title}</a></h5>
+						<div class="box">
+							<div class="content">
+								<p class="card-text">${recipe.content}</p>
+							</div>
+						</div>
+						<br>
 					</div>
 				</div>
 			</div>
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img2.jpg" alt="" />
-					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img3.jpg" alt="" />
-					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img4.jpg" alt="" />
-					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img5.jpg" alt="" />
-					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2">
-				<div class="card">
-					<div class="card-header">작성자</div>
-					<img src="../images/img6.jpg" alt="" />
-					<div class="card-body">
-						<p class="card-text">제목</p>
-						<a href="#" class="btn btn-primary">More</a>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
+			<!-- 반복문 끝 -->
+		</c:if>
+		<!-- 카드 끝 -->
 		</div>
 	</div>
+	<!-- 이벤트 -->
 	<div class="container-fluid mt-5 pt-3 mb-5 pb-3">
 			<div class="row" style="width: 100%">
 			<div class="text-center col-md-12">
