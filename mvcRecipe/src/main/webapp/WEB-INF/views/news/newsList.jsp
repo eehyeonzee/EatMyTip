@@ -22,7 +22,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
-<!-- 공지사항 상단 -->
+	<!-- 공지사항 상단 -->
 	<div class="container text-center mt-5">
 		<div class="row">
 			<div class="col">
@@ -32,24 +32,35 @@
 		</div>
 		<div class="row mt-1">
 			<div class="col">
-				<h6>잇마이팁의 공지사항입니다.</h6>
+				<h6>게시물 : ${count } 개</h6>
 			</div>
 		</div>
+		<hr>
 	</div>
 	<!-- 관리자일 경우 공지사항 글 작성 버튼 보이게 -->
-		<div class="container text-right mt-3">
-		<c:if test="${auth==3}">
-			<a href="${pageContext.request.contextPath}/news/newsForm.do"
-			class="btn btn-info" role="button">글작성</a>
-		</c:if>
-		</div>
-<!-- 공지사항에 게시글이 없을 경우 없다는 표시 -->
+	<div class="container text-right mt-3">
+		<form action="newsList.do" method="get">
+			<select name="division">
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="작성자">작성자</option>
+			</select>
+			<input type="hidden" value="${mem_num}" name="mem_num"> <input
+				type="search" id="search" name="search">
+			<button type="submit" class="btn btn-primary mb-2">검색</button>
+			<c:if test="${auth==3}">
+				<a href="${pageContext.request.contextPath}/news/newsForm.do"
+					class="btn btn-info" role="button">글작성</a>
+			</c:if>
+		</form>
+	</div>
+	<!-- 공지사항에 게시글이 없을 경우 없다는 표시 -->
 	<c:if test="${count == 0}">
 		<div class="container mt-5">
 			<h3>등록된 게시물이 없습니다.</h3>
 		</div>
 	</c:if>
-<!-- 공지사항에 게시글이 있을 경우 리스트를 출력 -->
+	<!-- 공지사항에 게시글이 있을 경우 리스트를 출력 -->
 	<c:if test="${count > 0}">
 		<div class="container-fluid mt-3 mb-5">
 			<table class="table">
@@ -60,7 +71,7 @@
 						<td>제목</td>
 						<td>작성자</td>
 						<td>조회수</td>
-						<td>수정일</td>
+						<td>작성일</td>
 					</tr>
 					<c:forEach var="news" items="${list}">
 						<tr>
@@ -74,20 +85,10 @@
 					</c:forEach>
 				</thead>
 			</table>
-		<div class="row">
-			<div class="col text-center mt-3">
-				${pagingHtml}
+			<div class="row">
+				<div class="col text-center mt-4 mb-n1">${pagingHtml}</div>
 			</div>
 		</div>
-	</div>
-	<div class="container">
-	<form action="newsSearch.do" method="GET">
-		<div class="form-group">
-			<input type="text" class="form-control" name="search" id="search"  placeholder="검색">
-		</div>	
-		<button type="submit" class="btn btn-primary mb-2">검색</button>
-	</form>
-	</div>
 	</c:if>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

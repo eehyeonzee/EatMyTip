@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.news.vo.NewsCommentsVO;
 import com.news.vo.NewsVO;
+import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.StringUtil;
 
@@ -97,6 +98,45 @@ public class NewsDAO {
 	}
 	
 	/**
+	 * @Method 메소드명  : getNewsCount
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 신혜지
+	 * @Method 설명 : 검색 후 리스트 뽑을 떄 세는 메소드
+	 */
+	public int getNewsCount(String division, String search) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			if(division.equals("제목")) {
+			sql="SELECT COUNT(*) FROM NEWS_BOARD Where news_title Like ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,"%"+search+"%");
+			}else if(division.equals("내용")) {
+				sql="SELECT COUNT(*) FROM NEWS_BOARD Where news_content Like ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1,"%"+search+"%");
+			}else {
+				sql="SELECT COUNT(*) FROM NEWS_BOARD n join member_detail m on n.mem_num = m.mem_num Where name Like ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1,"%"+search+"%");
+			}
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				count =rs.getInt(1);
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+	/**
 	 * @Method 메소드명  : getNewsList
 	 * @작성일     : 2021. 9. 7. 
 	 * @작성자     : 신혜지
@@ -139,6 +179,98 @@ public class NewsDAO {
 		return list; 	
 	}
 	
+	
+	/**
+	 * @Method 메소드명  : getNewsList
+	 * @작성일     : 2021. 9. 12. 
+	 * @작성자     : 신혜지
+	 * @Method 설명 :
+	 */
+	public List<NewsVO> getNewsList(int start, int end, String division, String search) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		List<NewsVO> list = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			
+				// 조건시작
+			// SQL문 작성
+			// 검색 조건이 제목인 경우
+			if(division.equals("제목")) {
+				// SQL문장 작성
+				sql = "select * from (select a.*, rownum rnum from "
+						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
+						+ "where rnum >=? and rnum <=? and news_title LIKE ? ";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				
+				// ? 에 데이터 바인딩
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				pstmt.setString(3, "%" + search + "%");
+				
+				
+			// 검색조건이 내용인 경우
+			}else if(division.equals("내용")){
+				// SQL문장 작성
+				sql = "select * from (select a.*, rownum rnum from "
+						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
+						+ "where rnum >=? and rnum <=? and news_content LIKE ?";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				
+				// ? 에 데이터 바인딩
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				pstmt.setString(3, "%" + search + "%");
+			
+			// 검색 조건이 작성자인 경우
+			}else {
+				// SQL문장 작성
+				sql = "select * from (select a.*, rownum rnum from "
+						+ "(select * from News_board b join member_detail m on b.mem_num = m.mem_num order by b.news_num desc) a) "
+						+ "where rnum >=? and rnum <=? and name LIKE ?";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				
+				// ? 에 데이터 바인딩
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				pstmt.setString(3, "%" + search + "%");
+			}
+			// 조건문 종료
+			
+			// sql 문을 실행하고 rs에 결과행 담기
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<NewsVO>();
+			while(rs.next()) {
+				NewsVO news = new NewsVO();
+				news.setNews_num(rs.getInt("news_num"));
+				news.setNews_title(rs.getString("news_title"));
+				news.setNews_category(rs.getString("news_category"));
+				news.setNews_content(rs.getString("news_content"));
+				news.setname(rs.getString("name"));
+				news.setNews_date(rs.getDate("news_date"));
+				news.setNews_modi(rs.getDate("news_modi"));
+				news.setNews_hits(rs.getInt("news_hits"));
+				list.add(news);
+				
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {		
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return list; 	
+	}
 	
 	/**
 	 * @Method 메소드명  : updateCount

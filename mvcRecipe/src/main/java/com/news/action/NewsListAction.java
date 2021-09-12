@@ -25,16 +25,24 @@ public class NewsListAction implements Action {
 		//세션으로 회원등급파악
 		HttpSession session = request.getSession();
 		Integer auth =(Integer)session.getAttribute("auth");
+		String search = request.getParameter("search");
+		String division = request.getParameter("division");
+		String pagen =null;
+		request.setCharacterEncoding("utf-8");
+		request.setAttribute("search",search);
+		request.setAttribute("division", division);
 		
+		//
+		if(division == null) {
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum==null)pageNum = "1";
 		
 		NewsDAO dao = NewsDAO.getInstance();
 		int count = dao.getNewsCount();
 		
-		//페이지처리
+		//페이지처리 기본일때
 		//currentPage, count, rowCount, pageCount, url
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"newsList.do");
+		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,10,10,"newsList.do");
 		
 		List<NewsVO> list =null;
 		if(count > 0) {
@@ -44,7 +52,87 @@ public class NewsListAction implements Action {
 		request.setAttribute("list", list);
 		request.setAttribute("pagingHtml", page.getPagingHtml());
 		request.setAttribute("auth",auth);
-		return "/WEB-INF/views/news/newsList.jsp";
-	}
+			return "/WEB-INF/views/news/newsList.jsp";
+		
+			
+			
+			//페이지처리 제목검색시
+		}else if(division.equals("제목")) {
+			String pageNum = request.getParameter("pageNum");
+			if(pageNum==null) pageNum = "1";		
+			
+			NewsDAO dao = NewsDAO.getInstance();
+			int count = dao.getNewsCount(division,search);
+			PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum),count,10,10,"newsList.do");
+			List<NewsVO> list =null;
+			if(count > 0) {
+				list = dao.getNewsList(page.getStartCount(), page.getEndCount(),division,search);
+			}
+			request.setAttribute("count", count);
+			request.setAttribute("list", list);
+			request.setAttribute("pagingHtml", page.getPagingHtml());
+			request.setAttribute("auth",auth);	
+		
+			return "/WEB-INF/views/news/newsList.jsp";
+		}else if(division.equals("내용")) {
+			
+			String pageNum = request.getParameter("pageNum");
+			if(pageNum==null) pageNum = "1";
+				
+			NewsDAO dao = NewsDAO.getInstance();
+			int count = dao.getNewsCount(division,search);	// 검색조건에 부합한 총 레코드 수
+					
+			// 페이지 처리
+			// currentPage, count, rowCount, pageCount, url
+			PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do");
+					
+			List<NewsVO> list =null;
+					
+			if(count > 0) {
+				list = dao.getNewsList(page.getStartCount(), page.getEndCount(),division,search);
+			}
+
+					
+			// list와 총 페이지, 페이지 하단부분 넘겨주기
+			request.setAttribute("count", count);
+			request.setAttribute("list", list);
+			request.setAttribute("pagingHtml", page.getPagingHtml());
+			request.setAttribute("auth",auth);	
+					
+			// 모두의 레시피로 이동		
+			
+			return "/WEB-INF/views/news/newsList.jsp";
+			
+			// 검색조건이 작성자인 경우
+		}else {
+			String pageNum = request.getParameter("pageNum");
+			if(pageNum==null) pageNum = "1";
+				
+			NewsDAO dao = NewsDAO.getInstance();
+			int count = dao.getNewsCount(division,search);	// 검색조건에 부합한 총 레코드 수
+					
+			// 페이지 처리
+			// currentPage, count, rowCount, pageCount, url
+			PagingUtil page = new PagingUtil(search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do?search="+search+"&category="+division);
+					
+			List<NewsVO> list =null;
+					
+			// 총 레코드가 0이 아닐 때 list에 값을 담는다
+			if(count > 0) {
+				list = dao.getNewsList(page.getStartCount(), page.getEndCount(),division,search);
+			}
+
+					
+			// list와 총 페이지, 페이지 하단부분 넘겨주기
+			request.setAttribute("count", count);
+			request.setAttribute("list", list);
+			request.setAttribute("pagingHtml", page.getPagingHtml());
+			request.setAttribute("auth",auth);	
+			request.setAttribute("division", division);
+			request.setAttribute("search", search);
+			// 모두의 레시피로 이동	
+			return "/WEB-INF/views/news/newsList.jsp";
+		}
+	} 
 
 }
