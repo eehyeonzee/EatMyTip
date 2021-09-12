@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
+import com.member.dao.MemberDAO;
+import com.member.vo.MemberVO;
 
 public class DeleteMemberFormAction implements Action{
 
@@ -17,6 +19,11 @@ public class DeleteMemberFormAction implements Action{
 		if(mem_num == null) {
 			return "redirect:/member/loginForm.do";
 		}
+		
+		MemberDAO dao = MemberDAO.getInstance();
+		MemberVO member = dao.getMember(mem_num);
+		
+		request.setAttribute("member", member);
 		
 		return "/WEB-INF/views/member/deleteMemberForm.jsp";
 	}

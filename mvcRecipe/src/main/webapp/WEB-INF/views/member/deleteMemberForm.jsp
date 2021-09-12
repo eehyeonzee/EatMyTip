@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="../js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>회원 탈퇴</title>
@@ -18,11 +19,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#delete_form').submit(function() {
-			if($('#id').val().trim() == '') {
-				alert('아이디를 입력하세요!');
-				$('#id').val('').focus();
-				return false;
-			}
 			if($('#passwd').val().trim() == '') {
 				alert('비밀번호를 입력하세요!');
 				$('#passwd').val('').focus();
@@ -64,31 +60,35 @@
 </script>
 </head>
 <body>
-<div class = "">
-	<jsp:include page = "/WEB-INF/views/common/header.jsp" />
-	<h2>회원 탈퇴</h2>
-	<form action = "deleteMember.do" method = "post" id = "delete_form">
-		<ul>
-			<li>
-				<label for = "id">아이디</label>
-				<input type = "text" name = "id" id = "id" maxlength = "12">
-			</li>
-			<li>
-				<label for = "passwd">비밀번호</label>
-				<input type = "password" name = "passwd" id = "passwd" maxlength = "12">
-			</li>
-			<li>
-				<label for = "cpasswd">비밀번호 확인</label>
-				<input type = "password" name = "cpasswd" id = "cpasswd" maxlength = "12">
-				<span id = "message_id"></span>
-			</li>
-		</ul>
-		<div class = "">
-			<input type = "submit" value = "회원 탈퇴">
-			<input type = "button" value = "뒤로 가기" onclick = "location.href='myPage.do'"> 
-		</div>
-	</form>
+<jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<div class = "container contents-wrap" style = "width:90%">
+	<div class="text-left col-sm-50 my-5 md-10">
+		<h2>회원 탈퇴</h2>
+		<form action = "deleteMember.do" method = "post" id = "delete_form">
+			<ul class = "list-group">
+				<li class = "list-group-item">
+					<label for = "id">아이디</label>
+					: ${member.id}
+				</li>
+				<li class = "list-group-item">
+					<label for = "passwd" class = "col-sm-2 col-form-label">비밀번호</label>
+					<input type = "password" name = "passwd" id = "passwd" maxlength = "12">
+				</li>
+				<li class = "list-group-item">
+					<label for = "cpasswd" class = "col-sm-2 col-form-label">비밀번호 확인</label>
+					<input type = "password" name = "cpasswd" id = "cpasswd" maxlength = "12">
+					<span id = "message_id"></span>
+				</li>
+			</ul>
+			<div class = "">
+				<input type = "submit" value = "회원 탈퇴">
+				<input type = "button" value = "뒤로 가기" onclick = "location.href='myPage.do'"> 
+			</div>
+		</form>
+	</div>
 </div>
+<footer>
 <jsp:include page = "/WEB-INF/views/common/footer.jsp" />
+</footer>
 </body>
 </html>

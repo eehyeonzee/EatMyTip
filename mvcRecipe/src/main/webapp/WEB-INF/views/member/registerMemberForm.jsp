@@ -180,7 +180,7 @@
 				<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
 				<input type = "text" class = "col-sm-4 form-control mr-4" name = "id" id = "id" maxlength = "12">
 				<input type = "button" class = "btn btn-outline-dark" value = "ID 중복체크" id = "id_check">
-				<span id = "message_id"></span>
+				&emsp;<span id = "message_id"></span>
 			</div>
 			<div class = "form-group row">
 				<label for = "name" class = "col-sm-2 col-form-label">이름</label>
@@ -193,7 +193,7 @@
 			<div class = "form-group row">
 				<label for = "passwd2" class = "col-sm-2 col-form-label">비밀번호 확인</label>
 				<input type = "password" class = "col-sm-4 form-control" id = "passwd2" maxlength = "12">
-				<span id = "message_passwd2"></span>
+				&emsp;<span id = "message_passwd2"></span>
 			</div>
 			<div class = "form-group row">
 				<label for = "email" class = "col-sm-2 col-form-label">이메일</label>

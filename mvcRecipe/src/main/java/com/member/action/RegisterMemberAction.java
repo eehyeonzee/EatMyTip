@@ -31,6 +31,13 @@ public class RegisterMemberAction implements Action{
 		member.setBirthday(request.getParameter("birthday"));
 		member.setPasskey(request.getParameter("passkey"));
 		
+		String checkId = request.getParameter("id");
+		String checkName = request.getParameter("name");
+		
+		if(checkId == null && checkName == null) {
+			return "/WEB-INF/views/main/main.jsp";
+		}
+		
 		MemberDAO dao = MemberDAO.getInstance();
 		dao.insertMember(member);
 		

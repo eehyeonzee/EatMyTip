@@ -73,52 +73,55 @@
 	<div class="col-sm-12 my-5">
 	<h2>회원 정보 수정</h2>
 	<form action = "modifyMember.do" method = "post" id = "modify_form">
-		<ul>
-			<li>
-				<label for = "id" class = "col-sm-2 col-form-label">아이디 : ${member.id}</label>
+		<ul class = "list-group">
+			<li class = "list-group-item">
+				<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
+				: ${member.id}
 				&emsp;
-				<input type = "button" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
+				<input type = "button" class = "btn btn-outline-dark" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
 			</li>
-			<li>
-				<label for = "name">이름</label>
+			<li class = "list-group-item">
+				<label for = "name" class = "col-sm-2 col-form-label">이름</label>
 				: ${member.name}
 			</li>
-			<li>
-				<label for = "nowpasswd">현재 비밀번호</label>
+			<li class = "list-group-item">
+				<label for = "nowpasswd" class = "col-sm-2 col-form-label">현재 비밀번호</label>
 				<input type = "password" name = "nowpasswd" id = "nowpasswd" maxlength = "12">
 			</li>
-			<li>
-				<label for = "newpasswd">새 비밀번호</label>
+			<li class = "list-group-item">
+				<label for = "newpasswd" class = "col-sm-2 col-form-label">새 비밀번호</label>
 				<input type = "password" name = "newpasswd" id = "newpasswd" maxlength = "12">
 			</li>
-			<li>
-				<label for = "chepasswd">새 비밀번호 확인</label>
+			<li class = "list-group-item">
+				<label for = "chepasswd" class = "col-sm-2 col-form-label">새 비밀번호 확인</label>
 				<input type = "password" name = "chepasswd" id = "chepasswd" maxlength = "12">
-				<span id = "message_chepasswd"></span>
+				&emsp;<span id = "message_chepasswd"></span>
 			</li>
-			<li>
-				<label for = "email">이메일</label>
+			<li class = "list-group-item">
+				<label for = "email" class = "col-sm-2 col-form-label">이메일</label>
 				<input type = "email" name = "email" id = "email" value = "${member.email}" maxlength = "50">
 			</li>
-			<li>
-				<label for = "phone">전화번호</label>
+			<li class = "list-group-item">
+				<label for = "phone" class = "col-sm-2 col-form-label">전화번호</label>
 				<input type = "text" name = "phone" id = "phone" value = "${member.phone}" maxlength = "15">
 			</li>
-			<li>
-				<label for = "birthday">생년월일</label>
+			<li class = "list-group-item" class = "col-sm-2 col-form-label">
+				<label for = "birthday" class = "col-sm-2 col-form-label">생년월일</label>
 				: ${member.birthday}
 			</li>
-			<li>
-				<label>비밀번호 힌트 : 가장 좋아하는 요리는?</label>
+			<li class = "list-group-item">
+				<label class = "col-sm-2 col-form-label">비밀번호 힌트</label>
+				 : 가장 좋아하는 요리는?
 			</li>
-			<li>
-				<label for = "passkey">비밀번호 정답</label>
+			<li class = "list-group-item">
+				<label for = "passkey" class = "col-sm-2 col-form-label">비밀번호 정답</label>
 				<input type = "text" name = "passkey" id = "passkey" value = "${member.passkey}" maxlength = "16">
 			</li>
 		</ul>
-		<div class = "">
-			<input type = "submit" value = "수정">
-			<input type = "button" value = "뒤로가기" onclick = "location.href='myPage.do'">
+		<br>
+		<div class = "align-left">
+			<input type = "submit" class = "btn btn-outline-dark" value = "수정">
+			<input type = "button" class = "btn btn-outline-dark" value = "뒤로가기" onclick = "location.href='myPage.do'">
 		</div>
 	</form>
 	</div>

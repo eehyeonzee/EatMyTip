@@ -15,7 +15,7 @@
 </c:if>
 <c:if test = "${check == false}">
 	<script>
-		alert('아이디 또는 비밀번호 불일치!');
+		alert('비밀번호 불일치!');
 		location.href='myPage.do';
 	</script>
 </c:if>
