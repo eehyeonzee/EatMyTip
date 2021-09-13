@@ -623,7 +623,7 @@ public class MemberDAO {
 	 * @Method 설명 : 멤버를 정지 회원으로 설정
 	 */
 	
-	public void stopAdminMember(int mem_num)throws Exception {
+	public void stopAdminMember(String mem_num)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -632,7 +632,7 @@ public class MemberDAO {
 			conn = DBUtil.getConnection();
 			sql = "UPDATE member SET auth = 1 WHERE mem_num = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, mem_num);
+			pstmt.setString(1, mem_num);
 			
 			pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -651,16 +651,54 @@ public class MemberDAO {
 	 * @Method 설명 : 멤버를 정지 회원으로 설정
 	 */
 	
-	public void deleteAdminMember(int mem_num)throws Exception {
+	public void deleteAdminMember(String mem_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		String sql = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			sql = "UPDATE member SET auth = 0 WHERE mem_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem_num);
+			pstmt.executeUpdate();
+			
+			sql = "DELETE member_detail WHERE mem_num = ?";
+			pstmt2 = conn.prepareStatement(sql);
+			pstmt2.setString(1, mem_num);
+			pstmt2.executeUpdate();
+			
+			conn.commit();
+		}catch(Exception e) {
+			conn.rollback();
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+	}
+	
+	// 관리자 정지 회원을 다시 일반 회원으로 설정
+	
+	/**
+	 * @Method 메소드명  : upAdminMember
+	 * @작성일     : 2021. 9. 13. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 관리자 정지 회원을 다시 일반 회원으로 설정
+	 */
+	public void upAdminMember(String mem_num)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "UPDATE member SET auth = 0 WHERE mem_num = ?";
+			sql = "UPDATE member SET auth = 2 WHERE mem_num = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, mem_num);
+			pstmt.setString(1, mem_num);
 			
 			pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -668,5 +706,6 @@ public class MemberDAO {
 		}finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
+		
 	}
 }

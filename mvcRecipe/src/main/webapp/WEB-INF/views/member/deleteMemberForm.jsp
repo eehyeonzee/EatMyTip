@@ -61,10 +61,10 @@
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "container contents-wrap" style = "width:90%">
-	<div class="text-left col-sm-20 my-5">
+<div class = "container-fluid contents-wrap" style = "width:90%">
+	<div class="text-left col-sm-10 my-5">
 		<div align = "left">
-			<h2>회원 탈퇴</h2>
+			<h3>회원 탈퇴</h3>
 		</div>
 		<form action = "deleteMember.do" method = "post" id = "delete_form">
 			<ul class = "list-group">

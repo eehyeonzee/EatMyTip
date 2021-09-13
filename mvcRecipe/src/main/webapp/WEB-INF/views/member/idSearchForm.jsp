@@ -37,8 +37,8 @@
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "container contents-wrap">
-	<div class="col-sm-30 my-5">
+<div class = "container-fluid contents-wrap" style = "width:90%">
+	<div class="text-left col-sm-30 my-5">
 		<div align = "left">
 			<h3>아이디 찾기</h3>
 		</div>

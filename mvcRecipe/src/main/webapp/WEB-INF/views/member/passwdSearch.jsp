@@ -61,39 +61,39 @@ $(document).ready(function() {
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "">
+<div class = "container-fluid contents-wrap" style="width:90%">
+	<div class="text-left col-sm-12 my-5">
+		<div align = "left">
+			<h3>비밀번호 찾기 결과</h3>
+		</div>
 	<c:if test = "${member.id != null && member.name != null && member.passkey != null}">
 		<form action = "modifyPasswd.do" method = "post" id = "password_form">
-			<ul>
-				<li>
-					<label for = "id">아이디</label>
-					: ${member.id}
-					<input type = "hidden" name = "id" id = "id" value = "${member.id}">
-				</li>
-				<li>
-					<label for = "passwd">변경 할 비밀번호</label>
-					<input type = "password" name = "passwd" id = "passwd" maxlength = "12">
-				</li>
-				<li>
-					<label for = "passwd2">변경 할 비밀번호 확인</label>
-					<input type = "password" name = "passwd2" id = "passwd2" maxlength = "12">
-					<span id = "message_passwd"></span>
-				</li>
+			<ul class = "list-group">
+				<li class = "list-group-item"><label for = "id" class = "col-sm-2 col-form-label">아이디</label>
+				 : ${member.id}<input type = "hidden" name = "id" id = "id" value = "${member.id}"></li>
+				<li class = "list-group-item"><label for = "passwd" class = "col-sm-2 col-form-label">변경 할 비밀번호</label>
+				<input type = "password" name = "passwd" id = "passwd" maxlength = "12"></li>
+				<li class = "list-group-item"><label for = "passwd2" class = "col-sm-2 col-form-label">변경 할 비밀번호 확인</label>
+				<input type = "password" name = "passwd2" id = "passwd2" maxlength = "12">
+				<span id = "message_passwd"></span></li>
 			</ul>
-			<div class = "">
-				<input type = "submit" value = "비밀번호 수정">
+			<br>
+			<div class = "align-left">
+				<input type = "submit" class = "btn btn-outline-dark" value = "비밀번호 수정">
 			</div>
 		</form>
 	</c:if>
 	<c:if test = "${member.id == null || member.name == null || member.passkey || null }">
-		<ul>
-			<li>해당되는 정보가 존재하지 않습니다.</li>
-		</ul>
-		<div>
-			<input type = "button" value = "뒤로가기" onclick = "location.href='passwdSearchForm.do'">
-			<input type = "button" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'">
+		<div class = "text-center">
+			<ul class = "list-group">
+				<li class = "list-group-item">해당되는 정보가 존재하지 않습니다.</li>
+			</ul>
+			<br>
+			<input type = "button" class = "btn btn-outline-dark" value = "뒤로가기" onclick = "location.href='passwdSearchForm.do'">
+			<input type = "button" class = "btn btn-outline-dark" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
 	</c:if>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

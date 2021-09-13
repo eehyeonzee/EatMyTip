@@ -42,27 +42,34 @@
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "">
-	<form action = "passwdSearch.do" method = "post" id = "passwdsearch_form">
-		<ul>
-			<li>
-				<label for = "id">ID</label>
-				<input type = "text" id = "id" name = "id" maxlength = "12">
-			</li>
-			<li>
-				<label for = "name">회원 가입시 입력한 이름</label>
-				<input type = "text" id = "name" name = "name" maxlength = "8">
-			</li>
-			<li>
-				<label for = "passkey">비밀번호 힌트 : 가장 좋아하는 음식은?</label>
-				<input type = "text" id = "passkey" name = "passkey" maxlength = "16">
-			</li>
-		</ul>
-		<div class = "">
-			<input type = "submit" value = "비밀번호 찾기">
-			<input type = "button" value = "뒤로 가기" onclick = "location.href='loginForm.do'">
+<div class = "container-fluid contents-wrap" style = "width:90%">
+	<div class="text-left col-sm-30 my-5">
+		<div align = "left">
+			<h3>비밀번호 찾기</h3>
 		</div>
+	<form action = "passwdSearch.do" method = "post" id = "passwdsearch_form">
+		<table align = "center">
+			<tr>
+				<td height = "80px"><label for = "id" class = "col-sm-12 col-form-label">아이디</label></td>
+				<td><input type = "text" class = "col-sm-12 form-control" id = "id" name = "id" maxlength = "12"></td>
+			</tr>
+			<tr>
+				<td height = "40px"><label for = "name" class = "col-sm-12 col-form-label">회원 가입시 입력한 이름</label></td>
+				<td><input type = "text" class = "col-sm-12 form-control" id = "name" name = "name" maxlength = "8"></td>
+			</tr>
+			<tr>
+				<td height = "80px"><label for = "passkey" class = "col-sm-12 col-form-label">비밀번호 힌트 : 가장 좋아하는 음식은?</label></td>
+				<td><input type = "text" class = "col-sm-12 form-control" id = "passkey" name = "passkey" maxlength = "16"></td>
+			</tr>
+			<tr>
+				<td colspan = "2" align = "center">
+					<input type = "submit" class = "btn btn-outline-dark"  value = "비밀번호 찾기">
+					<input type = "button" class = "btn btn-outline-dark"  value = "뒤로 가기" onclick = "location.href='loginForm.do'">
+				</td>
+			</tr>
+		</table>
 	</form>
+	</div>
 </div>
 </body>
 </html>

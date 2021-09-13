@@ -69,9 +69,9 @@
 </head>
 <body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
-<div class = "containter" style = "width:90%">
+<div class = "container-fluid" style = "width:90%">
 	<div class="col-sm-12 my-5">
-	<h2>회원 정보 수정</h2>
+	<h3>회원 정보 수정</h3>
 	<form action = "modifyMember.do" method = "post" id = "modify_form">
 		<ul class = "list-group">
 			<li class = "list-group-item">

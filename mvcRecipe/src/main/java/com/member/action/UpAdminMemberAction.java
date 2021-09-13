@@ -13,13 +13,13 @@ import com.member.dao.MemberDAO;
 
 /**
  * @Package Name   : com.member.action
- * @FileName  : StopAdminMemberAction.java
- * @작성일       : 2021. 9. 11. 
+ * @FileName  : UpAdminMemberAction.java
+ * @작성일       : 2021. 9. 13. 
  * @작성자       : 박용복
- * @프로그램 설명 : 관리자가 회원 정지를 하게 해주는 Action
+ * @프로그램 설명 : 정지회원을 다시 일반회원으로 복구하는 Action
  */
 
-public class StopAdminMemberAction implements Action{
+public class UpAdminMemberAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,7 +33,7 @@ public class StopAdminMemberAction implements Action{
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		
 		for(String mem_num : stopChecked) {
-			dao.stopAdminMember(mem_num);
+			dao.upAdminMember(mem_num);
 			
 			mapAjax.put("result", "success");
 		}
@@ -45,5 +45,5 @@ public class StopAdminMemberAction implements Action{
 
 		return "/WEB-INF/views/common/ajax_view.jsp";
 	}
-
+	
 }
