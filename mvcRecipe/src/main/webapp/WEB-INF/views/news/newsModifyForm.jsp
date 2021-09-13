@@ -48,7 +48,7 @@
 			<input type="text" class="form-control" name="title" id="title" value="${news.news_title}">
 		</div>
 			<div class="form-group">
-			<label for="content">내용</label>
+			<label for="content">내용</label><br><br>
 			<textarea class="form-control" id="content" rows="20" name="content">${news.news_content}</textarea>
 		</div>
 		<div class="form-group">
