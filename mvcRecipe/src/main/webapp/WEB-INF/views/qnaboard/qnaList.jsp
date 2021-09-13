@@ -8,6 +8,7 @@
  * 설명 : 고객센터 게시판 목록
  * 수정일 : 2021. 9. 7.
 --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,8 @@
 			<c:forEach var="qnaboard" items="${list }">
 			<tr>
 				<td>${qnaboard.qna_num}</td>
-				<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}">${qnaboard.qna_title}</a></td>
+				<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}"
+				>${qnaboard.qna_title}</a></td>
 				<td>${qnaboard.qna_id}</td>
 				<td>${qnaboard.qna_date}</td>
 			</tr>
@@ -65,6 +67,7 @@
 	</div>
 	
 	</c:if>
+	
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
