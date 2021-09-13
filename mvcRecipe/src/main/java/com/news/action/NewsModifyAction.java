@@ -30,18 +30,29 @@ public class NewsModifyAction implements Action {
 		if(mem_num == null || auth != 3) {//로그인 되지 않은 경우, 권한이 3이 아닌 경우
 			return "redirect:/member/loginForm.do";
 		}
-		request.setCharacterEncoding("utf-8");
-		NewsVO news= new NewsVO();
-		int num = Integer.parseInt(request.getParameter("news_num"));
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		
 		MultipartRequest multi = FileUtil.createFile(request);
+		int num = Integer.parseInt(multi.getParameter("news_num"));
+		String filename= multi.getFilesystemName("filename");
+		
+		NewsDAO dao = NewsDAO.getInstance();
+		//수정 전 데이터
+		NewsVO db= dao.getNews(num);
+		if(mem_num != db.getMem_num()) {
+			FileUtil.removeFile(request, filename);//업로드된 파일이 있으면 파일 삭제
+			return "redirect:/main/main.do";
+		}
+		NewsVO news = new NewsVO();
 		news.setNews_num(num);
-		news.setNews_title(title);
-		news.setNews_content(content);
-		news.setNews_file(multi.getFilesystemName("filename"));
-		NewsDAO dao=NewsDAO.getInstance();
+		news.setNews_title(multi.getParameter("title"));
+		news.setNews_content(multi.getParameter("content"));
+		news.setNews_file(filename);
+		
 		dao.updateNews(news);
+		
+		if(filename!=null) {
+			FileUtil.removeFile(request, db.getNews_file());
+		}
 		
 		return "/WEB-INF/views/news/newsModify.jsp";
 	}

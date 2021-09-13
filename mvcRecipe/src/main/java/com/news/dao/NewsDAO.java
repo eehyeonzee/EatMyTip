@@ -184,7 +184,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : getNewsList
 	 * @작성일     : 2021. 9. 12. 
 	 * @작성자     : 신혜지
-	 * @Method 설명 :
+	 * @Method 설명 : 뉴스리스트 뽑는 메서드(검색시)
 	 */
 	public List<NewsVO> getNewsList(int start, int end, String division, String search) throws Exception{
 		Connection conn = null;
@@ -285,7 +285,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : getNews
 	 * @작성일     : 2021. 9. 7. 
 	 * @작성자     : 신혜지
-	 * @Method 설명 : 공지사항 본문을 확인하는 메소드. 파일 지워둠
+	 * @Method 설명 : 공지사항 본문을 확인하는 메소드.
 	 */
 	public NewsVO getNews(int num) throws Exception{
 		Connection conn = null;
@@ -324,7 +324,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : updateNews
 	 * @작성일     : 2021. 9. 7. 
 	 * @작성자     : 신혜지
-	 * @Method 설명 :공지사항을 수정하는 코드 파일 지우고 널값처리해둠
+	 * @Method 설명 :공지사항을 수정하는 코드
 	 */
 	public void updateNews(NewsVO news) throws Exception{
 		Connection conn= null;
@@ -334,18 +334,25 @@ public class NewsDAO {
 		
 		try {
 			conn=DBUtil.getConnection();
+			if(news.getNews_file()!=null) {
 			sql="UPDATE news_board SET news_title=?, news_content=?, news_file=?, news_modi=SYSDATE WHERE news_num=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1,news.getNews_title());
 			pstmt.setString(2,news.getNews_content());
 			pstmt.setString(3,news.getNews_file());
 			pstmt.setInt(4,news.getNews_num());
-			rs=pstmt.executeQuery();
-			
+			}else {
+				sql="UPDATE news_board SET news_title=?, news_content=?, news_modi=SYSDATE WHERE news_num=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1,news.getNews_title());
+				pstmt.setString(2,news.getNews_content());
+				pstmt.setInt(3,news.getNews_num());	
+			}
+			pstmt.executeUpdate();	
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
-			DBUtil.executeClose(rs, pstmt, conn);			
+			DBUtil.executeClose(null, pstmt, conn);			
 		}
 	}
 	public void DeleteNews(int num) throws Exception{
@@ -365,6 +372,9 @@ public class NewsDAO {
 			DBUtil.executeClose(null, pstmt, conn);			
 		}
 	}
+	//****
+	//댓글 CRUD시작
+	//****
 	/**
 	 * @Method 메소드명  : insertReplyBoard
 	 * @작성일     : 2021. 9. 9. 

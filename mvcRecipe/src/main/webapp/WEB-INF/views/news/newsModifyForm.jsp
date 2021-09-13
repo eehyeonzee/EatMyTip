@@ -53,9 +53,14 @@
 		</div>
 		<div class="form-group">
 			<label for="filename">파일</label>
-			<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg" value="${news.news_file}">
+			<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
+			<c:if test="${!empty news.news_file}">
+			<br>
+			<span>(${news.news_file})파일이 등록되어 있습니다. 다시 업로드하면 기존 파일은 삭제됩니다.</span>
+			</c:if>
 		</div>
 		  <button type="submit" class="btn btn-primary mb-2">수정 등록</button>	
+		  <input type="button" class="btn btn-primary mb-2" value="목록" onclick="location.href='newsList.do'">	
 	</form>
 </div>
 </body>

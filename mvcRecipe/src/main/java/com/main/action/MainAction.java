@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
+import com.news.dao.NewsDAO;
+import com.news.vo.NewsVO;
 import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
@@ -34,14 +36,14 @@ public class MainAction implements Action {
 		
 		// DAO 호출
 		RecipeDAO dao = RecipeDAO.getInstance();
-		
+		NewsDAO newsdao=NewsDAO.getInstance();
 		// ---------- 공지사항 ----------
 		// 게시글 수 체크
-		int news_count = dao.getRecipeNewsCount();
+		int news_count = newsdao.getNewsCount();
 		// 리스트 출력
-		List<RecipeNewsVO> newsList = null;
+		List<NewsVO> newsList = null;
 		if(news_count > 0) {
-			newsList = dao.getRecipeNewsList(1, 5);
+			newsList = newsdao.getNewsList(1, 5);
 		}
 		
 		// ---------- 모두의 레시피 ----------

@@ -39,7 +39,7 @@
 	</div>
 	<!-- 관리자일 경우 공지사항 글 작성 버튼 보이게 -->
 	<div class="container text-right mt-3">
-		<form action="newsList.do" method="get">
+		<form id="search_form" action="newsList.do" method="get">
 			<select name="division">
 				<option value="제목">제목</option>
 				<option value="내용">내용</option>
@@ -53,6 +53,17 @@
 			</c:if>
 		</form>
 	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#search_form').submit(function(){
+			if($('#search').val().trim()==''){
+				alert('검색어를 입력하세요!');
+				$('search').val('').focus();
+				return false;
+			}
+		});
+	});
+	</script>
 	<!-- 공지사항에 게시글이 없을 경우 없다는 표시 -->
 	<c:if test="${count == 0}">
 		<div class="container mt-5">

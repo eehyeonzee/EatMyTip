@@ -229,7 +229,36 @@
 			event.preventDefault();
 		});	
 		//댓글 수정 끝
-				selectData(1);
+		//댓글 삭제 시작
+		$(document).on('click','.delete-btn',function(){
+			var comment_num = $(this).attr('data-renum');
+			var mem_num = $(this).attr('data-memnum');
+			$.ajax({
+				url:'newsCommentsDelete.do',
+				type:'post',
+				data:{comment_num:comment_num,mem_num:mem_num},
+				dataType:'json',
+				cache:false,
+				timeout:30000,
+				success:function(param){
+					if(param.result == 'logout'){
+						alert('로그인해야 삭제할 수 있습니다.');
+					}else if(param.result == 'success'){
+						alert('삭제 완료!');
+						selectData(1);
+					}else if(param.result == 'wrongAccess'){
+						alert('타인의 글을 삭제할 수 없습니다.');
+					}else{
+						alert('삭제시 오류 발생!');
+					}
+				},
+				error : function(request,status,error){      // 에러메세지 반환
+		               alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+		            }
+			});
+		});
+		selectData(1);
+
 	});
 </script>
 <meta charset="UTF-8">

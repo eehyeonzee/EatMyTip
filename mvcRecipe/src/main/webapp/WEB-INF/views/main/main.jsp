@@ -36,48 +36,32 @@
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
 			<!-- 공지 시작 -->
-			<div class="text-center col-md-6 my-5 mt-5">
+	<div class="container-fluid">
+		<div class="row" style="width: 100%">
+			<!-- 공지 시작 -->
+			<div class="text-center col-md-6 my-5 mt-5 pt-1">
 				<a class=" btn btn-light btn-lg" href="../news/newsList.do">공지사항 &amp; 이벤트</a>
 				<hr style="width:80%">
 				<span>새로운 소식을 알려드립니다.</span>
-				<table class="table mt-5">
+				<c:if test="${news_count==0}">
+				</c:if>
+				<c:if test="${news_count>0}">
+				<table class="table mt-5 pt-5">
 					<thead>
 						<tr>
 							<td>제목</td>
 							<td>작성자</td>
 							<td>작성일</td>
 						</tr>
+						<c:forEach var="news" items="${newsList}">
 						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
+							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.id}</td>
+							<td>${news.news_modi}</td>
 						</tr>
-						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
-						</tr>
-						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
-						</tr>
-						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
-						</tr>
-						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
-						</tr>
-						<tr>
-							<td>테스트</td>
-							<td>테스트</td>
-							<td>테스트</td>
-						</tr>
+						</c:forEach>			
 				</table>
+				</c:if>
 			</div>
 			<!-- 공지 끝 -->
 			<!-- 모두의 레시피 시작 -->
