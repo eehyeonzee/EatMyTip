@@ -8,5 +8,5 @@
 --%>
 <script type="text/javascript">
 	alert('잘못된 접속입니다.');
-	location.href='recipeList.do';
+	location.href='${pageContext.request.contextPath}/main/main.do';
 </script>
