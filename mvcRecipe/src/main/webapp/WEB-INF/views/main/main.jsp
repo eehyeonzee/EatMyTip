@@ -12,8 +12,18 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
-
-
+	$(document).ready(function() {
+		// 카드형 게시물 100글자 초과시 ... 처리
+		$('.box').each(function() {
+			var content = $(this).children('.content');
+			var content_txt = content.text();
+			var content_txt_short = content_txt.substring(0,150)+"...";
+			
+			if(content_txt.length >= 150) {
+				content.html(content_txt_short);
+			}
+		});
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
