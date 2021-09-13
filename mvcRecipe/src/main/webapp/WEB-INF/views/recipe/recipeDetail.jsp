@@ -429,7 +429,6 @@
 		</div>
 		</c:if>
 		<p align="center">${ recipe.sub_content }</p>
-		<hr size="2" style="border: dashed;" width="100%">
 	<p align="center">
 		${ recipe.content }
 	</p>

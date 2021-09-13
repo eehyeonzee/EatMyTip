@@ -104,7 +104,7 @@
 						<option value="내용">내용</option>
 					</select> <input type="hidden" value="${mem_num}" name="mem_num"> <input
 						type="search" id="search" name="search" placeholder="검색어를 입력하세요.">
-			<input type="submit" value="검색">
+					<input type="submit" value="검색">
 				</form>
 				<br>
 			</div>
