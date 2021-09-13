@@ -33,8 +33,6 @@
 		<jsp:include page="/WEB-INF/views/main/carousel.jsp" />
 	</div>
 	<!-- 공지 ｜ 레시피 -->
-	<div class="container-fluid">
-		<div class="row" style="width: 100%">
 			<!-- 공지 시작 -->
 	<div class="container-fluid">
 		<div class="row" style="width: 100%">
@@ -180,21 +178,6 @@
 		</div>
 	</div>
 	<!-- 베스트 레시피 끝 -->
-	<!-- 이벤트 시작-->
-	<div class="container-fluid mt-5 pt-3 mb-5 pb-3">
-			<div class="row" style="width: 100%">
-			<div class="text-center col-md-12">
-				<a class=" btn btn-light btn-lg" href="${pageContext.request.contextPath}/news/newsList.do">이벤트</a>
-				<hr>
-			</div>
-	</div>
-	<div class="row">
-		<div class="col-4"><img src="../images/event_sm1.png"></div>
-		<div class="col-4"><img src="../images/event_sm2.png"></div>
-		<div class="col-4"><img src="../images/event_sm3.png"></div>
-	</div>
-	</div>
-	<!-- 이벤트 끝 -->
 	<!-- container 끝 -->
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
