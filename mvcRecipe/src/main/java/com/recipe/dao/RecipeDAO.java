@@ -40,7 +40,7 @@ public class RecipeDAO {
 			// 커넥션풀로부터 커넥션 할당받음
 			conn = DBUtil.getConnection();
 			// SQL문 작성
-			sql = "INSERT INTO recipe_board (board_num,category,title,content,filename,ip,mem_num) VALUES (recipe_board_seq.nextval,?,?,?,?,?,?)";
+			sql = "INSERT INTO recipe_board (board_num,category,title,content,filename,ip,mem_num, sub_content) VALUES (recipe_board_seq.nextval,?,?,?,?,?,?,?)";
 						
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -51,6 +51,7 @@ public class RecipeDAO {
 			pstmt.setString(4, recipe.getFilename());
 			pstmt.setString(5, recipe.getIp());
 			pstmt.setInt(6, recipe.getMem_num());
+			pstmt.setString(7, recipe.getSub_content());
 						
 			// SQL문 실행
 			pstmt.executeUpdate();
@@ -359,8 +360,9 @@ public class RecipeDAO {
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
+				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -423,8 +425,9 @@ public class RecipeDAO {
 				int board_num = rs.getInt("board_num");
 				
 				recipe.setBoard_num(board_num);
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
+				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -488,8 +491,9 @@ public class RecipeDAO {
 				int board_num = rs.getInt("board_num");
 				
 				recipe.setBoard_num(board_num);
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
+				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -552,8 +556,9 @@ public class RecipeDAO {
 				int board_num = rs.getInt("board_num");
 				
 				recipe.setBoard_num(board_num);
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
+				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -655,8 +660,9 @@ public class RecipeDAO {
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
+				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));

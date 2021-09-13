@@ -39,9 +39,9 @@ public class RecipeDetailAction implements Action {
          // 한건의 레코드 받기
          RecipeVO recipe = dao.getRecipeBoard(board_num);
          
-         // HTML을 허용
-         recipe.setTitle(StringUtil.useBrHtml(recipe.getTitle()));
-         // HTML을 허용하면서 줄바꿈 처리
+         // HTML을 허용하지 않음
+         recipe.setTitle(StringUtil.useNoHtml(recipe.getTitle()));
+         // HTML을 허용하지 않으면서 줄바꿈 처리
          recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
          
          comm = dao.getRecipeReplyBoardCount(board_num);
@@ -50,7 +50,7 @@ public class RecipeDetailAction implements Action {
          request.setAttribute("bookmarkBtnCheck", bookmarkBtnCheck);
          request.setAttribute("recommBtnCheck", recommBtnCheck);
          request.setAttribute("comm", comm);
-         
+                  
          // 한건의 레코드 반환
          request.setAttribute("recipe", recipe);
          
@@ -67,9 +67,9 @@ public class RecipeDetailAction implements Action {
          RecipeVO recipe = dao.getRecipeBoard(board_num);
          
          // HTML을 허용하지 않음
-         recipe.setTitle(StringUtil.useBrNoHtml(recipe.getTitle()));
+         recipe.setTitle(StringUtil.useNoHtml(recipe.getTitle()));
          // HTML을 허용하지 않으면서 줄바꿈 처리
-         recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
+         recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
          
          // 찜하기 버튼과 북마크 버튼 유효성 체크를 위해 변수 지정
          recommBtnCheck = 0;

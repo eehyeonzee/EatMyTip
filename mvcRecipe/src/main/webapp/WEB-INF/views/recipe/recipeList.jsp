@@ -28,13 +28,13 @@
 			}
 		});
 		
-		// 카드형 게시물 100글자 초과시 ... 처리
+		// 카드형 게시물 110글자 초과시 ... 처리
 		$('.box').each(function(){
 			var content = $(this).children('.content');
 			var content_txt = content.text();
-			var content_txt_short = content_txt.substring(0,150)+"...";
+			var content_txt_short = content_txt.substring(0,110)+"...";
 
-			if(content_txt.length >= 150){
+			if(content_txt.length >= 110){
 				content.html(content_txt_short);
             }
         });
@@ -154,7 +154,7 @@
 	              <h5 class="card-title"><a href="recipeDetail.do?board_num=${ recipe.board_num }" class="btn btn-outline-dark">${ recipe.title }</a></h5>
 		           <div class="box">   
 		              <div class="content">
-		              		<p class="card-text">${ recipe.content }</p>
+		              		<p class="card-text">${ recipe.sub_content }</p>
 		              </div>
 		           </div>
 		           <br>

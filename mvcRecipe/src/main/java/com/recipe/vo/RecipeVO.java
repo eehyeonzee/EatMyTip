@@ -6,6 +6,7 @@ public class RecipeVO {
 	
 	private int board_num; // 글번호
 	private String title; // 글제목
+	private String sub_content;	// 소개글
 	private String content; // 내용
 	private int hits; // 조회수
 	private int recom_count; // 추천수
@@ -36,6 +37,15 @@ public class RecipeVO {
 		this.title = title;
 	}
 	
+	
+	public String getSub_content() {
+		return sub_content;
+	}
+
+	public void setSub_content(String sub_content) {
+		this.sub_content = sub_content;
+	}
+
 	public String getContent() {
 		return content;
 	}

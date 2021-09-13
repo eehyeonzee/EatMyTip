@@ -37,6 +37,7 @@ public class RecipeWriteAction implements Action{
 		RecipeVO recipe = new RecipeVO();
 		recipe.setCategory(multi.getParameter("category"));
 		recipe.setTitle(multi.getParameter("title"));
+		recipe.setSub_content(multi.getParameter("sub_content"));
 		recipe.setContent(multi.getParameter("content"));
 		recipe.setFilename(multi.getFilesystemName("filename"));
 		recipe.setIp(request.getRemoteAddr()); // 우리가 보낸 데이터 아님
