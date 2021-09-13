@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel = "stylesheet" href= "${pageContext.request.contextPath}/css/style.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -71,5 +72,8 @@
 	</form>
 	</div>
 </div>
+<footer>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+</footer>
 </body>
 </html>

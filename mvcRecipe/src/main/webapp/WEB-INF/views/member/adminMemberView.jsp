@@ -45,8 +45,7 @@
 				    success: function(param) {
 				    	alert('수정 완료');
 				    	location.reload();
-
-				    	$("input:checkbox[id='chkbox']").prop("checked", false);
+				    	$('input[type=checkbox]:checked').prop("checked", false);
 				    },
 				    error : function() {
 				    	alert('네트워크 오류');
@@ -79,7 +78,7 @@
 				    success: function(param) {
 				    	alert('수정 완료');
 				    	location.reload();
-				    	$("input:checkbox[id='chkbox']").prop("checked", false);
+				    	$('input[type=checkbox]:checked').prop("checked", false);
 				    },
 				    error : function() {
 				    	alert('네트워크 오류');
@@ -112,7 +111,7 @@
 				    success: function(param) {
 				    	alert('수정 완료');
 				    	location.reload();
-				    	$("input:checkbox[id='chkbox']").prop("checked", false);
+				    	$('input[type=checkbox]:checked').prop("checked", false);
 				    },
 				    error : function() {
 				    	alert('네트워크 오류');
@@ -125,42 +124,45 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<div class = "">
-	<h2>가입한 회원 목록</h2>
-	<div class = "">
-		<input type = "button" class = "btn btn-outline-dark" value = "뒤로 가기" onclick = "location.href='myPage.do'">
-		<input type = "button" class = "btn btn-outline-dark" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'"> 
-		<input type = "button" class = "btn btn-outline-dark" value = "회원 정지" id = "stop_btn">
-		<input type = "button" class = "btn btn-outline-dark" value = "정지 해제" id = "up_btn">
-		<input type = "button" class = "btn btn-outline-dark" value = "회원 탈퇴" id = "delete_btn"> 
-	</div>
+<div class = "container-fluid contents-wrap" style = "width:90%">
+	<div class="text-center col-sm-30 my-5">
+		<div align = "left">
+			<h3>관리자 페이지</h3>
+		</div>
 	<c:if test = "${count == 0}">
-	<div class = "">
+	<div class = "text-center">
 		회원 가입한 회원이 없습니다.
 	</div>
 	</c:if>
 	<c:if test = "${count > 0}">
-		<table>
+		<div class = "text-right">
+			<input type = "button" class = "btn btn-outline-dark" value = "뒤로 가기" onclick = "location.href='myPage.do'">
+			<input type = "button" class = "btn btn-outline-dark" value = "홈으로" onclick = "location.href='${pageContext.request.contextPath}/main/main.do'"> 
+			<input type = "button" class = "btn btn-outline-dark" value = "회원 정지" id = "stop_btn">
+			<input type = "button" class = "btn btn-outline-dark" value = "정지 해제" id = "up_btn">
+			<input type = "button" class = "btn btn-outline-dark" value = "회원 탈퇴" id = "delete_btn"> 
+		</div>
+		<br>
+		<table class="table table-sm">
 			<tr>
-				<th>회원 번호</th>
-				<th>ID</th>
-				<th>이메일</th>
-				<th>전화번호</th>
-				<th>생년월일</th>
-				<th>가입일</th>
-				<th>멤버 권한</th>
-				<th>선택</th>
-				<th>테스트</th>
+				<th scope="col">회원 번호</th>
+				<th scope="col">아이디</th>
+				<th scope="col">이메일</th>
+				<th scope="col">전화번호</th>
+				<th scope="col">생년월일</th>
+				<th scope="col">가입일</th>
+				<th scope="col">멤버 권한</th>
+				<th scope="col">선택</th>
 			</tr>
 			<c:forEach var = "member" items = "${list}">
 			<tr>
-				<td>${member.mem_num}</td>
-				<td>${member.id}</td>
-				<td>${member.email}</td>
-				<td>${member.phone}</td>
-				<td>${member.birthday}</td>
-				<td>${member.join_date}</td>
-				<td>
+				<th scope = "row">${member.mem_num}</th>
+				<td width = "200px">${member.id}</td>
+				<td width = "200px">${member.email}</td>
+				<td width = "200px">${member.phone}</td>
+				<td width = "200px">${member.birthday}</td>
+				<td width = "200px">${member.join_date}</td>
+				<td width = "150px">
 				    <c:if test="${member.auth == 1}">정지회원</c:if>
 				    <c:if test="${member.auth == 2}">일반회원</c:if>
 				    <c:if test="${member.auth == 3}">관리자</c:if>
@@ -173,10 +175,11 @@
 			</tr>
 			</c:forEach>
 		</table>
-		<div class = "">
+		<div align = "center">
 			${pagingHtml}
 		</div>
 	</c:if>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
