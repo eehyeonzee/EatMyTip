@@ -10,9 +10,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>글 작성</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 //유효성 체크
 window.onload=function(){
@@ -51,42 +51,41 @@ window.onload=function(){
 };
 
 </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>고객센터 게시판 글 작성</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>
-<div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<div class="container">
+	<br>
 	<h2>글 작성</h2>
+	<hr size="1" noshade width="100%">
 	<form id="qnawrite_form" action="qnaWrite.do" method="post">
-		<ul>
-			<li>
+		<input type="hidden" name="qna_num" value="${qnaboardVO.qna_num}">
+		<div class="form-group">
 				<label for="qna_title">제목</label>
-				<input type="text" name="qna_title" id="qna_title" size="30" maxlength="50">
-			</li>
-			<li>
+				<input type="text" class="form-control" name="qna_title" id="qna_title" maxlength="50">
+		</div>
 				<label for="qna_id">닉네임</label>
 				<c:if test="${empty mem_num }">
-					<input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" placeholder="닉네임을 입력하세요">
+					<input type="text" class="form-control" name="qna_id" id="qna_id" maxlength="12" placeholder="닉네임을 입력하세요">
 				</c:if>
 				<c:if test="${!empty mem_num }">
-					<input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${mem_id }" readonly>
+					<input type="text" class="form-control" name="qna_id" id="qna_id" maxlength="12" value="${mem_id }" readonly>
 				</c:if>
-			</li>
-			<li>
 				<label for="qna_passwd">비밀번호</label>
-				<input type="password" name="qna_passwd" id="qna_passwd" size="12" maxlength="12">
-			</li>
-			<li>
-				<label for="qna_content">내용</label>
-				<textarea rows="5" cols="40" name="qna_content" id="qna_content"></textarea>
-			</li>					
-		</ul>
-		<div class="align-center">
-			<input type="submit" value="글 작성">
-			<input type="button" value="목록" onclick="location.href='qnaList.do'">
-		</div>	
-	</form>
+				<input type="password" class="form-control" name="qna_passwd" id="qna_passwd" maxlength="12">
 
-</div>
+			<div class="form-group">
+				<br><label for="qna_content">내용</label>
+				<textarea class="form-control" rows="20" name="qna_content" id="qna_content"></textarea>
+				<br>
+			</div>
+				<input type="submit" value="글 등록" class="btn btn-outline-dark">&nbsp;
+				<input type="button" value="목록" class="btn btn-outline-dark"  onclick="location.href='qnaList.do'"><br>
+		</form>
+</div>	
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

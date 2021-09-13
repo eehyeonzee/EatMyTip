@@ -10,80 +10,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>글 수정</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 //유효성 체크
 window.onload=function(){
-	var form = document.getElementById('qnaModify_form');
-	//이벤트 연결
-	form.onsubmit=function(){
-		var qna_title = document.getElementById('qna_title');
-		if(qna_title.value.trim()==''){
-			alert('제목을 입력하세요!');
-			qna_title.focus();
-			qna_title.value = '';
-			return false;
-		}
-		var qna_passwd = document.getElementById('qna_passwd');
-		if(qna_passwd.value.trim()==''){
-			alert('비밀번호를 입력하세요!');
-			qna_passwd.focus();
-			qna_passwd.value = '';
-			return false;
-		}
-		var qna_content = document.getElementById('qna_content');
-		if(qna_content.value.trim()==''){
-			alert('내용을 입력하세요!');
-			qna_content.focus();
-			qna_content.value = '';
-			return false;
-		}
-	};
+   var form = document.getElementById('qnaModify_form');
+   //이벤트 연결
+   form.onsubmit=function(){
+      var qna_title = document.getElementById('qna_title');
+      if(qna_title.value.trim()==''){
+         alert('제목을 입력하세요!');
+         qna_title.focus();
+         qna_title.value = '';
+         return false;
+      }
+      var qna_passwd = document.getElementById('qna_passwd');
+      if(qna_passwd.value.trim()==''){
+         alert('비밀번호를 입력하세요!');
+         qna_passwd.focus();
+         qna_passwd.value = '';
+         return false;
+      }
+      var qna_content = document.getElementById('qna_content');
+      if(qna_content.value.trim()==''){
+         alert('내용을 입력하세요!');
+         qna_content.focus();
+         qna_content.value = '';
+         return false;
+      }
+   };
 };
 
 
 </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>고객센터 게시판 글 수정</title>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>
-<div class="page-main">
-	<h2>글 수정</h2>
-	<form id="qnaModify_form" action="qnaModify.do" method="post">
-		<input type="hidden" name="qna_num" value="${qnaboardVO.qna_num}">
-		<ul>
-			<li>
-				<label for="qna_title">제목</label>
-				<input type="text" name="qna_title" id="qna_title" size="30"
-				                   value="${qnaboardVO.qna_title}" maxlength="50">
-			</li>
-		 	<li>
-	            <label for="qna_id">닉네임</label>
-	            <c:if test="${empty mem_num }">
-	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
-	            </c:if>
-	            <c:if test="${!empty mem_num }">
-	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
-	            </c:if>
-         	</li>
-			<li>
-				<label for="qna_passwd">비밀번호</label>
-				<input type="password" name="qna_passwd" id="qna_passwd" size="12" maxlength="12">
-				*등록시 입력한 비밀번호
-			</li>
-			<li>
-				<label for="qna_content">내용</label>
-				<textarea rows="5" cols="40" name="qna_content" id="qna_content">${qnaboardVO.qna_content}</textarea>
-			</li>
-		</ul>
-		<div class="align-center">
-			<input type="submit" value="글수정">
-			<input type="button" value="목록" onclick="location.href='qnaList.do'">
-		</div>
-	</form>
+<div class="container">
+<br>
+   <h2>글 수정</h2>
+   <hr size="1" noshade width="100%">
+   <form id="qnaModify_form" action="qnaModify.do" method="post">
+      <input type="hidden" name="qna_num" value="${qnaboardVO.qna_num}">
+         <div class="form-group">
+            <label for="qna_title">제목</label>
+            <input type="text" class="form-control" name="qna_title" id="qna_title" value="${qnaboardVO.qna_title}" >
+         </div>
+               <label for="qna_id">닉네임</label>
+               <c:if test="${empty mem_num }">
+                  <input type="text"class="form-control" name="qna_id" id="qna_id" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
+               </c:if>
+               <c:if test="${!empty mem_num }">
+                  <input type="text"class="form-control" name="qna_id" id="qna_id" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
+               </c:if>
+            <label for="qna_passwd">비밀번호</label>
+            <input type="password" class="form-control" name="qna_passwd" id="qna_passwd" maxlength="12">
+            *등록시 입력한 비밀번호
+            
+         <div class="form-group">
+            <br><label for="qna_content">내용</label><br>
+            <textarea class="form-control" rows="20" name="qna_content" id="qna_content">${qnaboardVO.qna_content}</textarea>
+         	<br>
+         </div>
+			<input type="submit" value="수정 등록" class="btn btn-outline-dark">&nbsp;
+			<input type="button" value="목록" class="btn btn-outline-dark"  onclick="location.href='qnaList.do'"><br>
+   </form>
 </div>
 </body>
+<jsp:include page = "/WEB-INF/views/common/footer.jsp" />
 </html>
-
-
-

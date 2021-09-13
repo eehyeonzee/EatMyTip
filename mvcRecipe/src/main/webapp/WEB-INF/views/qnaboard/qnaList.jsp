@@ -20,17 +20,26 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 </head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
-<div class="page-main">
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<h2>게시판 목록</h2>
-	<div class ="align-right">
-		
-			<input type="button" value="글쓰기" onclick="location.href='qnaWriteForm.do'">
-			<input type="button" value="목록" onclick="location.href='qnaList.do'">
-			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
-	
+<div class="container-fluid" style="width :90%;">
+	<div class="row" style="width :100%;">
+    <div class="text-center col-md-12 my-5">
+    <div align="left">
+		<h3>문의 게시판</h3>
+		 <hr size="2" noshade width="100%">
 	</div>
+		
+		<div align="left">
+		
+		<br>
+		<span style="font-weight: bold; color: red;">${ count } </span>개
+      	<span style="float: right;">
+	
+			<input type="button" value="글쓰기" onclick="location.href='qnaWriteForm.do'">
+			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+	</span>
+	 </div>
 	
 	<!-- 게시물이 없는 경우 -->
 	<c:if test="${count==0 }">
@@ -62,11 +71,15 @@
 		
 		</table>
 	</div>
-	<div align="center">
-		${pagingHtml }
-	</div>
-	
 	</c:if>
+	 <%-- 구분선 --%>
+		 <hr size="2" noshade width="100%">
+	</div>
+      </div> 
+		<div class="row">
+			<div class="col text-center mt-4 mb-n1">${pagingHtml}</div>
+		</div>
+	
 	
 </div>
 </body>
