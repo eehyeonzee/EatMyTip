@@ -27,7 +27,6 @@ public class NewsListAction implements Action {
 		Integer auth =(Integer)session.getAttribute("auth");
 		String search = request.getParameter("search");
 		String division = request.getParameter("division");
-		String pagen =null;
 		request.setCharacterEncoding("utf-8");
 		request.setAttribute("search",search);
 		request.setAttribute("division", division);
