@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import com.controller.Action;
 import com.recipe.dao.RecipeDAO;
+import com.recipe.vo.RecipeVO;
+import com.util.FileUtil;
 
 /**
  * @Package Name   : com.recipe.action
@@ -29,15 +31,22 @@ public class RecipeDeleteAction implements Action{
 		}
 		
 		// 로그인 한 경우
-		// 전송된 데이터 인코딩 처리
-		request.setCharacterEncoding("utf-8");
 		// 글번호 반환
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 				
 		// RecipeDAO 호출
 		RecipeDAO dao = RecipeDAO.getInstance();
-		// 글 삭제
+		RecipeVO recipe = dao.getRecipeBoard(board_num);
+		if(mem_num != null && mem_num != recipe.getMem_num()) {
+			// 로그인한 회원번호와 작성자 회원번호가 불일치
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
+		// 로그인한 회원번호와 작성자 회원번호가 일치
+		// DB 먼저 삭제
 		dao.deleteRecipe(board_num);
+		// 파일 삭제
+		FileUtil.removeFile(request, recipe.getFilename());
 				
 		// JSP 경로 반환
 		return "/WEB-INF/views/recipe/recipeDelete.jsp";

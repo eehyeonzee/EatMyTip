@@ -81,18 +81,33 @@ public class RecipeDAO {
 			// 커넥션풀로부터 커넥션 할당받음
 			conn = DBUtil.getConnection();
 			
-			// SQL문 작성
-			sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+			if(recipe.getFilename() != null) { // 업로드한 파일이 있을 경우
+				// SQL문 작성
+				sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setString(1, recipe.getCategory());
+				pstmt.setString(2, recipe.getTitle());
+				pstmt.setString(3, recipe.getContent());
+				pstmt.setString(4, recipe.getFilename());
+				pstmt.setString(5, recipe.getIp());
+				pstmt.setInt(6, recipe.getBoard_num());
 			
-			// PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			// ?에 데이터 바인딩
-			pstmt.setString(1, recipe.getCategory());
-			pstmt.setString(2, recipe.getTitle());
-			pstmt.setString(3, recipe.getContent());
-			pstmt.setString(4, recipe.getFilename());
-			pstmt.setString(5, recipe.getIp());
-			pstmt.setInt(6, recipe.getBoard_num());
+			}else { // 업로드한 파일이 없을 경우
+				// SQL문 작성
+				sql = "UPDATE recipe_board SET category=?,title=?,content=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+				
+				// PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				// ?에 데이터 바인딩
+				pstmt.setString(1, recipe.getCategory());
+				pstmt.setString(2, recipe.getTitle());
+				pstmt.setString(3, recipe.getContent());
+				pstmt.setString(4, recipe.getIp());
+				pstmt.setInt(5, recipe.getBoard_num());
+			}
 			
 			// SQL문 실행
 			pstmt.executeUpdate();
@@ -125,66 +140,56 @@ public class RecipeDAO {
 		try {
 			// 커넥션풀로부터 커넥션 할당받음
 			conn = DBUtil.getConnection();
-			
-			// 오토커밋 중지
+			// 오토커밋 해제
 			conn.setAutoCommit(false);
 			
 			// 1. 무결성 제약조건 위반으로 인해 댓글 테이블에서 글번호가 일치한 모든 행(댓글) 삭제
-			
 			// SQL문 작성
-			sql = "DELETE FROM comments WHERE board_num=?";
-						
+			sql = "DELETE FROM comments WHERE board_num=?";	
 			// PreparedStatment 객체 생성
 			pstmt1 = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
-			pstmt1.setInt(1, board_num);
-						
+			pstmt1.setInt(1, board_num);		
 			// SQL문 실행
 			pstmt1.executeUpdate();
 			
 			// 2. 무결성 제약조건 위반으로 인해 추천 테이블에서 글번호가 일치한 모든 행(추천) 삭제
-			
 			// SQL문 작성
-			sql = "DELETE FROM recommend WHERE board_num=?";
-									
+			sql = "DELETE FROM recommend WHERE board_num=?";					
 			// PreparedStatment 객체 생성
 			pstmt2 = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
-			pstmt2.setInt(1, board_num);
-								
+			pstmt2.setInt(1, board_num);				
 			// SQL문 실행
 			pstmt2.executeUpdate();			
 		
 			
 			// 3. 무결성 제약조건 위반으로 인해 북마크 테이블에서 글번호가 일치한 모든 행(북마크) 삭제
-			
 			// SQL문 작성
-			sql = "DELETE FROM bookmark WHERE board_num=?";
-									
+			sql = "DELETE FROM bookmark WHERE board_num=?";				
 			// PreparedStatment 객체 생성
 			pstmt3 = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
-			pstmt3.setInt(1, board_num);
-									
+			pstmt3.setInt(1, board_num);				
 			// SQL문 실행
 			pstmt3.executeUpdate();
 			
 			// 4. 레시피 테이블에서 글번호가 일치하는 (글)행 삭제
-			
 			// SQL문 작성
 			sql = "DELETE FROM recipe_board WHERE board_num=?";
-			
 			// PreparedStatment 객체 생성
 			pstmt4 = conn.prepareStatement(sql);
 			// ?에 데이터 바인딩
 			pstmt4.setInt(1, board_num);
-			
 			// SQL문 실행
 			pstmt4.executeUpdate();
 			
-			// 커밋
+			// 예외 발생 없이 정상적으로 SQL문 실행
 			conn.commit();
+			
 		}catch(Exception e) {
+			// 예외 발생
+			conn.rollback();
 			throw new Exception(e);
 		
 		}finally {

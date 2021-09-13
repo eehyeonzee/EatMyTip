@@ -34,8 +34,11 @@ public class RecipeModifyFormAction implements Action{
 		
 		RecipeDAO dao = RecipeDAO.getInstance();
 		RecipeVO recipe = dao.getRecipeBoard(board_num);
+		if(mem_num != recipe.getMem_num()) { // 로그인한 회원번호와 작성자 회원번호 불일치
+			return "/WEB-INF/views/common/notice.jsp";
+		}
 		
-		// request에 데이터 저장
+		// 로그인한 상태이고 회원번호와 작성자 회원번호 일치
 		request.setAttribute("recipe", recipe);
 		
 		// JSP 경로 반환

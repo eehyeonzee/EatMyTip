@@ -101,8 +101,13 @@
 			<li>
 				<div>
 				<label for="filename"></label>
-				<input type="file" name="filename" id="filename" class="form-control-file border" value="${recipe.filename}" accept="image/gif,image/png,image/jpeg">
+				<c:if test="${!empty recipe.filename}">
+				<br>
+				<span style="background-color:#ffe8e8">* 이미 등록된 파일이 있습니다. [${recipe.filename}]</span> 
+				</c:if>
 				</div>
+				<br>
+				<input type="file" name="filename" id="filename" class="form-control-file border" value="${recipe.filename}" accept="image/gif,image/png,image/jpeg">
 			</li>
 		</ul>
 		<br>

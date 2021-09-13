@@ -39,9 +39,9 @@ public class RecipeDetailAction implements Action {
          // 한건의 레코드 받기
          RecipeVO recipe = dao.getRecipeBoard(board_num);
          
-         // HTML을 허용하지 않음
+         // HTML을 허용
          recipe.setTitle(StringUtil.useBrHtml(recipe.getTitle()));
-         // HTML을 허용하지 않으면서 줄바꿈 처리
+         // HTML을 허용하면서 줄바꿈 처리
          recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
          
          comm = dao.getRecipeReplyBoardCount(board_num);

@@ -36,18 +36,30 @@ public class RecipeModifyAction implements Action{
 		request.setCharacterEncoding("utf-8");
 		
 		MultipartRequest multi = FileUtil.createFile(request);
-		
-		// 자바빈(VO) 생성
-		RecipeVO recipe = new RecipeVO();
-		recipe.setBoard_num((Integer.parseInt(multi.getParameter("board_num"))));
-		recipe.setCategory(multi.getParameter("category"));
-		recipe.setTitle(multi.getParameter("title"));
-		recipe.setContent(multi.getParameter("content"));
-		recipe.setFilename(multi.getFilesystemName("filename"));
-		recipe.setIp(request.getRemoteAddr());
+		int board_num = Integer.parseInt(multi.getParameter("board_num"));
+		String filename = multi.getFilesystemName("filename");
 		
 		// RecipeDAO 호출
 		RecipeDAO dao = RecipeDAO.getInstance();
+		
+		// 수정 전 데이터 읽어오기
+		RecipeVO dbRecipe = dao.getRecipeBoard(board_num);
+		if(mem_num != dbRecipe.getMem_num()) { // 로그인한 회원번호와 작성자 회원번호 불일치
+			FileUtil.removeFile(request, filename); // 업로드한 파일이 있으면 파일 삭제
+			
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
+		// 로그인한 회원번호와 작성 회원번호 일치
+		// 자바빈(VO) 생성
+		RecipeVO recipe = new RecipeVO();
+		recipe.setBoard_num(board_num);
+		recipe.setCategory(multi.getParameter("category"));
+		recipe.setTitle(multi.getParameter("title"));
+		recipe.setContent(multi.getParameter("content"));
+		recipe.setFilename(filename);
+		recipe.setIp(request.getRemoteAddr());
+		
 		// 글 수정
 		dao.updateRecipe(recipe);
 		
