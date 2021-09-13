@@ -208,7 +208,7 @@ public class QnaBoardDAO {
 	 * @Method 메소드명  : qnaBoardModify
 	 * @작성일     : 2021. 9. 12. 
 	 * @작성자     : 나윤경
-	 * @Method 설명 :
+	 * @Method 설명 : 고객센터 게시판 글 수정
 	 */
 	public void qnaBoardModify(QnaBoardVO qnaboardVO)throws Exception{
 		Connection conn = null;
@@ -220,7 +220,7 @@ public class QnaBoardDAO {
 			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
-			sql = "UPDATE qnaboard SET qna_title=?, qna_content=?, qna_ip=? WHERE qna_num=?";
+			sql = "UPDATE qna_board SET qna_title=?, qna_content=?, qna_ip=? WHERE qna_num=?";
 			
 			//PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);

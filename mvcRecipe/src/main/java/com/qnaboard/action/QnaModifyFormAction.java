@@ -21,7 +21,7 @@ public class QnaModifyFormAction implements Action{
 		//request에 데이터 저장
 		request.setAttribute("qnaboardVO", qnaboardVO);
 		
-		return "/WEB-INF/views/QnaModifyForm.jsp";
+		return "/WEB-INF/views/qnaboard/qnaModifyForm.jsp";
 	}
 
 }

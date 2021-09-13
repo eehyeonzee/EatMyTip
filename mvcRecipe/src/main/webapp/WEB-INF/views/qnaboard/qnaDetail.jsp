@@ -19,10 +19,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
 	$(function(){
+		// 관리자가 아니라면 비밀번호 체크
+		<c:if test="${auth!=3 }">  
 		var passwdCheck = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
 		checkPassWd();
 		
-		// 비밀번호 체크
 		function checkPassWd(){
 			if(passwdCheck==${qnaboard.qna_passwd} ){
 				return;
@@ -31,6 +32,7 @@
 				history.go(-1);
 			}
 		}
+		</c:if> 
 		
 		// 댓글 기능쪽 자바스크립트
 		var currentPage;
@@ -373,7 +375,7 @@
    
    
    		<%-- 로그인 한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
-   		<%--<c:if test="${mem_id == qnaboard.mem_id }">  나중에 관리자 유효성 체크하세요 윤경님--%>
+   		
    		<input type="button" value="수정" onclick="location.href='qnaModifyForm.do?qna_num=${qnaboard.qna_num}'">
    		<input type="button" value="삭제" id="qnaDelete_btn">
    		<script type="text/javascript">
@@ -387,7 +389,7 @@
    			};
    			
    		</script>
-   		<%-- </c:if> --%>
+   		
    		<input type="button" value="목록" onclick="location.href='qnaList.do'">
    </div>
 </div>

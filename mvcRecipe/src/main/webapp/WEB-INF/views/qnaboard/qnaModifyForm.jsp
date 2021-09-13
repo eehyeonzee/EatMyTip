@@ -14,6 +14,35 @@
 <title>글 수정</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type="text/javascript">
+//유효성 체크
+window.onload=function(){
+	var form = document.getElementById('qnaModify_form');
+	//이벤트 연결
+	form.onsubmit=function(){
+		var qna_title = document.getElementById('qna_title');
+		if(qna_title.value.trim()==''){
+			alert('제목을 입력하세요!');
+			qna_title.focus();
+			qna_title.value = '';
+			return false;
+		}
+		var qna_passwd = document.getElementById('qna_passwd');
+		if(qna_passwd.value.trim()==''){
+			alert('비밀번호를 입력하세요!');
+			qna_passwd.focus();
+			qna_passwd.value = '';
+			return false;
+		}
+		var qna_content = document.getElementById('qna_content');
+		if(qna_content.value.trim()==''){
+			alert('내용을 입력하세요!');
+			qna_content.focus();
+			qna_content.value = '';
+			return false;
+		}
+	};
+};
+
 
 </script>
 </head>
@@ -21,20 +50,20 @@
 <div class="page-main">
 	<h2>글 수정</h2>
 	<form id="qnaModify_form" action="qnaModify.do" method="post">
-		<input type="hidden" name="qna_num" value="${qnaBoardVO.qna_num}">
+		<input type="hidden" name="qna_num" value="${qnaboardVO.qna_num}">
 		<ul>
 			<li>
 				<label for="qna_title">제목</label>
 				<input type="text" name="qna_title" id="qna_title" size="30"
-				                   value="${boardVO.qna_title}" maxlength="50">
+				                   value="${qnaboardVO.qna_title}" maxlength="50">
 			</li>
 		 	<li>
 	            <label for="qna_id">닉네임</label>
 	            <c:if test="${empty mem_num }">
-	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" placeholder="닉네임을 입력하세요">
+	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
 	            </c:if>
 	            <c:if test="${!empty mem_num }">
-	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${mem_id }" readonly>
+	               <input type="text" name="qna_id" id="qna_id" size="12" maxlength="12" value="${qnaboardVO.qna_id }" readonly>
 	            </c:if>
          	</li>
 			<li>
@@ -44,7 +73,7 @@
 			</li>
 			<li>
 				<label for="qna_content">내용</label>
-				<textarea rows="5" cols="40" name="qna_content" id="qna_content">${boardVO.qna_content}</textarea>
+				<textarea rows="5" cols="40" name="qna_content" id="qna_content">${qnaboardVO.qna_content}</textarea>
 			</li>
 		</ul>
 		<div class="align-center">

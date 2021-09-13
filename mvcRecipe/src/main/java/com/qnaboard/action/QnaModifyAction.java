@@ -39,7 +39,7 @@ public class QnaModifyAction implements Action{
 		request.setAttribute("check", check);
 		
 		//JSP 경로 반환
-		return "/WEB-INF/views/qnaboard/QnaModify.jsp";
+		return "/WEB-INF/views/qnaboard/qnaModify.jsp";
 	}
 
 }
