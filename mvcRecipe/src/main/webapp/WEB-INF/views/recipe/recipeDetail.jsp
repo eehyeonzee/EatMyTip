@@ -416,11 +416,20 @@
 	<%-- 글부분 --%>
 	<hr size="2" noshade width="100%">
 	<!-- 상세글 내용 -->
+		<%-- 썸네일 사진이 있는 경우 --%>
 		<c:if test="${ !empty recipe.filename }">
 		<div class="detail-content">
 		<img src="${ pageContext.request.contextPath }/upload/${ recipe.filename }" class="detail-img">
 		</div>
-	</c:if>
+		</c:if>
+		<%-- 썸네일 사진이 없는 경우 --%>
+		<c:if test="${ empty recipe.filename }">
+		<div class="detail-content">
+		<img src="${ pageContext.request.contextPath }/images/basic.png" class="detail-img">
+		</div>
+		</c:if>
+		<p align="center">${ recipe.sub_content }</p>
+		<hr size="2" style="border: dashed;" width="100%">
 	<p align="center">
 		${ recipe.content }
 	</p>

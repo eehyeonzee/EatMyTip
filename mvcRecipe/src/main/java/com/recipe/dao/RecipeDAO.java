@@ -84,7 +84,7 @@ public class RecipeDAO {
 			
 			if(recipe.getFilename() != null) { // 업로드한 파일이 있을 경우
 				// SQL문 작성
-				sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+				sql = "UPDATE recipe_board SET category=?,title=?,content=?,filename=?,ip=?,sub_content=?,modify_date=SYSDATE WHERE board_num=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
@@ -94,11 +94,12 @@ public class RecipeDAO {
 				pstmt.setString(3, recipe.getContent());
 				pstmt.setString(4, recipe.getFilename());
 				pstmt.setString(5, recipe.getIp());
-				pstmt.setInt(6, recipe.getBoard_num());
+				pstmt.setString(6, recipe.getSub_content());
+				pstmt.setInt(7, recipe.getBoard_num());
 			
 			}else { // 업로드한 파일이 없을 경우
 				// SQL문 작성
-				sql = "UPDATE recipe_board SET category=?,title=?,content=?,ip=?,modify_date=SYSDATE WHERE board_num=?";
+				sql = "UPDATE recipe_board SET category=?,title=?,content=?,ip=?,sub_content=?,modify_date=SYSDATE WHERE board_num=?";
 				
 				// PreparedStatement 객체 생성
 				pstmt = conn.prepareStatement(sql);
@@ -107,7 +108,8 @@ public class RecipeDAO {
 				pstmt.setString(2, recipe.getTitle());
 				pstmt.setString(3, recipe.getContent());
 				pstmt.setString(4, recipe.getIp());
-				pstmt.setInt(5, recipe.getBoard_num());
+				pstmt.setString(5, recipe.getSub_content());
+				pstmt.setInt(6, recipe.getBoard_num());
 			}
 			
 			// SQL문 실행
@@ -719,8 +721,9 @@ public class RecipeDAO {
 			if(rs.next()) {
 				recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
-				recipe.setTitle(rs.getString("title"));
-				recipe.setContent(rs.getString("content"));
+				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
+				recipe.setContent(StringUtil.useBrHtml(rs.getString("content")));
+				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));	// 추천수
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -730,6 +733,7 @@ public class RecipeDAO {
 				recipe.setIp(rs.getString("ip"));
 				recipe.setCategory(rs.getString("category"));
 				recipe.setId(rs.getString("id"));
+				recipe.setAuth(rs.getInt("auth"));
 				
 				
 			}

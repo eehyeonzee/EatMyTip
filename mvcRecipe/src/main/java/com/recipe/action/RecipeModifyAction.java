@@ -26,7 +26,9 @@ public class RecipeModifyAction implements Action{
 		// 로그인 체크
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
-				
+		Integer auth = (Integer)session.getAttribute("auth");
+		
+		
 		if(mem_num == null) { // 로그인 하지 않은 경우
 			return "redirect:/member/loginForm.do";
 		}
@@ -44,7 +46,7 @@ public class RecipeModifyAction implements Action{
 		
 		// 수정 전 데이터 읽어오기
 		RecipeVO dbRecipe = dao.getRecipeBoard(board_num);
-		if(mem_num != dbRecipe.getMem_num()) { // 로그인한 회원번호와 작성자 회원번호 불일치
+		if(mem_num != dbRecipe.getMem_num() && auth != 3) { // 로그인한 회원번호와 작성자 회원번호 불일치하고 등급이 3이 아니라면
 			FileUtil.removeFile(request, filename); // 업로드한 파일이 있으면 파일 삭제
 			
 			return "/WEB-INF/views/common/notice.jsp";
@@ -56,11 +58,13 @@ public class RecipeModifyAction implements Action{
 		recipe.setBoard_num(board_num);
 		recipe.setCategory(multi.getParameter("category"));
 		recipe.setTitle(multi.getParameter("title"));
+		recipe.setSub_content(multi.getParameter("sub_content"));
 		recipe.setContent(multi.getParameter("content"));
 		recipe.setFilename(filename);
 		recipe.setIp(request.getRemoteAddr());
 		
 		// 글 수정
+		if(dbRecipe.getFilename() != null) FileUtil.removeFile(request, dbRecipe.getFilename());
 		dao.updateRecipe(recipe);
 		
 		// JSP 경로 반환

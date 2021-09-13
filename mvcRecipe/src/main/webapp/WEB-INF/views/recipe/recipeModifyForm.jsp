@@ -24,21 +24,44 @@
 	$(document).ready(function() {
 		// 이벤트 연결
 		$('#modify_form').submit(function() {
+			if($('#category').val() == '') {
+				alert('카테고리를 선택하세요!');
+				$('#category').val('').focus();
+				return false;
+			}
 			if($('#title').val().trim() == '') {
 				alert('제목을 입력하세요!');
 				$('#title').val('').focus();
 				return false;
 			}
 			
-			if($('#content').val().trim() == '') {
+			if($('#sub_content').val().trim() == '') {
+				alert('소개글을 입력하세요!');
+				$('#sub_content').val('').focus();
+				return false;
+			}
+			
+			if($('#md_summernote').val().trim() == '') {
 				alert('내용을 입력하세요!');
-				$('#content').val('').focus();
+				$('#md_summernote').val('').focus();
 				return false;
 			}
 		});
 		
+		// textarea에 내용 입력시 글자수 체크
+		$(document).on("keyup","textarea",function(){
+			 // 입력한 글자 구함
+	         var inputLength = $(this).val().length;
+	         
+	         if(inputLength > 150){   // 150자를 넘어선 경우
+	            $(this).val($(this).val().substring(0,150));
+	         	$(".number_of").text("※ 소개글은 150자까지만 입력 가능합니다.")
+	         }
+
+		});
+		
 		// summernote 에디터
-		$('#summernote').summernote({
+		$('#md_summernote').summernote({
 			height: 300, // 에디터 높이
 			minHeight: null, // 최소 높이
 			maxHeight: null, // 최대 높이
@@ -56,7 +79,7 @@
 			    ['table', ['table']],
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
-			    ['insert',['link']],
+			    ['insert',['link', 'picture', 'codeview']],
 			    ['view', ['help']]
 			],
 			
@@ -95,8 +118,15 @@
 				</div>
 			</li>
 			<li>
+				<br>
+				<div class="form-group">
+				<textarea class="form-control" id="sub_content" rows="5" name="sub_content" placeholder="소개글을 입력해주세요 (목록에 소개될 내용입니다.)">${recipe.sub_content}</textarea>
+				</div>
+				<span style="color: red; font-weight:bolder; font-size: 12px; font-style: italic;" class="number_of"></span>
+			</li>
+			<li>
 				<label for="content"></label>
-				<textarea id="summernote" name="content" id="content">${recipe.content}</textarea>
+				<textarea id="md_summernote" name="content" class="contents">${recipe.content}</textarea>
 			</li>
 			<li>
 				<div>
@@ -108,6 +138,7 @@
 				</div>
 				<br>
 				<input type="file" name="filename" id="filename" class="form-control-file border" value="${recipe.filename}" accept="image/gif,image/png,image/jpeg">
+				<span style="color: red; font-weight:bolder; font-size: 12px; font-style: italic;">썸네일사진을 선택해주세요. (미선택시 기본이미지 출력)</span>
 			</li>
 		</ul>
 		<br>

@@ -19,6 +19,7 @@ public class RecipeVO {
 	private int book_num; // 북마크 번호
 	private int comm_count; // 댓글 객수
 	private String id;  // join을 위해 id 명시
+	private int auth;	// 회원등급
 	
 	
 	public int getBoard_num() {
@@ -140,6 +141,14 @@ public class RecipeVO {
 
 	public void setComm_count(int comm_count) {
 		this.comm_count = comm_count;
+	}
+
+	public int getAuth() {
+		return auth;
+	}
+
+	public void setAuth(int auth) {
+		this.auth = auth;
 	}
 
 	
