@@ -25,7 +25,8 @@ public class RecipeDeleteAction implements Action{
 		// 로그인 체크
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
-				
+		Integer auth = (Integer)session.getAttribute("auth");
+		
 		if(mem_num == null) { // 로그인 하지 않은 경우
 			return "redirect:/member/loginForm.do";
 		}
@@ -37,7 +38,7 @@ public class RecipeDeleteAction implements Action{
 		// RecipeDAO 호출
 		RecipeDAO dao = RecipeDAO.getInstance();
 		RecipeVO recipe = dao.getRecipeBoard(board_num);
-		if(mem_num != null && mem_num != recipe.getMem_num()) {
+		if(mem_num != null && mem_num != recipe.getMem_num() && auth != 3) {
 			// 로그인한 회원번호와 작성자 회원번호가 불일치
 			return "/WEB-INF/views/common/notice.jsp";
 		}

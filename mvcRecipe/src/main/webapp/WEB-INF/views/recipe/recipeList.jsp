@@ -154,7 +154,7 @@
 	              <h5 class="card-title"><a href="recipeDetail.do?board_num=${ recipe.board_num }" class="btn btn-outline-dark">${ recipe.title }</a></h5>
 		           <div class="box">   
 		              <div class="content">
-		              		<p class="card-text">${ recipe.sub_content }</p>
+		              		<p class="card-text">${ recipe.content }</p>
 		              </div>
 		           </div>
 		           <br>

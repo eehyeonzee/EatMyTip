@@ -24,7 +24,8 @@ public class RecipeModifyFormAction implements Action{
 		// 로그인 체크
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
-						
+		Integer auth = (Integer)session.getAttribute("auth");
+		
 		if(mem_num == null) { // 로그인 하지 않은 경우
 			return "redirect:/member/loginForm.do";
 		}
@@ -34,7 +35,7 @@ public class RecipeModifyFormAction implements Action{
 		
 		RecipeDAO dao = RecipeDAO.getInstance();
 		RecipeVO recipe = dao.getRecipeBoard(board_num);
-		if(mem_num != recipe.getMem_num()) { // 로그인한 회원번호와 작성자 회원번호 불일치
+		if(mem_num != recipe.getMem_num() && auth !=3) { // 로그인한 회원번호와 작성자 회원번호 불일치하고 관리자가 아니라면
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
