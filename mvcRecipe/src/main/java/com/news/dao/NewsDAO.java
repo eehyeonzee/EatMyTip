@@ -52,13 +52,13 @@ public class NewsDAO {
 		
 		try {
 		conn = DBUtil.getConnection();
-		sql="insert into NEWS_BOARD VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, ?,?)";
+		sql="insert into NEWS_BOARD(news_num, news_title, news_content, mem_num, news_hits, news_date, news_modi, news_category, news_file) VALUES (NEWS_BOARD_SEQ.nextval, ?, ?, ? , 1, SYSDATE, SYSDATE, ?,?)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,news.getNews_title());
 		pstmt.setString(2,news.getNews_content());
 		pstmt.setInt(3,news.getMem_num());
-		pstmt.setString(4,news.getNews_file());
-		pstmt.setString(5, news.getNews_category());
+		pstmt.setString(4, news.getNews_category());
+		pstmt.setString(5,news.getNews_file());
 		pstmt.executeQuery();
 		}catch(Exception e){
 			throw new Exception(e);

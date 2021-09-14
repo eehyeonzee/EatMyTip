@@ -14,8 +14,7 @@
 <head>
 <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 	//댓글 시작
@@ -420,7 +419,7 @@
 			style="color: black; background-color: white; border-color: #d5dfe8"
 			onclick="history.go(-1)">
 		<div style="float: right;">
-			수정일 : ${news.modify_date}
+			수정일 : ${news.news_modi}
 			<c:if test="${auth==3}">
 				<input type="button" value="수정"
 					onclick="location.href='newsModifyForm.do?news_num=${news.news_num}'"
