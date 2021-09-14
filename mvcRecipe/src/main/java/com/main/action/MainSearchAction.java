@@ -22,7 +22,7 @@ import com.util.PagingUtil;
  * @프로그램 설명 : 메인에서 통합검색할때 쓰는 서블릿입니다. 
  *  mainSearchList.do로 연결해주세요! 
  */
-public class MainSerachAction implements Action {
+public class MainSearchAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

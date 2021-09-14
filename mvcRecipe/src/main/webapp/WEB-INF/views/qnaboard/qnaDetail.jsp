@@ -307,18 +307,20 @@
    });
 </script>
 </head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
 <div class="recipe-detail-main">
-   <jsp:include page="/WEB-INF/views/common/header.jsp"/>
    <div class="detail_title">
-   <br><h3>No. ${qnaboard.qna_num} ${qnaboard.qna_title }</h3>
+	   <br><h3>No. ${qnaboard.qna_num} ${qnaboard.qna_title }</h3>
    </div>
    <hr size="2" noshade width="100%">
    <b>작성자 </b>&nbsp; ${qnaboard.qna_id} | <b>작성일</b> ${qnaboard.qna_date }
      <hr size="2" noshade width="100%">
+   
    <p align="center">
       ${qnaboard.qna_content }
    </p>
+   
   <hr size="2" noshade width="100%">
    <%-- 댓글 목록 출력 시작 --%>
       <div id="output"></div>
@@ -332,7 +334,7 @@
    
    <div class="align-right">
    
-    <%-- 댓글 달기 --%>
+    <%-- 댓글 시작 --%>
    <div id="reply_div">
       <span class="re-title">댓글 달기</span>
       <div align="center">
@@ -356,11 +358,7 @@
    <hr size="2" noshade width="100%">
    <%-- 댓글달기 끝 --%>
    
-   
-   
-   
          <%-- 로그인 한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
-         
          <input type="button" value="수정" onclick="location.href='qnaModifyForm.do?qna_num=${qnaboard.qna_num}'">
          <input type="button" value="삭제" id="qnaDelete_btn">
          <script type="text/javascript">
@@ -377,6 +375,7 @@
          
          <input type="button" value="목록" onclick="location.href='qnaList.do'">
    </div>
+   	<div style="padding-bottom: 50px;"></div>
 </div>
 <script>
 // 관리자가 아니라면 비밀번호 체크

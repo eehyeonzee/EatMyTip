@@ -41,8 +41,8 @@ public class RecipeDetailAction implements Action {
          
          // HTML을 허용하지 않음
          recipe.setTitle(StringUtil.useNoHtml(recipe.getTitle()));
-         // HTML을 허용하면서 줄바꿈 처리
-         recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
+         // HTML을 허용하지 않으면서 줄바꿈 처리
+         recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
          
          comm = dao.getRecipeReplyBoardCount(board_num);
          
@@ -69,7 +69,7 @@ public class RecipeDetailAction implements Action {
          // HTML을 허용하지 않음
          recipe.setTitle(StringUtil.useNoHtml(recipe.getTitle()));
          // HTML을 허용하면서 줄바꿈 처리
-         recipe.setContent(StringUtil.useBrHtml(recipe.getContent()));
+         recipe.setContent(StringUtil.useBrNoHtml(recipe.getContent()));
          
          // 찜하기 버튼과 북마크 버튼 유효성 체크를 위해 변수 지정
          recommBtnCheck = 0;

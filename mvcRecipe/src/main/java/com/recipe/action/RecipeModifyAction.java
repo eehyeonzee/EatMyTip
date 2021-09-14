@@ -58,7 +58,6 @@ public class RecipeModifyAction implements Action{
 		recipe.setBoard_num(board_num);
 		recipe.setCategory(multi.getParameter("category"));
 		recipe.setTitle(multi.getParameter("title"));
-		recipe.setSub_content(multi.getParameter("sub_content"));
 		recipe.setContent(multi.getParameter("content"));
 		recipe.setFilename(filename);
 		recipe.setIp(request.getRemoteAddr());
