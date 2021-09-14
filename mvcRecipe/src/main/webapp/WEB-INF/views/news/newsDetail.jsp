@@ -352,6 +352,7 @@
 	<div class="recipe-detail-main">
 		<div class="detail_title">
 			<br>
+			<br>
 			<h3>No. ${news.news_num} [${news.news_category}]
 				${news.news_title}</h3>
 		</div>

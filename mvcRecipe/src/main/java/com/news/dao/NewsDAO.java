@@ -335,18 +335,20 @@ public class NewsDAO {
 		try {
 			conn=DBUtil.getConnection();
 			if(news.getNews_file()!=null) {
-			sql="UPDATE news_board SET news_title=?, news_content=?, news_file=?, news_modi=SYSDATE WHERE news_num=?";
+			sql="UPDATE news_board SET news_title=?, news_content=?, news_file=?, news_modi=SYSDATE, news_category=? WHERE news_num=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1,news.getNews_title());
 			pstmt.setString(2,news.getNews_content());
 			pstmt.setString(3,news.getNews_file());
-			pstmt.setInt(4,news.getNews_num());
+			pstmt.setString(4, news.getNews_category());
+			pstmt.setInt(5,news.getNews_num());
 			}else {
-				sql="UPDATE news_board SET news_title=?, news_content=?, news_modi=SYSDATE WHERE news_num=?";
+				sql="UPDATE news_board SET news_title=?, news_content=?, news_modi=SYSDATE, news_category=? WHERE news_num=?";
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1,news.getNews_title());
 				pstmt.setString(2,news.getNews_content());
-				pstmt.setInt(3,news.getNews_num());	
+				pstmt.setString(3,news.getNews_category());
+				pstmt.setInt(4,news.getNews_num());	
 			}
 			pstmt.executeUpdate();	
 		}catch(Exception e) {

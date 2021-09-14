@@ -35,6 +35,7 @@ public class MainSearchAction implements Action {
 		int news_count = dao.searchNewsCount(search);
 		// 뉴스 리스트 출력
 		String newsPageNum = request.getParameter("newsPageNum");
+		
 		if(newsPageNum==null) newsPageNum ="1";
 		PagingUtil page1 = new PagingUtil(search,null,Integer.parseInt(newsPageNum), news_count, 10, 7,"mainSearch.do?search="+search);
 		List<NewsVO> NewsList = null;

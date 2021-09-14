@@ -30,10 +30,9 @@
 				$('#content').val('').focus();
 				return false;
 			}
-			if($('input:radio[name=category]').is(':checked')=='') {
+			if($('#category').val() == '') {
 				alert('카테고리를 선택하세요!');
-				$('#category').focus();
-				$('#category').val('');
+				$('#category').val('').focus();
 				return false;
 			}
 		});
@@ -53,16 +52,17 @@
 		<input type="hidden" name="news_num" id="news_num" value="${news.news_num}">
 		<div class="form-group">
 			<h6>카테고리</h6>
-			<input type="radio" id="news" name="category" value="공지사항">
-			<label for="news">공지사항</label>
-			<input type="radio" id="recipe" name="category" value="레시피">
-			<label for="news">레시피</label>
-			<input type="radio" id="bestrecipe" name="category" value="베스트레시피">
-			<label for="news">베스트레시피</label>
-			<input type="radio" id="event" name="category" value="이벤트">
-			<label for="news">이벤트</label>
-			<input type="radio" id="qna" name="category" value="문의사항">
-			<label for="news">문의사항</label><br>
+				<p>
+				<label for="category"></label>
+				<select name="category" id="category">
+				
+					<option value="공지사항" <c:if test="${news.news_category.equals('공지사항')}"> selected </c:if>>공지사항</option>
+					<option value="레시피" <c:if test="${news.news_category.equals('레시피')}"> selected </c:if>>레시피</option>
+					<option value="베스트레시피" <c:if test="${news.news_category.equals('베스트레시피')}"> selected </c:if>>베스트레시피</option>
+					<option value="이벤트" <c:if test="${news.news_category.equals('이벤트')}"> selected </c:if>>이벤트</option>
+					<option value="문의사항" <c:if test="${news.news_category.equals('문의사항')}"> selected </c:if>>문의사항</option>
+				</select>
+				</p>
 		</div>	
 		<div class="form-group">
 			<label for="title">제목</label>

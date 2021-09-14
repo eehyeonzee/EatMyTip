@@ -68,9 +68,12 @@
 					</thead>
 				</table>
 				<div class="row">
-					<div class="col text-center mt-4 mb-n1">${pagingHtmlNews}</div>
+					<br>
+					<div align="center">${pagingHtmlNews}</div>
 				</div>
 			</c:if>
+			<br>
+			<br>
 		</div>
 	</div>
 	<!-- 공지사항 검색 끝 -->
@@ -81,7 +84,7 @@
 				<h3>모두의 레시피</h3>
 			</div>
 			<div align="left">
-				<br> 게시물 <span style="font-weight: bold; color: red;">${ count }
+				<br> 게시물 <span style="font-weight: bold; color: red;">${ recipe_count }
 				</span>개
 			</div>
 			<hr size="2" noshade width="100%">
@@ -139,6 +142,9 @@
 		</div>
 		<div align="center">${ pagingHtmlRecipe }</div>
 	</div>
+	<hr>
+	<hr>
+	<hr>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </html>
