@@ -49,6 +49,7 @@ public class MainDAO {
 			sql = "select count(*) from news_board Where news_title Like ? or news_content like ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, '%' + search + '%');
+			pstmt.setString(2, '%' + search + '%');
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				news_count = rs.getInt(1);
@@ -80,6 +81,8 @@ public class MainDAO {
 			sql = "select count(*) from recipe_board b join member m on b.mem_num=m.mem_num Where title Like ? or content like ? or id like ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, '%' + search + '%');
+			pstmt.setString(2, '%' + search + '%');
+			pstmt.setString(3, '%' + search + '%');
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				recipe_count = rs.getInt(1);
@@ -113,8 +116,9 @@ public class MainDAO {
 					+ "where rnum >=? and rnum <=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
-			pstmt.setInt(2, startCount);
-			pstmt.setInt(3, endCount);
+			pstmt.setString(2, "%" + search + "%");
+			pstmt.setInt(3, startCount);
+			pstmt.setInt(4, endCount);
 			rs = pstmt.executeQuery();
 
 			newsList = new ArrayList<NewsVO>();
@@ -152,17 +156,19 @@ public class MainDAO {
 		List<RecipeVO> recipeList = null;
 		try {
 			conn = DBUtil.getConnection();
+			sql="select * from (select a.*, rownum rnum from(select * from recipe_board b join member m on b.mem_num = m.mem_num  where title like ? or content like ? or id like ? order by b.board_num desc)a) where rnum >=? and rnum <=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
-			pstmt.setInt(2, startCount);
-			pstmt.setInt(3, endCount);
+			pstmt.setString(2, "%" + search + "%");
+			pstmt.setString(3, "%" + search + "%");
+			pstmt.setInt(4, startCount);
+			pstmt.setInt(5, endCount);
 			rs = pstmt.executeQuery();
 			recipeList = new ArrayList<RecipeVO>();
 			while (rs.next()) {
 				RecipeVO recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setSub_content(StringUtil.useNoHtml(rs.getString("sub_content")));
 				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
