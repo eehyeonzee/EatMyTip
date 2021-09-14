@@ -1,13 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" /> 
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <!-- 네브바 최 상단 잇마이팁 부분 -->
-<nav class="navbar navbar-expand-md justify-content-center" style="background-color: #f76f31; padding-top:40px; padding-bottom:0px; margin:0px; position:0;">
+<nav class="navbar navbar-expand-md justify-content-center" style="background-color: #ffffff; padding-top:40px; padding-bottom:0px; margin:0px; position:0;">
   <a href="../main/main.do"><img src="../images/logo.png" height="80px" width="200px"></a>
 </nav>
+<!-- 검색창 -->
+<form action="mainSearchList.do" method="GET">
+    <div class="mx-auto mt-5 search-bar input-group mb-3" style="width: 300px;">
+      	<input type="search" name="keyword" id="keyword" class="form-control rounded-pill" placeholder="잇마이팁 통합검색" aria-label="Recipient's username" aria-describedby="button-addon2">
+      	<div class="input-group-append"></div>
+    </div>
+</form>
 <!-- 회원가입, 로그인, 회원관리 등 두번째 부분 -->
-<nav class="navbar navbar-expand-md justify-content-end" style="background-color: #f76f31; padding:0px; margin:0px; position:0;">
+<nav class="navbar navbar-expand-md justify-content-end" style="background-color: #ffffff; padding:0px; margin:0px; position:0;">
 <c:if test="${empty mem_num}">
   <ul class="navbar-nav mr-5">
     <li class="nav-item mr-5" style="font-size: 13pt; font-weight: bold;">
