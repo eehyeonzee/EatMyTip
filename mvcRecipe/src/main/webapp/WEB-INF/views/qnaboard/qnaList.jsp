@@ -56,8 +56,9 @@
 		<br>
 		게시물 <span style="font-weight: bold; color: red;">${ count } </span>개
       	<span style="float: right;">
-	
+		<c:if test="${auth!=3 }">
 			<input type="button" value="글쓰기" onclick="location.href='qnaWriteForm.do'">
+		</c:if>
 			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 	</span>
 		 <hr size="2" noshade width="100%"><br>
