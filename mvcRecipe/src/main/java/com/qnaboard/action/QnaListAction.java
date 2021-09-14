@@ -28,16 +28,23 @@ public class QnaListAction implements Action{
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum==null) pageNum="1";
 		
+		String keyfield = request.getParameter("keyfield");
+		String keyword = request.getParameter("keyword");
+		
+		if(keyfield ==null) keyfield = "";
+		if(keyword == null) keyword = "";
+		
+		
 		QnaBoardDAO dao = QnaBoardDAO.getInstance();
-		int count = dao.getQnaBoardCount();
+		int count = dao.getQnaBoardCount(keyfield, keyword);
 		
 		//페이지 처리
 		//currentPage,count,rowCount,pageCount,url
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum),count,20,10,"qnaList.do");
+		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum),count,20,10,"qnaList.do");
 		
 		List<QnaBoardVO> list = null;
 		if(count>0) {
-			list = dao.getQnaBoardList(page.getStartCount(), page.getEndCount());
+			list = dao.getQnaBoardList(page.getStartCount(), page.getEndCount(), keyfield, keyword);
 		}
 		
 		//request에 데이터 저장

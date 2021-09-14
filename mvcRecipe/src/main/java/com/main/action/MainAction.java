@@ -43,7 +43,7 @@ public class MainAction implements Action {
 		// 리스트 출력
 		List<NewsVO> newsList = null;
 		if(news_count > 0) {
-			newsList = newsdao.getNewsList(1, 5);
+			newsList = newsdao.getNewsList(1, 7);
 		}
 		
 		// ---------- 모두의 레시피 ----------

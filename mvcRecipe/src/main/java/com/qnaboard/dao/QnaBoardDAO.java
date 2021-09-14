@@ -66,27 +66,42 @@ public class QnaBoardDAO {
 	 * @Method 메소드명  : getQnaBoardCount
 	 * @작성일     : 2021. 9. 6. 
 	 * @작성자     : 나윤경
-	 * @Method 설명 : 고객센터 게시판 총 레코드 수
+	 * @Method 설명 : 고객센터 게시판 총 레코드 수(검색 레코드 수)
 	 */
-	public int getQnaBoardCount()throws Exception{
+	public int getQnaBoardCount(String keyfield, String keyword)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
+		String sub_sql =null;
 		int count = 0;
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			
-			//SQL문 작성
-			sql="SELECT COUNT(*) FROM qna_board";
-			
-			//PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			
-			//SQL문을 실행해서 결과행을 ResultSet에 담음
+			if(keyword == null || "".equals(keyword)) {
+				//전체 글 개수
+				sql="SELECT COUNT(*) FROM qna_board";
+				pstmt = conn.prepareStatement(sql);
+			}else {
+				//검색 글 개수
+				if(keyfield.equals("1")) sub_sql = "qna_title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "qna_id =?";
+				else if(keyfield.equals("3")) sub_sql = "qna_content LIKE ?";
+				
+				sql="SELECT COUNT(*) FROM qna_board WHERE " + sub_sql;
+				pstmt = conn.prepareStatement(sql);
+				if(keyfield.equals("2")) {
+					pstmt.setString(1, keyword);
+				}else {
+					pstmt.setString(1, "%"+keyword+"%");
+				}
+				
+			}
+			//SQL문 실행하고 결과행을 ResultSet에 담음
 			rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
 				count = rs.getInt(1);
 			}			
@@ -104,28 +119,49 @@ public class QnaBoardDAO {
 	 * @Method 메소드명  : getQnaBoardList
 	 * @작성일     : 2021. 9. 6. 
 	 * @작성자     : 나윤경
-	 * @Method 설명 : 고객센터 게시판 글 목록
+	 * @Method 설명 : 고객센터 게시판 글 목록(검색글 목록)
 	 */
-	public List<QnaBoardVO> getQnaBoardList(int startRow, int endRow)throws Exception {
+	public List<QnaBoardVO> getQnaBoardList(int startRow, int endRow, String keyfield, String keyword)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<QnaBoardVO> list = null;
 		String sql = null;
+		String sub_sql = null;
 		
 		try {
 			//커넥션풀로부터 커넥션을 할당
 			conn = DBUtil.getConnection();
 			
-			//SQL문 작성
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qna_board "
-					+ "ORDER BY qna_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			if(keyword==null || "".equals(keyword)) {
+				//전체 글 보기
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qna_board "
+						+ "ORDER BY qna_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+				//PreparedStatement 객체 생성
+				pstmt = conn.prepareStatement(sql);
+				//?에 데이터 바인딩
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+			}else {
+				//검색 글 보기
+				if(keyfield.equals("1")) sub_sql = "qna_title LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "qna_id = ?";
+				else if(keyfield.equals("3")) sub_sql = "qna_content LIKE ?";
+
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM qna_board WHERE " + sub_sql
+						+ " ORDER BY qna_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+				pstmt = conn.prepareStatement(sql);
+				if(keyfield.equals("2")) {
+					pstmt.setString(1, keyword);
+				}else {
+					pstmt.setString(1, "%"+keyword+"%");
+				}
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+				
+			}
 			
-			//PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			//?에 데이터 바인딩
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
 			
 			//SQL문을 실행하고 결과행을 ResultSet에 담음
 			rs=pstmt.executeQuery();
@@ -134,6 +170,7 @@ public class QnaBoardDAO {
 				QnaBoardVO qnaboardVO = new QnaBoardVO();
 				qnaboardVO.setQna_num(rs.getInt("qna_num"));
 				qnaboardVO.setQna_title(rs.getString("qna_title"));
+				qnaboardVO.setQna_passwd(rs.getString("qna_passwd"));
 				qnaboardVO.setQna_id(rs.getString("qna_id"));
 				qnaboardVO.setQna_date(rs.getDate("qna_date"));
 				

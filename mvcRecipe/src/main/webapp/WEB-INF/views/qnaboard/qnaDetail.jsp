@@ -381,22 +381,6 @@
    	<div style="padding-bottom: 50px;"></div>
 </div>
 </div>
-<script>
-// 관리자가 아니라면 비밀번호 체크
-<c:if test="${auth!=3 }">  
-var passwdCheck = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
-checkPassWd();
-
-function checkPassWd(){
-   if(passwdCheck==${qnaboard.qna_passwd} ){
-      return;
-   }else{
-      alert("비밀번호가 틀렸습니다.");
-      history.go(-1);
-   }
-}
-</c:if>
-</script>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>
