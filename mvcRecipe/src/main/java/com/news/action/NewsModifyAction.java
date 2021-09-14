@@ -46,6 +46,7 @@ public class NewsModifyAction implements Action {
 		news.setNews_num(num);
 		news.setNews_title(multi.getParameter("title"));
 		news.setNews_content(multi.getParameter("content"));
+		news.setNews_category(multi.getParameter("category"));
 		news.setNews_file(filename);
 		
 		dao.updateNews(news);
