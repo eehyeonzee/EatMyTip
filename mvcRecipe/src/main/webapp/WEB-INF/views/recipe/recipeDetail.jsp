@@ -116,6 +116,7 @@
 							// 폼 초기화 함수 호출
 							initForm();
 							// 댓글 작성이 성공하면 새로 삽입한 글을 포함해서 첫번째 페이지의 게시글을 다시 호출함
+							location.reload(true);
 							selectData(1);
 						}else{
 							alert("등록시 오류 발생");
@@ -190,9 +191,9 @@
 						var output = "<div class='item'>";
 								
 								if(item.photo != null){
-									output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 35px; width:40;" /></div>'
+									output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 47px; width:40;" class = "my-photo" /></div>'
 								}else{
-									output += '<div style ="width:40px; height:40px; float:left; padding-right: 4em;"><img src="${pageContext.request.contextPath}/images/logo.png" style="height: 35px; width:40;" /></div>'
+									output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 47px; width:40;" class = "my-photo"/></div>'
 								}
 								output += "<span><h4>" + item.id + "<h4></span>";
 								output += "<div class='sub-item'>";
@@ -461,7 +462,7 @@
 			<input type="hidden" name="mem_num" value="${ mem_num }" id="mem_num">
 			<textarea name="re_content" id="re_content" class="rep-content"
 				<c:if test="${ empty mem_num || auth == 1 }">disabled="disabled"</c:if>
-			><c:if test="${ empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 있습니다.</c:if></textarea>
+			><c:if test="${ empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 없습니다.</c:if></textarea>
 			<c:if test="${!empty mem_num && auth != 1}">
 			<div id="re_first">
 				<span class="letter-count">300/300</span>

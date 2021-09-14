@@ -24,6 +24,7 @@
 						var currentPage;
 						var count;
 						var rowCount;
+						var auth = ${auth};
 						//댓글 목록 시작
 						function selectData(pageNum) {
 							currentPage = pageNum;
@@ -58,8 +59,13 @@
 															function(index,
 																	item) {
 																var output = '<div class="item">'
+																if(item.photo != null){
+																	output += '<img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 50px; width:45; padding-right: 1em;" class = "my-photo" />';
+																}else{
+																	output += '<img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 50px; width:45; padding-right: 1em;" class = "my-photo"/>';
+																}
 																output += '<span style="font-size:14pt;">'
-																		+ item.name
+																		+ item.id
 																		+ '<span>';
 																output += '<div class="sub-item">';
 																output += '<p>'
@@ -69,9 +75,7 @@
 																		+ item.comm_date
 																		+ '</span>';
 																//로그인한 회원번호와 작성자의 일치여부 체크
-																if ($(
-																		'#mem_num')
-																		.val() == item.mem_num) {//로그인한 회원번호와 작성자 회원번호와 일치
+																if ($('#mem_num').val() == item.mem_num || auth == 3) {//로그인한 회원번호와 작성자 회원번호와 일치
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
 																}
@@ -93,8 +97,8 @@
 												$('.paging-button').show();
 											}
 										},
-										error : function() {
-											alert('리스트 뽑기 네트워크 오류 발생');
+										error : function(request,status,error){		// 에러메세지 반환
+											alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 										}
 									});
 						}
@@ -392,22 +396,21 @@
 		<%-- 댓글 내용 끝 --%>
 		<%-- 댓글 기능 시작 --%>
 		<div id="reply_div">
+			<span class="re-title">댓글 달기</span>
 			<div align="center">
-				<form id="news_comment_form">
-					<input type="hidden" name="news_num" value="${news.news_num}"
-						id="news_num"> <input type="hidden" name="mem_num"
-						value="${news.mem_num}" id="mem_num"> <input type="hidden"
-						name="auth" value="${auth}" id="auth">
-					<textarea rows="3" cols="50" name="re_content" id="re_content"
-						class="rep-content"
-						<c:if test="${empty mem_num}">disabled="disabled"</c:if>><c:if
-							test="${empty mem_num}">로그인해야 작성할 수 있습니다.</c:if></textarea>
-					<c:if test="${!empty mem_num}">
+				<form style="width : 750px; border : none;" id="news_comment_form">
+					<input type="hidden" name="news_num" value="${news.news_num}" id="news_num"> 
+					<input type="hidden" name="mem_num" value="${mem_num}" id="mem_num"> 
+					<input type="hidden" name="auth" value="${auth}" id="auth">
+					<textarea name="re_content" id="re_content" class="rep-content"
+						<c:if test="${empty mem_num || auth == 1}">disabled="disabled"</c:if>
+					><c:if test="${empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 없습니다.</c:if></textarea>
+					<c:if test="${!empty mem_num && auth != 1}">
 						<div id="re_first">
 							<span class="letter-count">300/300</span>
 						</div>
 						<div id="re_second">
-							<input type="submit" value="전송">
+							<input type="submit" value="등록">
 						</div>
 					</c:if>
 				</form>

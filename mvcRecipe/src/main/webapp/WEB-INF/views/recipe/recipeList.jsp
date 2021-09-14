@@ -137,7 +137,7 @@
 	            </span>
 	          <div class="card" style="height: 540px;">
 	            <div class="card-header">
-	              ${ recipe.id } 님
+	             <b style="font-size: 17px">${ recipe.id }</b> 님
 	              <span style="float: right;">
 	              추천 <b style="color: red;">${ recipe.recom_count }</b>
 	              </span>

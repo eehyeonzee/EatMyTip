@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.news.vo.NewsCommentsVO;
 import com.news.vo.NewsVO;
-import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.StringUtil;
 
@@ -330,7 +329,7 @@ public class NewsDAO {
 		Connection conn= null;
 		PreparedStatement pstmt= null;
 		String sql = null;
-		ResultSet rs= null;
+
 		
 		try {
 			conn=DBUtil.getConnection();
@@ -448,7 +447,13 @@ public class NewsDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.comm_num, TO_CHAR(b.comm_date,'YYYY-MM-DD HH24:MI:SS')comm_date, TO_CHAR(b.comm_modifydate,'YYYY-MM-DD HH24:MI:SS')comm_modifydate, b.comm_con, b.news_num, b.mem_num, m.name FROM comments b JOIN member_detail m ON b.mem_num=m.mem_num WHERE b.news_num=? ORDER BY b.comm_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
+			sql="SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT b.comm_num, TO_CHAR(b.comm_date,'YYYY-MM-DD HH24:MI:SS')comm_date, "
+					+ "TO_CHAR(b.comm_modifydate,'YYYY-MM-DD HH24:MI:SS')comm_modifydate, "
+					+ "b.comm_con, b.news_num, b.mem_num, m.id, md.photo "
+					+ "FROM comments b JOIN member_detail md ON b.mem_num=md.mem_num JOIN "
+					+ "member m ON b.mem_num=m.mem_num "
+					+ "WHERE b.news_num=? ORDER BY b.comm_num DESC)a) "
+					+ "WHERE rnum >= ? AND rnum <= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, news_num);
 			pstmt.setInt(2, start);
@@ -463,7 +468,9 @@ public class NewsDAO {
 				comments.setComm_con(StringUtil.useBrNoHtml(rs.getString("comm_con")));
 				comments.setNews_num(rs.getInt("news_num"));
 				comments.setMem_num(rs.getInt("mem_num"));
-				comments.setName(rs.getString("name"));
+				comments.setId(rs.getString("id"));
+				comments.setPhoto(rs.getString("photo"));
+				
 				list.add(comments);
 			}
 		}catch(Exception e) {
