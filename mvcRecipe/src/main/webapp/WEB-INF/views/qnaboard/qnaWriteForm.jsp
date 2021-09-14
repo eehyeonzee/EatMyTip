@@ -58,7 +58,7 @@ window.onload=function(){
 </head>
 <body>
 <div class="container">
-	<br>
+	<br><br>
 	<h2>글 작성</h2>
 	<hr size="1" noshade width="100%">
 	<form id="qnawrite_form" action="qnaWrite.do" method="post">
@@ -82,10 +82,12 @@ window.onload=function(){
 				<textarea class="form-control" rows="20" name="qna_content" id="qna_content"></textarea>
 				<br>
 			</div>
-				<input type="submit" value="글 등록" class="btn btn-outline-dark">&nbsp;
+			<div align="center">
+				<input type="submit" value="등록" class="btn btn-outline-dark">&nbsp;
 				<input type="button" value="목록" class="btn btn-outline-dark"  onclick="location.href='qnaList.do'"><br>
+			</div>
 		</form>
-</div>	
+</div>	<br><br>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

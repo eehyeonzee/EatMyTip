@@ -317,9 +317,10 @@
    <b>작성자 </b>&nbsp; ${qnaboard.qna_id} | <b>작성일</b> ${qnaboard.qna_date }
      <hr size="2" noshade width="100%">
    
-   <p align="center">
+   <!-- 상세글 내용 -->
+   <p align="center"><br>
       ${qnaboard.qna_content }
-   </p>
+   <br><br><br></p>
    
   <hr size="2" noshade width="100%">
    <%-- 댓글 목록 출력 시작 --%>
@@ -358,9 +359,13 @@
    <hr size="2" noshade width="100%">
    <%-- 댓글달기 끝 --%>
    
+	<%-- 하단 목록, 수정, 삭제 --%>   
+         <input type="button" value="목록"  style="color: black; background-color: white; border-color: #d5dfe8" 
+         		onclick="location.href='qnaList.do'">
+    <div style="float: right;">
          <%-- 로그인 한 회원번호와 작성자 회원번호가 일치해야 수정, 삭제 가능 --%>
-         <input type="button" value="수정" onclick="location.href='qnaModifyForm.do?qna_num=${qnaboard.qna_num}'">
-         <input type="button" value="삭제" id="qnaDelete_btn">
+         <input type="button" value="수정" onclick="location.href='qnaModifyForm.do?qna_num=${qnaboard.qna_num}'" style="color: black; background-color: white; border-color: #d5dfe8">
+         <input type="button" value="삭제" id="qnaDelete_btn" style="color: red; background-color: white; border-color: #d5dfe8">
          <script type="text/javascript">
             var qnaDelete_btn = document.getElementById('qnaDelete_btn');
             //이벤트 연결
@@ -372,10 +377,9 @@
             };
             
          </script>
-         
-         <input type="button" value="목록" onclick="location.href='qnaList.do'">
    </div>
    	<div style="padding-bottom: 50px;"></div>
+</div>
 </div>
 <script>
 // 관리자가 아니라면 비밀번호 체크
