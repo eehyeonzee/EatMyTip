@@ -30,6 +30,12 @@
 				$('#content').val('').focus();
 				return false;
 			}
+			if($('input:radio[name=category]').is(':checked')=='') {
+				alert('카테고리를 선택하세요!');
+				$('#category').focus();
+				$('#category').val('');
+				return false;
+			}
 		});
 	});
 </script>
@@ -40,28 +46,47 @@
 </head>
 <body>
 <div class="container">
-	<h2>공지사항 수정하기</h2>
+	<br><br>
+	<h2>레시피 수정</h2>	
+	<hr size="1" noshade width="100%">
 	<form id="modify_form" action="newsModify.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="news_num" id="news_num" value="${news.news_num}">
+		<div class="form-group">
+			<h6>카테고리</h6>
+			<input type="radio" id="news" name="category" value="공지사항">
+			<label for="news">공지사항</label>
+			<input type="radio" id="recipe" name="category" value="레시피">
+			<label for="news">레시피</label>
+			<input type="radio" id="bestrecipe" name="category" value="베스트레시피">
+			<label for="news">베스트레시피</label>
+			<input type="radio" id="event" name="category" value="이벤트">
+			<label for="news">이벤트</label>
+			<input type="radio" id="qna" name="category" value="문의사항">
+			<label for="news">문의사항</label><br>
+		</div>	
 		<div class="form-group">
 			<label for="title">제목</label>
 			<input type="text" class="form-control" name="title" id="title" value="${news.news_title}">
 		</div>
 			<div class="form-group">
-			<label for="content">내용</label><br><br>
+			<label for="content">내용</label>
 			<textarea class="form-control" id="content" rows="11" name="content">${news.news_content}</textarea>
 		</div>
 		<div class="form-group">
 			<label for="filename">파일</label>
-			<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
+			<input type="file" name="filename" id="filename" class="form-control-file border" accept="image/gif,image/png,image/jpeg">
 			<c:if test="${!empty news.news_file}">
 			<br>
 			<span>(${news.news_file})파일이 등록되어 있습니다. 다시 업로드하면 기존 파일은 삭제됩니다.</span>
 			</c:if>
 		</div>
-		  <button type="submit" class="btn btn-primary mb-2">수정 등록</button>	
-		  <input type="button" class="btn btn-primary mb-2" value="목록" onclick="location.href='newsList.do'">	
+		<div align="center">
+		<input type="submit" value="등록" class="btn btn-outline-dark">&nbsp;
+		<input type="button" value="취소" class="btn btn-outline-dark" onclick="location.href='newsList.do'">
+		</div>	
 	</form>
+	<br>
+	<br>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
