@@ -90,23 +90,23 @@
 <body>
 <!-- 본문 -->
 <div class = "container-fluid" style = "width:90%">
-	<div class="text-center col-sm-12 my-5">
+	<div align = "center" class="col-sm-12 my-5">
 	<div align = "left">
 		<h3>회원정보</h3>
 	</div>
 	<div class = "container row">
 		<div class = "mypage-div">
 			<h3>프로필 사진</h3>
-			<ul>
-				<li>
+			<ul class = "list-group">
+				<li class="list-group-item">
 					<c:if test = "${empty member.photo}">
-						<img src = "#" width = "100" height = "100" class = "my-photo">
+						<img src = "${pageContext.request.contextPath}/images/default_user.png" width = "100" height = "100" class = "my-photo">
 					</c:if>
 					<c:if test = "${!empty member.photo}">
 						<img src = "${pageContext.request.contextPath}/upload/${member.photo}" width = "100" height = "100" class = "my-photo">
 					</c:if>
 				</li>
-				<li>
+				<li class="list-group-item">
 				<br>
 					<div>
 						<input type = "button" class="btn btn-outline-dark" value = "수정" id = "photo_btn">
