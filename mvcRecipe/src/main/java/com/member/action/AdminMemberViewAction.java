@@ -20,25 +20,31 @@ public class AdminMemberViewAction implements Action{
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
 		Integer auth = (Integer)session.getAttribute("auth");
 		
-		String pageNum = request.getParameter("pageNum");
-		if(pageNum == null)pageNum = "1";
-		
-		MemberDAO dao = MemberDAO.getInstance();
-		int count = dao.getMemberCount();
-		
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 20, 10, "adminMemberView.do");
-		
-		List<MemberVO> list = null;
-		if(count > 0) {
-			list = dao.getListMember(page.getStartCount(), page.getEndCount());
-		}
-		
 		if(mem_num == null) {
 			return "redirect:/member/loginForm.do";
 		}
 		
 		if(auth != 3) {
-			return "redirect:/member/loginForm.do";
+			return "/WEB-INF/views/common/notice.jsp";
+		}
+		
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null)pageNum = "1";
+		
+		String keyfield = request.getParameter("keyfield");
+		String keyword = request.getParameter("keyword");
+		
+		if(keyfield == null) keyfield = "";
+		if(keyword == null) keyword = "";
+		
+		MemberDAO dao = MemberDAO.getInstance();
+		int count = dao.getMemberCount(keyfield, keyword);
+		
+		PagingUtil page = new PagingUtil(keyfield, keyword, Integer.parseInt(pageNum), count, 20, 10, "adminMemberView.do");
+		
+		List<MemberVO> list = null;
+		if(count > 0) {
+			list = dao.getListMember(page.getStartCount(), page.getEndCount(), keyfield, keyword);
 		}
 		
 		request.setAttribute("count", count);

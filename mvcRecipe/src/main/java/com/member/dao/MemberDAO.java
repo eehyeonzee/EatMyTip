@@ -540,18 +540,29 @@ public class MemberDAO {
 	 * @Method 설명 : 총 아이디 수 구하기
 	 */
 	
-	public int getMemberCount() throws Exception {
+	public int getMemberCount(String keyfield, String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
+		String sub_sql = null;
 		int count = 0;
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT COUNT(id) FROM member_detail d, member m WHERE d.mem_num = m.mem_num";
 			
-			pstmt = conn.prepareStatement(sql);
+			if(keyword == null || "".equals(keyword)) {
+				sql = "SELECT COUNT(*) FROM member m LEFT OUTER JOIN member_detail d USING (mem_num)";
+				pstmt = conn.prepareStatement(sql);
+			}else {
+				if(keyfield.equals("1")) sub_sql = "id LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql = "email LIKE ?";
+			
+				sql = "SELECT COUNT(*) FROM member m LEFT OUTER JOIN member_detail d USING (mem_num) WHERE " + sub_sql;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+			}
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -574,20 +585,33 @@ public class MemberDAO {
 	 * @Method 설명 : 가입한 회원 리스트 출력
 	 */
 
-	public List<MemberVO> getListMember(int start, int end)throws Exception {
+	public List<MemberVO> getListMember(int start, int end, String keyfield, String keyword)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<MemberVO> list = null;
 		String sql = null;
+		String sub_sql = null;
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM(SELECT m.mem_num, id, name, email, phone, to_char(birthday, 'yyyy-MM-dd') as birthday, auth, join_date FROM member_detail d JOIN member m ON d.mem_num = m.mem_num ORDER BY d.mem_num DESC)a) WHERE rnum >= ? AND rnum <= ?";
-		
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			
+			if(keyword == null || "".equals(keyword)) {
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT mem_num, id, name, email, phone, to_char(birthday, 'yyyy-MM-dd') as birthday, auth, join_date FROM member m LEFT OUTER JOIN member_detail d USING (mem_num) ORDER BY mem_num DESC NULLS LAST)a) WHERE rnum >= ? AND rnum <= ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+			}else {
+				if(keyfield.equals("1")) sub_sql = "id LIKE ?";
+				else if(keyfield.equals("2")) sub_sql = "name LIKE ?";
+				else if(keyfield.equals("3")) sub_sql = "email LIKE ?";
+				
+				sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT mem_num, id, name, email, phone, to_char(birthday, 'yyyy-MM-dd') as birthday, auth, join_date FROM member m LEFT OUTER JOIN member_detail d USING (mem_num) WHERE " + sub_sql + "  ORDER BY mem_num DESC NULLS LAST)a) WHERE rnum >= ? AND rnum <= ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}
 			
 			rs = pstmt.executeQuery();
 			list = new ArrayList<MemberVO>();

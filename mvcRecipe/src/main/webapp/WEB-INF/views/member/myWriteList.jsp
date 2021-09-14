@@ -48,8 +48,8 @@
 		<c:if test="${ !empty mem_num && (auth == 2 || auth == 3) }">
 				<form action="${pageContext.request.contextPath}/recipe/recipeWriteForm.do">
 					<input type="hidden" value="${ mem_num }" name="mem_num">
-					<input type="submit" value="글쓰기">
-					<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+					<input type="submit" class = "btn btn-outline-dark" value="글쓰기">
+					<input type="button" class = "btn btn-outline-dark" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 				</form>
 		</c:if>
 		</span>
@@ -109,7 +109,6 @@
 	<div align="center">
 		${ pagingHtml }
 	</div>
-	<br>
 </div>
 <footer>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

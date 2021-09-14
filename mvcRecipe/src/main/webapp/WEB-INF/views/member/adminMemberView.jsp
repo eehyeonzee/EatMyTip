@@ -118,6 +118,14 @@
 				    }
 				});
 		});
+		
+		$('#search_form').submit(function() {
+			if($('#keyword').val().trim() == '') {
+				alert('검색어를 입력하세요!');
+				$('#keyword').val('').focus();
+				return false;
+			}
+		});
 	});
 
 </script>
@@ -147,6 +155,7 @@
 			<tr>
 				<th scope="col">회원 번호</th>
 				<th scope="col">아이디</th>
+				<th scope="col">이름</th>
 				<th scope="col">이메일</th>
 				<th scope="col">전화번호</th>
 				<th scope="col">생년월일</th>
@@ -157,19 +166,21 @@
 			<c:forEach var = "member" items = "${list}">
 			<tr>
 				<th scope = "row">${member.mem_num}</th>
-				<td width = "200px">${member.id}</td>
-				<td width = "200px">${member.email}</td>
-				<td width = "200px">${member.phone}</td>
-				<td width = "200px">${member.birthday}</td>
-				<td width = "200px">${member.join_date}</td>
-				<td width = "150px">
+				<td>${member.id}</td>
+				<td>${member.name}</td>
+				<td>${member.email}</td>
+				<td>${member.phone}</td>
+				<td>${member.birthday}</td>
+				<td>${member.join_date}</td>
+				<td>
+					<c:if test="${member.auth == 0}">탈퇴회원</c:if>
 				    <c:if test="${member.auth == 1}">정지회원</c:if>
 				    <c:if test="${member.auth == 2}">일반회원</c:if>
 				    <c:if test="${member.auth == 3}">관리자</c:if>
 				</td>
 				<td>
-				    <c:if test="${member.auth != 3}">
-				    	<input type = "checkbox" value = "${member.mem_num}">
+				    <c:if test="${member.auth != 3 && member.auth != 0}">
+				    	<input type = "checkbox" aria-label="Checkbox for following text input" value = "${member.mem_num}">
 				    </c:if>
 				</td>
 			</tr>
@@ -180,7 +191,22 @@
 		</div>
 	</c:if>
 	</div>
+	<div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+	<br>  
+	<form action="adminMemberView.do" method="get" id="search_form">
+		<select name="keyfield">
+			<option value="1">아이디</option>
+			<option value="2">이름</option>
+			<option value="3">이메일</option>
+		</select>
+		<input type="search" name="keyword" id = "keyword" style="height: 28px;" placeholder="검색어를 입력하세요.">
+		<input type="submit" value="검색">
+	</form>
+		<br>
+	</div>
 </div>
+<footer>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+</footer>
 </body>
 </html>
