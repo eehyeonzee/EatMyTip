@@ -19,6 +19,17 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('search_form').submit(function(){
+			if($('#keyword').val().trim()==''){
+				alert('검색어를 입력하세요!');
+				$('#keyword').val('').focus();
+				return false;
+			}
+		});
+	});
+</script>
 </head>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
@@ -28,7 +39,6 @@
     <div align="left">
 		<h3>문의 게시판</h3>
 	</div>
-		
 		<div align="left">
 		
 		<br>
@@ -79,7 +89,21 @@
 		<div class="row">
 			<div class="col text-center mt-4 mb-n1">${pagingHtml}<br><br></div>
 		</div>
-	
+		<%-- 검색 시작 --%>
+		<div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+		<br>
+		<form id="search_form" action="qnaList.do" method="get">
+				<select name="keyfield">
+					<option value="1">제목</option>
+					<option value="2">작성자</option>
+					<option value="3">내용</option>
+				</select>
+				<input type="search" name="keyword" id="keyword" placeholder="검색어를 입력하세요.">
+				<input type="submit" value="검색">
+	</form>
+	<br>
+	</div>
+	<%-- 검색 끝 --%>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
