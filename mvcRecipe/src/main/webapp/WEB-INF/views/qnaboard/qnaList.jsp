@@ -28,6 +28,16 @@
 				return false;
 			}
 		});
+		
+		$(document).on("click",".next_page",function(){
+			var inputPasswd = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
+			var qna_passwd = $(this).attr("data-bnum");
+			  
+			if(inputPasswd != qna_passwd){
+				alert("비밀번호가 틀렸습니다.");
+				event.preventDefault();		// 이벤트 취소
+			}
+		});
 	});
 </script>
 </head>
@@ -72,8 +82,8 @@
 			<c:forEach var="qnaboard" items="${list }">
 			<tr>
 				<td>${qnaboard.qna_num}</td>
-				<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}"
-				>${qnaboard.qna_title}</a></td>
+				<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
+				${qnaboard.qna_title}</a></td>
 				<td>${qnaboard.qna_id}</td>
 				<td>${qnaboard.qna_date}</td>
 			</tr>

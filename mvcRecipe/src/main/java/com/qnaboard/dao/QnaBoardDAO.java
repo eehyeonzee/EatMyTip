@@ -170,6 +170,7 @@ public class QnaBoardDAO {
 				QnaBoardVO qnaboardVO = new QnaBoardVO();
 				qnaboardVO.setQna_num(rs.getInt("qna_num"));
 				qnaboardVO.setQna_title(rs.getString("qna_title"));
+				qnaboardVO.setQna_passwd(rs.getString("qna_passwd"));
 				qnaboardVO.setQna_id(rs.getString("qna_id"));
 				qnaboardVO.setQna_date(rs.getDate("qna_date"));
 				

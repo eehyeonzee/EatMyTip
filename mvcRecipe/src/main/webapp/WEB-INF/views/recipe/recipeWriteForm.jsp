@@ -72,7 +72,7 @@
 			<li>
 				<div>
 				<label for="content"></label>
-				<textarea class="form-control" id="content" rows="11" name="content"></textarea>
+				<textarea class="form-control" id="content" rows="20" name="content"></textarea>
 				</div>
 			</li>
 			<li>
