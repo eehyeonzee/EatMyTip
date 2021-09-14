@@ -10,9 +10,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 //유효성 체크
 window.onload=function(){
@@ -79,7 +80,7 @@ window.onload=function(){
 
 			<div class="form-group">
 				<br><label for="qna_content">내용</label>
-				<textarea class="form-control" rows="20" name="qna_content" id="qna_content"></textarea>
+				<textarea class="form-control" rows="11" name="qna_content" id="qna_content"></textarea>
 				<br>
 			</div>
 			<div align="center">

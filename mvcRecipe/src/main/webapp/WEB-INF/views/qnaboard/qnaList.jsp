@@ -30,13 +30,15 @@
 		});
 		
 		$(document).on("click",".next_page",function(){
-			var inputPasswd = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
-			var qna_passwd = $(this).attr("data-bnum");
-			  
-			if(inputPasswd != qna_passwd){
-				alert("비밀번호가 틀렸습니다.");
-				event.preventDefault();		// 이벤트 취소
-			}
+			<c:if test="${auth != 3}">
+				var inputPasswd = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
+				var qna_passwd = $(this).attr("data-bnum");
+				  
+				if(inputPasswd != qna_passwd){
+					alert("비밀번호가 틀렸습니다.");
+					event.preventDefault();		// 이벤트 취소
+				}
+			</c:if>
 		});
 	});
 </script>

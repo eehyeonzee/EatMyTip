@@ -12,9 +12,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		// 이벤트 연결

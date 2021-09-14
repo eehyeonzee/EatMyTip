@@ -4246,6 +4246,7 @@ input[type="button"].btn-block {
 }
 
 .nav-link:hover, .nav-link:focus {
+  color: #ffffff;
   text-decoration: none;
 }
 
