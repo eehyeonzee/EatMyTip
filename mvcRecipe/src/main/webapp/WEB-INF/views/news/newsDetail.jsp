@@ -415,6 +415,8 @@
 
 		<%-- 댓글 기능 끝 --%>
 		<%--하단에 목록, 수정,삭제  --%>
+				<hr size="2" noshade width="100%">
+		<br>
 		<input type="button" value="목록"
 			style="color: black; background-color: white; border-color: #d5dfe8"
 			onclick="history.go(-1)">

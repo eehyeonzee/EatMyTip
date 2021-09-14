@@ -14,6 +14,7 @@
 <head>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script type = "text/javascript" src = "../js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,8 +47,10 @@
 </head>
 <body>
 <div class="container">
-	<h2>공지사항 쓰기</h2>
-	<form id="news_form" action="newsWrite.do" method="post" enctype="multipart/form-data">
+	<br><br>
+	<h2>레시피 수정</h2>	
+	<hr size="1" noshade width="100%">
+	<form id="news_form" action="newsWrite.do" method="post" enctype="multipart/form-data">	
 		<div class="form-group">
 			<h6>카테고리</h6>
 			<input type="radio" id="news" name="category" value="공지사항">
@@ -63,18 +66,26 @@
 		</div>
 		<div class="form-group">
 			<label for="title">제목</label>
-			<input type="text" class="form-control" name="title" id="title">
+			<input type="text" class="form-control" name="title" id="title" maxlength="50">
 		</div>
 			<div class="form-group">
 			<label for="content">내용</label>
 			<textarea class="form-control" id="content" rows="11" name="content"></textarea>
+		<br>
 		</div>
 		<div class="form-group">
 			<label for="filename">파일</label>
-			<input type="file" name="filename" id="filename" accept="image/gif,image/png,image/jpeg">
+			<input type="file" name="filename" id="filename" class="form-control-file border" accept="image/gif,image/png,image/jpeg">
 		</div>
-		  <button type="submit" class="btn btn-primary mb-2">글 등록</button>	
+		<br>
+		<br>
+		<div align="center">
+		<input type="submit" value="등록" class="btn btn-outline-dark">&nbsp;
+		<input type="button" value="취소" class="btn btn-outline-dark" onclick="location.href='newsList.do'">
+		</div>
 	</form>
+	<br>
+	<br>	
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
