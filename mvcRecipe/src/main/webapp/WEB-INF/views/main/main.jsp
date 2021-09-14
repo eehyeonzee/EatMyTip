@@ -42,8 +42,12 @@
 				<hr style="width:80%">
 				<span>새로운 소식을 알려드립니다.</span>
 				<c:if test="${news_count==0}">
+				<br>
+				<span> 현재 공지사항이 없습니다.</span>
+				<br>
 				</c:if>
 				<c:if test="${news_count>0}">
+				<br>
 				<table class="table mt-5 pt-5">
 					<thead>
 						<tr>
@@ -84,7 +88,7 @@
 						<span style="float: right; font-size: 14px;">
 						조회 ${recipe.hits}
 						</span>
-						<div class="card" style="height: 500px;">
+						<div class="card" style="height: 400px;">
 							<div class="card-header">
 								${recipe.id} 님
 								<span style="float: right;">
@@ -101,11 +105,6 @@
 							</c:if>
 							<div class="card-body">
 								<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}" class="btn btn-outline-dark">${recipe.title}</a></h5>
-								<div class="box">
-									<div class="content">
-										<p class="card-text">${recipe.sub_content}</p>
-									</div>
-								</div>
 								<br>
 							</div>
 						</div>
@@ -145,7 +144,7 @@
 				<span style="float: right; font-size: 14px;">
 				조회 ${recipe.hits}
 				</span>
-				<div class="card" style="height: 500px;">
+				<div class="card" style="height: 400px;">
 					<div class="card-header">
 						${recipe.id} 님
 						<span style="float: right;">
