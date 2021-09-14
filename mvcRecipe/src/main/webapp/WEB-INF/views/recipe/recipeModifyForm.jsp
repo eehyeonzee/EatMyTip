@@ -71,7 +71,7 @@
 			</li>
 			<li>
 				<label for="content"></label>
-				<textarea class="form-control" id="content" rows="20" name="content">${recipe.content}</textarea>
+				<textarea class="form-control" id="content" rows="11" name="content">${recipe.content}</textarea>
 			</li>
 			<li>
 				<div>

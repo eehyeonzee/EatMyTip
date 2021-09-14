@@ -67,7 +67,7 @@
 		</div>
 			<div class="form-group">
 			<label for="content">내용</label>
-			<textarea class="form-control" id="content" rows="20" name="content"></textarea>
+			<textarea class="form-control" id="content" rows="11" name="content"></textarea>
 		</div>
 		<div class="form-group">
 			<label for="filename">파일</label>
