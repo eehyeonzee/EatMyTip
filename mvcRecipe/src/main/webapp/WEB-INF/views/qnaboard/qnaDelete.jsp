@@ -7,6 +7,6 @@
  * 수정일 : 
 --%>
 <script type="text/javascript">
-	alert('레시피가 삭제되었습니다.');
+	alert('문의사항이 삭제되었습니다.');
 	location.href='${pageContext.request.contextPath }/qnaboard/qnaList.do';
 </script>

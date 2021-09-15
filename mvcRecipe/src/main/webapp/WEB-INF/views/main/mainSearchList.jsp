@@ -200,7 +200,7 @@
 							<th>작성자</th>
 							<th>작성일</th>
 						</tr>
-						<c:forEach var="qnaboard" items="${qnaList}">
+						<c:forEach var="qnaboard" items="${list}">
 							<tr>
 								<td>${qnaboard.qna_num}</td>
 								<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
