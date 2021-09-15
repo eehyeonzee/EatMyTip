@@ -68,7 +68,9 @@
         <!-- 반복문 시작 -->
         	<c:forEach var="recipe" items="${ list }">
 	       	<div class="col-3">
-	            <b>No. ${ recipe.board_num }</b> 
+	       		<div style = "text-align : left;">
+	            	<b>No. ${ recipe.board_num }</b> 
+	            </div>
 	            <span style="float: right; font-size: 14px;">
 	            조회 ${ recipe.hits }
 	            </span>
