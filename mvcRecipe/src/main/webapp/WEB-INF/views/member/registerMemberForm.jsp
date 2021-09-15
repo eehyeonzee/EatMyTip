@@ -179,7 +179,7 @@
 		<form id = "register_form" action = "registerMember.do" method = "post">
 			<div class = "form-group row">
 				<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
-				<input type = "text" class = "col-sm-4 form-control mr-4" name = "id" id = "id" maxlength = "12">
+				<input type = "text" class = "col-sm-4 form-control mr-4" name = "id" id = "id" maxlength = "10">
 				<input type = "button" class = "btn btn-outline-dark" value = "ID 중복체크" id = "id_check">
 				&emsp;<span id = "message_id"></span>
 			</div>
