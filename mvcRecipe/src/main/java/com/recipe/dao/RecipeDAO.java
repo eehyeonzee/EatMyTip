@@ -1168,7 +1168,7 @@ public class RecipeDAO {
 			// 目池记 钱肺何磐 目池记 且寸
 			conn = DBUtil.getConnection();
 			// SQL巩 累己
-			sql = "select comm_count from recipe_board where board_num = ?";
+			sql = "select count(*) from comments where board_num = ?";
 			
 			// PreparedStatement 按眉 积己
 			pstmt = conn.prepareStatement(sql);
@@ -1180,7 +1180,7 @@ public class RecipeDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				count = rs.getInt("comm_count");
+				count = rs.getInt(1);
 			}
 			
 		}catch(Exception e) {

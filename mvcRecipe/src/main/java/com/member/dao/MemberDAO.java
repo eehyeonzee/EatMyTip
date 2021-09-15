@@ -258,6 +258,9 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
 		String sql = null;
 		
 		try {
@@ -273,12 +276,30 @@ public class MemberDAO {
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, mem_num);
 			pstmt2.executeUpdate();
+		
+			sql = "DELETE FROM comments WHERE mem_num = ?";
+			pstmt3 = conn.prepareStatement(sql);
+			pstmt3.setInt(1, mem_num);
+			pstmt3.executeUpdate();
+			
+			sql = "DELETE FROM bookmark WHERE mem_num = ?";
+			pstmt4 = conn.prepareStatement(sql);
+			pstmt4.setInt(1, mem_num);
+			pstmt4.executeUpdate();
+			
+			sql = "DELETE FROM recommend WHERE mem_num = ?";
+			pstmt5 = conn.prepareStatement(sql);
+			pstmt5.setInt(1, mem_num);
+			pstmt5.executeUpdate();
 			
 			conn.commit();
 		}catch (Exception e) {
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt5, null);
+			DBUtil.executeClose(null, pstmt4, null);
+			DBUtil.executeClose(null, pstmt3, null);
 			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
@@ -688,7 +709,7 @@ public class MemberDAO {
 	 * @Method 메소드명  : stopMember
 	 * @작성일     : 2021. 9. 11. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 * @Method 설명 : 회원을 정지 회원으로 설정
 	 */
 	
 	public void stopAdminMember(String mem_num)throws Exception {
@@ -716,13 +737,16 @@ public class MemberDAO {
 	 * @Method 메소드명  : stopMember
 	 * @작성일     : 2021. 9. 11. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 * @Method 설명 : 회원을 탈퇴 시킬 수 있는 설정
 	 */
 	
 	public void deleteAdminMember(String mem_num)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
 		String sql = null;
 		
 		try {
@@ -740,11 +764,30 @@ public class MemberDAO {
 			pstmt2.setString(1, mem_num);
 			pstmt2.executeUpdate();
 			
+			sql = "DELETE comments WHERE mem_num = ?";
+			pstmt3 = conn.prepareStatement(sql);
+			pstmt3.setString(1, mem_num);
+			pstmt3.executeUpdate();
+			
+			sql = "DELETE bookmark WHERE mem_num = ?";
+			pstmt4 = conn.prepareStatement(sql);
+			pstmt4.setString(1, mem_num);
+			pstmt4.executeUpdate();
+			
+			sql = "DELETE recommend WHERE mem_num = ?";
+			pstmt5 = conn.prepareStatement(sql);
+			pstmt5.setString(1, mem_num);
+			pstmt5.executeUpdate();
+					
 			conn.commit();
 		}catch(Exception e) {
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt5, null);
+			DBUtil.executeClose(null, pstmt4, null);
+			DBUtil.executeClose(null, pstmt3, null);
+			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
@@ -755,7 +798,7 @@ public class MemberDAO {
 	 * @Method 메소드명  : upAdminMember
 	 * @작성일     : 2021. 9. 13. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 관리자 정지 회원을 다시 일반 회원으로 설정
+	 * @Method 설명 : 정지 회원을 다시 일반 회원으로 설정
 	 */
 	public void upAdminMember(String mem_num)throws Exception {
 		Connection conn = null;

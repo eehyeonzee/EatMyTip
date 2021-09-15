@@ -76,13 +76,13 @@
 		<ul class = "list-group">
 			<li class = "list-group-item">
 				<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
-				: ${member.id}
+				${member.id}
 				&emsp;
 				<input type = "button" class = "btn btn-outline-dark" value = "회원 탈퇴" onclick = "location.href='deleteMemberForm.do'">
 			</li>
 			<li class = "list-group-item">
 				<label for = "name" class = "col-sm-2 col-form-label">이름</label>
-				: ${member.name}
+				${member.name}
 			</li>
 			<li class = "list-group-item">
 				<label for = "nowpasswd" class = "col-sm-2 col-form-label">현재 비밀번호</label>
@@ -107,11 +107,11 @@
 			</li>
 			<li class = "list-group-item" class = "col-sm-2 col-form-label">
 				<label for = "birthday" class = "col-sm-2 col-form-label">생년월일</label>
-				: ${member.birthday}
+				${member.birthday}
 			</li>
 			<li class = "list-group-item">
 				<label class = "col-sm-2 col-form-label">비밀번호 힌트</label>
-				 : 가장 좋아하는 요리는?
+				 가장 좋아하는 요리는?
 			</li>
 			<li class = "list-group-item">
 				<label for = "passkey" class = "col-sm-2 col-form-label">비밀번호 정답</label>

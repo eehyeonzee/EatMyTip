@@ -43,7 +43,7 @@
 </head>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
-<div class="container-fluid" style="width :90%;">
+<div class="container-fluid contents-wrap" style="width :90%;">
       <div class="row" style="width :100%;">
       <div class="text-center col-md-12 my-5">
       <div align="left">
@@ -122,7 +122,7 @@
       <div align="center">
 	        	${ pagingHtml }
 	  </div>
-      <div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+      <div align="center" style="width :100%; height: 100%;">
 	        <br>
 	        <%-- 검색부분 --%>  
 		<form action="${pageContext.request.contextPath}/recipe/recipeList.do" method="get" name="search_form" id="search_form">
