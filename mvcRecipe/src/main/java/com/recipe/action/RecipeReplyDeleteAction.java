@@ -33,10 +33,11 @@ public class RecipeReplyDeleteAction implements Action{
 		Map<String,String> mapAjax = new HashMap<String, String>();
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");		// 로그인 회원 번호
+		Integer auth = (Integer)session.getAttribute("auth");
 		
 		if(mem_num == null) {	// 로그인 x
 			mapAjax.put("result", "logout");
-		}else if(mem_num != null && mem_num == writer_num) {	// 로그인 O 작성자와 일치
+		}else if((mem_num!=null && mem_num == writer_num) || auth == 3) {	// 로그인 O 작성자와 일치 or 관리자인경우
 			RecipeDAO dao = RecipeDAO.getInstance();
 			dao.deleteRecipeCommend(comm_num);
 			mapAjax.put("result", "success");

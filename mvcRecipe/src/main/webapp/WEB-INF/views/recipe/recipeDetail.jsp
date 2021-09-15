@@ -200,7 +200,7 @@
 									output += "<p style='font-size:16px;'>" + item.comm_con + "</p>";
 									output += "<span style='font-size:14px;'>" + item.comm_date + "</span>";
 									// 로그인한 회원번호와 작성자의 회원번호 일치 여부 체크
-									if($("#mem_num").val() == item.mem_num){
+									if(($("#mem_num").val() == item.mem_num) || $("#mem_auth").val() == 3){
 										// 댓글 번호와 회원번호를 속성을 통해 값을 준다. (커스텀 데이터 속성을 만들어서) 이걸로인해 수정이나 삭제 처리가 쉽다.
 										output += " <input type='button' data-renum='" + item.comm_num + "' data-memnum='"+item.mem_num+"' value='수정' style='font-size:14px;' class='modify-btn'>";		// 댓글번호와 작성자 번호 속성을 만들었다 data-만들속성명
 										output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" style="font-size:14px;" class="delete-btn">';
@@ -251,6 +251,7 @@
 			var modifyUI = "<form id='mre_form'>";
 				modifyUI += "	<input type='hidden' name='comm_num' id='mre_num' value='" + comm_num + "'>";
 				modifyUI += "	<input type='hidden' name='writer_num' id='muser_num' value='" + writer_num + "'>";
+				//modifyUI += "	<input type='hidden' name='user_auth' id='muser_auth' value='${auth}'>";
 				modifyUI += "	<textarea rows='3' cols='50' name='comm_con' id='mre_content' class='rep-content'>" + content + "</textarea>";
 				modifyUI += "	<div id='mre_first'><span class='letter-count'>300/300</span></div>";
 				modifyUI += "	<div id='mre_second' align='right'>";
@@ -460,6 +461,7 @@
 		<form id="re_form">
 			<input type="hidden" name="board_num" value="${ recipe.board_num }" id="board_num">
 			<input type="hidden" name="mem_num" value="${ mem_num }" id="mem_num">
+			<input type="hidden" name="mem_auth" value="${ auth }" id="mem_auth">
 			<textarea name="re_content" id="re_content" class="rep-content"
 				<c:if test="${ empty mem_num || auth == 1 }">disabled="disabled"</c:if>
 			><c:if test="${ empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 없습니다.</c:if></textarea>
