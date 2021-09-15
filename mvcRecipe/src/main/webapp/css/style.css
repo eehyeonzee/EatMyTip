@@ -5,7 +5,7 @@ html, body {
    height:100%;
 }
 .contents-wrap {
-   min-height:53.3%;
+   min-height:57.1%;
    position:relative;
    padding-bottom:30px;/* footer height */
 }
@@ -55,7 +55,7 @@ div#reply_div {
    background-color : #eeeeee;
 }
 form#re_form {
-   width : 650px;
+   width : 750px;
    border : none;
 }
 span.re-title {
@@ -73,7 +73,7 @@ span.form-id {
 }
 textarea.rep-content {
    width : 100%;
-   height : 100px;
+   height : 180px;
    margin : 10px 10px;
 }
 div#re_first {

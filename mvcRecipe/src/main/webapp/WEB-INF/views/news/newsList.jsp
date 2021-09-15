@@ -96,7 +96,7 @@
 			</c:if>
 			<!-- 검색 -->
 			<div align="center"
-				style="background-color: #f5f5ff; width: 100%; height: 100%;">
+				style="width: 100%; height: 100%;">
 				<br>
 				<form id="search_form" action="newsList.do" method="get">
 					<select name="division">

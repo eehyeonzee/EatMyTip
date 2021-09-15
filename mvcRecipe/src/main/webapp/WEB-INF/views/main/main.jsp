@@ -11,20 +11,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		// 카드형 게시물 50글자 초과시 ... 처리
-		$('.box').each(function() {
-			var content = $(this).children('.content');
-			var content_txt = content.text();
-			var content_txt_short = content_txt.substring(0,50)+"...";
-			
-			if(content_txt.length >= 50) {
-				content.html(content_txt_short);
-			}
-		});
-	});
-</script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
@@ -161,11 +147,6 @@
 					</c:if>
 					<div class="card-body">
 						<h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${recipe.board_num}" class="btn btn-outline-dark">${recipe.title}</a></h5>
-						<div class="box">
-							<div class="content">
-								<p class="card-text">${recipe.sub_content}</p>
-							</div>
-						</div>
 						<br>
 					</div>
 				</div>

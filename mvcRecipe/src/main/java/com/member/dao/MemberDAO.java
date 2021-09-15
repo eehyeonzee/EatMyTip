@@ -278,6 +278,16 @@ public class MemberDAO {
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, mem_num);
 			pstmt2.executeUpdate();
+		
+			sql = "DELETE FROM comments WHERE mem_num = ?";
+			pstmt3 = conn.prepareStatement(sql);
+			pstmt3.setInt(1, mem_num);
+			pstmt3.executeUpdate();
+			
+			sql = "DELETE FROM bookmark WHERE mem_num = ?";
+			pstmt4 = conn.prepareStatement(sql);
+			pstmt4.setInt(1, mem_num);
+			pstmt4.executeUpdate();
 			
 			// 회원이 북마크 등록한 모든 게시물의 북마크 내역 삭제
 			sql = "DELETE FROM bookmark WHERE mem_num = ?";
@@ -297,6 +307,8 @@ public class MemberDAO {
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt4, null);
+			DBUtil.executeClose(null, pstmt3, null);
 			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
@@ -446,6 +458,8 @@ public class MemberDAO {
 		return count;
 	}
 	
+	// 작성한 글 조회
+	
 	/**
 	 * @Method 메소드명  : getTotalRecipeList
 	 * @작성일     : 2021. 9. 9. 
@@ -494,13 +508,55 @@ public class MemberDAO {
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
-			// 자원정리
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		
 		return list;
 	}
-
+	
+	/**
+	 * @Method 메소드명  : getRecipeCount
+	 * @작성일     : 2021. 9. 9. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 아이디 별 북마크 count 조회
+	 */
+	public int getBookmarkCount(String id)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		MemberVO member = null;
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT COUNT(id) id FROM bookmark b JOIN member m ON b.mem_num = m.mem_num WHERE id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();	
+			
+			if(rs.next()) {
+				member = new MemberVO();
+				count = rs.getInt(1);
+				
+				member.setId(rs.getString("id"));
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return count;
+	}
+	
+	// 북마크 리스트 조회
+	
+	/**
+	 * @Method 메소드명  : getBookMarkRecipeList
+	 * @작성일     : 2021. 9. 15. 
+	 * @작성자     : 박용복
+	 * @Method 설명 : 북마크 리스트 조회
+	 */
 	public List<RecipeVO> getBookMarkRecipeList(int start, int end, int mem_num) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -690,13 +746,15 @@ public class MemberDAO {
 	 * @Method 메소드명  : stopMember
 	 * @작성일     : 2021. 9. 11. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 * @Method 설명 : 멤버를 탈퇴 회원으로 설정
 	 */
 	
 	public void deleteAdminMember(String mem_num)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
 		String sql = null;
 		
 		try {
@@ -714,11 +772,21 @@ public class MemberDAO {
 			pstmt2.setString(1, mem_num);
 			pstmt2.executeUpdate();
 			
+			sql = "DELETE comments WHERE mem_num = ?";
+			pstmt3 = conn.prepareStatement(sql);
+			pstmt3.setString(1, mem_num);
+			pstmt3.executeUpdate();
+			
+			sql = "DELETE bookmark WHERE mem_num = ?";
+			
 			conn.commit();
 		}catch(Exception e) {
 			conn.rollback();
 			throw new Exception(e);
 		}finally {
+			DBUtil.executeClose(null, pstmt4, null);
+			DBUtil.executeClose(null, pstmt3, null);
+			DBUtil.executeClose(null, pstmt2, null);
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}

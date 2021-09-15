@@ -12,16 +12,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>메인화면</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 카드형 게시물 50글자 초과시 ... 처리
+		$('.box').each(function() {
+			var content = $(this).children('.content');
+			var content_txt = content.text();
+			var content_txt_short = content_txt.substring(0,50)+"...";
+			
+			if(content_txt.length >= 50) {
+				content.html(content_txt_short);
+			}
+		});
+		$(document).on("click",".next_page",function(){
+			<c:if test="${auth != 3}">
+				var inputPasswd = prompt("비밀번호를 입력해주세요", "비밀번호를 입력해주세요");
+				var qna_passwd = $(this).attr("data-bnum");
+				if(inputPasswd != qna_passwd){
+					alert("비밀번호가 틀렸습니다.");
+					event.preventDefault();		// 이벤트 취소
+				}
+			</c:if>
+		});
+	});
+</script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
+	<!-- 본문 -->
 	<!-- 본문 -->
 	<!-- 공지사항 검색 시작 -->
 	<div class="container-fluid" style="width: 90%;">
@@ -42,6 +67,7 @@
 					<h3>등록된 게시물이 없습니다.</h3>
 				</div>
 			</c:if>
+			<div class="container-fluid mt-3 mb-5" style="width: 90%;">
 			<c:if test="${news_count > 0 }">
 				<table class="table">
 					<thead>
@@ -57,7 +83,7 @@
 							<tr>
 								<td>${news.news_num}</td>
 								<td>${news.news_category}</td>
-								<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+								<td><a href="../news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
 								<td><img
 									src="${pageContext.request.contextPath}/images/crown.gif"
 									style="height: 25px; width: 30;" />${news.id}</td>
@@ -67,13 +93,12 @@
 						</c:forEach>
 					</thead>
 				</table>
-				<div class="row">
 					<br>
-					<div align="center">${pagingHtmlNews}</div>
-				</div>
 			</c:if>
+					<div align="center">${pagingHtmlNews}</div>
 			<br>
 			<br>
+			</div>
 		</div>
 	</div>
 	<!-- 공지사항 검색 끝 -->
@@ -126,12 +151,12 @@
 							</c:if>
 							<div class="card-body">
 								<h5 class="card-title">
-									<a href="recipeDetail.do?board_num=${ recipe.board_num }"
+									<a href="../recipe/recipeDetail.do?board_num=${ recipe.board_num }"
 										class="btn btn-outline-dark">${ recipe.title }</a>
 								</h5>
 								<div class="box">
 									<div class="content">
-										<p class="card-text">${ recipe.sub_content }</p>
+										<p class="card-text">${ recipe.content }</p>
 									</div>
 								</div>
 								<br>
@@ -145,8 +170,56 @@
 		</div>
 		<div align="center">${ pagingHtmlRecipe }</div>
 	</div>
-	<hr>
-	<hr>
+	<br>
+	<br>
+	<!-- 고객센터게시판 시작 -->
+		<div class="container-fluid" style="width: 90%;">
+		<div class="row" style="width: 100%">
+			<div class="container text-center mt-5">
+				<div align="left">
+					<h3>문의 게시판</h3>
+				</div>
+				<div align="left">
+					<br> 게시물 <span style="font-weight: bold; color: red;">${qna_count}</span>개
+				</div>
+			</div>
+			<hr size="2" noshade width="85%">
+			<br>
+			<!-- 테이블 시작 -->
+			<c:if test="${qna_count == 0}">
+				<div class="container mt-5">
+					<h3>등록된 게시물이 없습니다.</h3>
+				</div>
+			</c:if>
+			<div class="container-fluid mt-3 mb-5" style="width: 90%;">
+			<c:if test="${qna_count > 0 }">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>글번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+						</tr>
+						<c:forEach var="qnaboard" items="${qnaList}">
+							<tr>
+								<td>${qnaboard.qna_num}</td>
+								<td><a href="../qnaboard/qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
+								${qnaboard.qna_title}</a></td>
+								<td>${qnaboard.qna_id}</td>
+								<td>${qnaboard.qna_date}</td>
+							</tr>
+						</c:forEach>
+					</thead>
+				</table>
+					<br>
+			</c:if>
+					<div align="center">${pagingHtmlQna}</div>
+			<br>
+			<br>
+			</div>
+		</div>
+	</div>
 	<hr>
 </body>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.news.vo.NewsVO;
+import com.qnaboard.vo.QnaBoardVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.StringUtil;
@@ -96,6 +97,68 @@ public class MainDAO {
 		return recipe_count;
 	}
 
+		public int searchQnaCount (String search) throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			//고객센터 개시글 개수 보관
+			int qna_count = 0;
+			try {
+				conn= DBUtil.getConnection();
+				sql="select count(*) from qna_board Where qna_title Like ? or qna_content Like ? or qna_id Like ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, '%' + search + '%');
+				pstmt.setString(2, '%' + search + '%');
+				pstmt.setString(3, '%' + search + '%');
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					qna_count = rs.getInt(1);
+				}
+			}catch (Exception e) {
+				throw new Exception(e);
+			}finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return qna_count;
+		}
+		
+		public List<QnaBoardVO> getQnaList(int startCount, int endCount, String search) throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			List<QnaBoardVO> qnaList = null;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql="select * from (select a.*, rownum rnum from(select * from qna_board where qna_title like ? or qna_content like ? or qna_id like ? order by qna_num desc)a) where rnum >=? and rnum <=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%" + search + "%");
+				pstmt.setString(2, "%" + search + "%");
+				pstmt.setString(3, "%" + search + "%");
+				pstmt.setInt(4, startCount);
+				pstmt.setInt(5, endCount);
+				rs=pstmt.executeQuery();
+				qnaList = new ArrayList<QnaBoardVO>();
+				while(rs.next()) {
+					QnaBoardVO qnaboardVO = new QnaBoardVO();
+					qnaboardVO.setQna_num(rs.getInt("qna_num"));
+					qnaboardVO.setQna_title(rs.getString("qna_title"));
+					qnaboardVO.setQna_passwd(rs.getString("qna_passwd"));
+					qnaboardVO.setQna_id(rs.getString("qna_id"));
+					qnaboardVO.setQna_date(rs.getDate("qna_date"));
+					
+					//자바빈(VO)을 ArrayList에 저장
+					qnaList.add(qnaboardVO);
+				}
+			}catch (Exception e) {
+				throw new Exception(e);
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return qnaList;
+		}
 	/**
 	 * @Method 메소드명 : getNewsList
 	 * @작성일 : 2021. 9. 13.
