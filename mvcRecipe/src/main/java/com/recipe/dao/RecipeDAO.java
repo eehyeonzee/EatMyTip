@@ -360,7 +360,7 @@ public class RecipeDAO {
 				RecipeVO recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -424,7 +424,7 @@ public class RecipeDAO {
 				
 				recipe.setBoard_num(board_num);
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -489,7 +489,7 @@ public class RecipeDAO {
 				
 				recipe.setBoard_num(board_num);
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -553,7 +553,7 @@ public class RecipeDAO {
 				
 				recipe.setBoard_num(board_num);
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));
 				recipe.setReport_date(rs.getDate("report_date"));
