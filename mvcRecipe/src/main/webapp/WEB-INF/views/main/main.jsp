@@ -74,7 +74,7 @@
 						
 						<b>No.${recipe.board_num}</b>
 						<span style="float: right; font-size: 14px;">
-						조회 ${recipe.hits}
+						<b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${recipe.hits}
 						</span>
 						<div class="card" style="height: 460px;">
 							<div style="font-size: 14px;" class="card-header">
@@ -130,7 +130,7 @@
 			<div class="col-3">
 				<b>No.${recipe.board_num}</b>
 				<span style="float: right; font-size: 14px;">
-				조회 ${recipe.hits}
+				<b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${recipe.hits}
 				</span>
 				<div class="card" style="height: 460px;">
 					<div class="card-header">
