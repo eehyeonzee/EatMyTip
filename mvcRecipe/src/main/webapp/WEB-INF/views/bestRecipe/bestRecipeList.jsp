@@ -122,7 +122,7 @@
       <div align="center">
 	        	${ pagingHtml }
 	  </div>
-      <div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+      <div align="center" style="width :100%; height: 100%;">
 	        <br>
 	        <%-- 검색부분 --%>  
 		<form action="${pageContext.request.contextPath}/recipe/recipeList.do" method="get" name="search_form" id="search_form">

@@ -103,7 +103,7 @@
 			<div class="col text-center mt-4 mb-n1">${pagingHtml}<br><br></div>
 		</div>
 		<%-- 검색 시작 --%>
-		<div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+		<div align="center" style="width :100%; height: 100%;">
 		<br>
 		<form id="search_form" action="qnaList.do" method="get">
 				<select name="keyfield">
