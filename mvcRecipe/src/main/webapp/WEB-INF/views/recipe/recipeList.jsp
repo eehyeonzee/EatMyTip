@@ -58,7 +58,6 @@
       	<%-- 로그인이 안되어 있다면 글쓰기 클릭시 로그인 페이지로 이동 --%>
 		<c:if test="${ empty mem_num }">
 				<input type="button" value="글쓰기" onclick="location.href='${pageContext.request.contextPath}/member/loginForm.do'">
-				<input type="button" value ="목록" onclick="location.href='recipeList.do'">
 				<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</c:if>
 		<%-- 로그인 되어 있다면 글쓰기 클릭스 글쓰기 폼으로 이동 --%>
@@ -66,7 +65,6 @@
 				<form action="recipeWriteForm.do">
 					<input type="hidden" value="${ mem_num }" name="mem_num">
 					<input type="submit" value="글쓰기">
-					<input type="button" value ="목록" onclick="location.href='recipeList.do'">
 					<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 				</form>
 		</c:if>

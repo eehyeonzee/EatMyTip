@@ -56,8 +56,7 @@
       	게시물 <span style="font-weight: bold; color: red;">${ count } </span>개
       	<span style="float: right;">
       	
-      	<%-- 목록 및 홈으로 버튼 --%>
-		<input type="button" value ="목록" onclick="location.href='bestRecipeList.do'">
+      	<%-- 목록 및 메인으로 버튼 --%>
 		<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		
       </span>

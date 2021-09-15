@@ -12,13 +12,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>메인화면</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 카드형 게시물 50글자 초과시 ... 처리
+		$('.box').each(function() {
+			var content = $(this).children('.content');
+			var content_txt = content.text();
+			var content_txt_short = content_txt.substring(0,50)+"...";
+			
+			if(content_txt.length >= 50) {
+				content.html(content_txt_short);
+			}
+		});
+	});
+</script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
@@ -131,7 +145,7 @@
 								</h5>
 								<div class="box">
 									<div class="content">
-										<p class="card-text">${ recipe.sub_content }</p>
+										<p class="card-text">${ recipe.content }</p>
 									</div>
 								</div>
 								<br>
