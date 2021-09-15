@@ -24,7 +24,6 @@
 						var currentPage;
 						var count;
 						var rowCount;
-						var auth = ${auth};
 						//댓글 목록 시작
 						function selectData(pageNum) {
 							currentPage = pageNum;
@@ -75,7 +74,7 @@
 																		+ item.comm_date
 																		+ '</span>';
 																//로그인한 회원번호와 작성자의 일치여부 체크
-																if ($('#mem_num').val() == item.mem_num || auth == 3) {//로그인한 회원번호와 작성자 회원번호와 일치
+																if ($('#mem_num').val() == item.mem_num) {//로그인한 회원번호와 작성자 회원번호와 일치
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
 																}
@@ -148,7 +147,6 @@
 							event.preventDefault();
 						});
 
-						// 댓글 작성 폼 초기화
 						function initForm() {
 							$('textarea').val(''); // # 있으면 안 됨
 							$('#re_first .letter-count').text('300/300'); // 글자수 초기화
@@ -383,7 +381,7 @@
 			</div>
 		</c:if>
 		<!-- 공지 내용 -->
-		<p align="center">${ recipe.content }</p>
+		<p align="center">${news.news_content }</p>
 		<%-- 댓글 내용 시작 --%>
 		<hr size="2" noshade width="100%">
 		<div id="output"></div>
@@ -401,7 +399,6 @@
 				<form style="width : 750px; border : none;" id="news_comment_form">
 					<input type="hidden" name="news_num" value="${news.news_num}" id="news_num"> 
 					<input type="hidden" name="mem_num" value="${mem_num}" id="mem_num"> 
-					<input type="hidden" name="auth" value="${auth}" id="auth">
 					<textarea name="re_content" id="re_content" class="rep-content"
 						<c:if test="${empty mem_num || auth == 1}">disabled="disabled"</c:if>
 					><c:if test="${empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 없습니다.</c:if></textarea>

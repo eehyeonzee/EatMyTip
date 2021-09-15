@@ -311,6 +311,7 @@ public class NewsDAO {
 				news.setNews_hits(rs.getInt("news_hits"));
 				news.setNews_file(rs.getString("news_file"));
 				news.setMem_num(rs.getInt("mem_num"));
+				news.setAuth(rs.getInt("auth"));
 			}
 		}catch(Exception e) {
 			throw new Exception(e);
