@@ -36,7 +36,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <div class="container-fluid contents-wrap" style="width :90%;">
 	<div class="row" style="width :100%;">
-	<div class="text-center col-md-12 my-5">
+	<div class="col-md-12 my-5">
 	<div align="left">
 	<h3>내가 저장한 글</h3>
 	</div>
@@ -68,9 +68,7 @@
         <!-- 반복문 시작 -->
         	<c:forEach var="recipe" items="${ list }">
 	       	<div class="col-3">
-	       		<div style = "text-align : left;">
-	            	<b>No. ${ recipe.board_num }</b> 
-	            </div>
+	            <b>No. ${ recipe.board_num }</b> 
 	            <span style="float: right; font-size: 14px;">
 	            조회 ${ recipe.hits }
 	            </span>
@@ -93,7 +91,7 @@
 	              <h5 class="card-title"><a href="${pageContext.request.contextPath}/recipe/recipeDetail.do?board_num=${ recipe.board_num }" class="btn btn-outline-dark">${ recipe.title }</a></h5>
 		           <div class="box">   
 		              <div class="content">
-		              		<p class="card-text">${ recipe.sub_content }</p>
+		              		<p class="card-text">${ recipe.content }</p>
 		              </div>
 		           </div>
 		           <br>
