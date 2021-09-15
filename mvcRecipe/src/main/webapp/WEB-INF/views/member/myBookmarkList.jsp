@@ -28,6 +28,7 @@
                 content.html(content_txt_short)
                 
             };
+		});
 	});
 </script>
 </head>
