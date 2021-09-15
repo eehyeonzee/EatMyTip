@@ -545,7 +545,7 @@ public class NewsDAO {
 	 * @Method 메소드명  : getCommentsCount
 	 * @작성일     : 2021. 9. 16. 
 	 * @작성자     : 오상준
-	 * @Method 설명 : 댓글 갯수 세는 메소드
+	 * @Method 설명 : 공지사항 댓글 갯수 세는 메소드
 	 */
 	public int getCommentsCount(int news_num)throws Exception {
 		

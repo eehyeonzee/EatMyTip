@@ -13,9 +13,9 @@ public class ListComparator implements Comparator<Object> {
 		int news_comments_count2 = ((RecipeVO)o2).getNews_comments_count();
 		
 		if(news_comments_count1 > news_comments_count2) {
-			return 1;
-		}else if(news_comments_count1 < news_comments_count2) {
 			return -1;
+		}else if(news_comments_count1 < news_comments_count2) {
+			return 1;
 		}else {
 			return 0;
 		}

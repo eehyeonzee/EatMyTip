@@ -28,13 +28,13 @@
 			}
 		});
 		
-		// 카드형 게시물 100글자 초과시 ... 처리
+		// 카드형 게시물 110글자 초과시 ... 처리
 		$('.box').each(function(){
 			var content = $(this).children('.content');
 			var content_txt = content.text();
-			var content_txt_short = content_txt.substring(0,150)+"...";
+			var content_txt_short = content_txt.substring(0,110)+"...";
 
-			if(content_txt.length >= 150){
+			if(content_txt.length >= 110){
 				content.html(content_txt_short);
             }
         });
@@ -86,7 +86,7 @@
 	       	<div class="col-3">
 	            <b>No. ${ recipe.board_num }</b> 
 	            <span style="float: right; font-size: 14px;">
-	            조회 ${ recipe.hits }
+	            <b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${ recipe.hits }
 	            </span>
 	          <div class="card" style="height: 540px;">
 	            <div class="card-header">
