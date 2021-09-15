@@ -19,6 +19,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type ="text/javascript">
 	$(document).ready(function() {
+		$('input[type=checkbox]:checked').prop("checked", false);
 		
 		$('#stop_btn').click(function() {
 		   	var output = '';
@@ -29,28 +30,35 @@
 			    }
 					output += $(this).val();
 			  	});
+			
+			  	var cnt = 0;
+			  	cnt = output;
+		      	if(cnt == 0){
+		         	 alert("선택한 회원이 없습니다!");
+		         	 return false;
+		      	}else{
+		    		if(confirm("선택한 회원의 권한을 변경 하시겠습니까?")){
 			    
-				if(output == '') {
-					alert('체크가 되어 있지 않습니다!');
-					return false;
-				}
-			   
-				$.ajax({
-					url: 'stopAdminMember.do',
-				   	type: 'post',
-				   	data: {output : output},
-				   	dataType : 'json',
-					cache : false,
-					timeout : 30000,
-				    success: function(param) {
-				    	alert('수정 완료');
-				    	location.reload();
-				    	$('input[type=checkbox]:checked').prop("checked", false);
-				    },
-				    error : function() {
-				    	alert('네트워크 오류');
-				    }
-				});
+						$.ajax({
+							url: 'stopAdminMember.do',
+						   	type: 'post',
+						   	data: {output : output},
+						   	dataType : 'json',
+							cache : false,
+							timeout : 30000,
+						    success: function(param) {
+						    	alert('변경 완료!');
+						    	location.reload();
+						    	$('input[type=checkbox]:checked').prop("checked", false);
+						    },
+						    error : function() {
+						    	alert('네트워크 오류!');
+						    }
+						});
+		    		}else {
+		    			$('input[type=checkbox]:checked').prop("checked", false);
+		    		}
+		    	}
 		});
 		
 		$('#up_btn').click(function() {
@@ -63,27 +71,34 @@
 					output += $(this).val();
 			  	});
 			    
-				if(output == '') {
-					alert('체크가 되어 있지 않습니다!');
-					return false;
-				}
+				var cnt = 0;
+			  	cnt = output;
+		      	if(cnt == 0){
+		         	 alert("선택한 회원이 없습니다!");
+		         	 return false;
+		      	}else{
+		    		if(confirm("선택한 회원의 권한을 변경 하시겠습니까?")){
 			   
-				$.ajax({
-					url: 'upAdminMember.do',
-				   	type: 'post',
-				   	data: {output : output},
-				   	dataType : 'json',
-					cache : false,
-					timeout : 30000,
-				    success: function(param) {
-				    	alert('수정 완료');
-				    	location.reload();
-				    	$('input[type=checkbox]:checked').prop("checked", false);
-				    },
-				    error : function() {
-				    	alert('네트워크 오류');
-				    }
-				});
+						$.ajax({
+							url: 'upAdminMember.do',
+						   	type: 'post',
+						   	data: {output : output},
+						   	dataType : 'json',
+							cache : false,
+							timeout : 30000,
+						    success: function(param) {
+						    	alert('변경 완료!');
+						    	location.reload();
+						    	$('input[type=checkbox]:checked').prop("checked", false);
+						    },
+						    error : function() {
+						    	alert('네트워크 오류!');
+						    }
+						});
+		    		}else {
+		    			$('input[type=checkbox]:checked').prop("checked", false);
+		    		}
+		      	}
 		});
 		
 		$('#delete_btn').click(function() {
@@ -95,28 +110,35 @@
 			    }
 					output += $(this).val();
 			  	});
-			    
-				if(output == '') {
-					alert('체크가 되어 있지 않습니다!');
-					return false;
-				}
-			   
-				$.ajax({
-					url: 'deleteAdminMember.do',
-				   	type: 'post',
-				   	data: {output : output},
-				   	dataType : 'json',
-					cache : false,
-					timeout : 30000,
-				    success: function(param) {
-				    	alert('수정 완료');
-				    	location.reload();
-				    	$('input[type=checkbox]:checked').prop("checked", false);
-				    },
-				    error : function() {
-				    	alert('네트워크 오류');
-				    }
-				});
+
+				var cnt = 0;
+		  		cnt = output;
+	      		if(cnt == 0){
+	         		alert("선택한 회원이 없습니다!");
+	         		return false;
+	      		}else{
+	    			if(confirm("선택한 회원의 권한을 변경 하시겠습니까?")){
+		   
+						$.ajax({
+							url: 'deleteAdminMember.do',
+						   	type: 'post',
+						   	data: {output : output},
+						   	dataType : 'json',
+							cache : false,
+							timeout : 30000,
+						    success: function(param) {
+						    	alert('변경 완료!');
+						    	location.reload();
+						    	$('input[type=checkbox]:checked').prop("checked", false);
+						    },
+						    error : function() {
+						    	alert('네트워크 오류!');
+						    }
+						});
+	    			}else {
+	    				$('input[type=checkbox]:checked').prop("checked", false);
+	    			}
+	    		}
 		});
 		
 		$('#search_form').submit(function() {
@@ -127,6 +149,7 @@
 			}
 		});
 	});
+	
 
 </script>
 </head>
