@@ -23,8 +23,16 @@ public class NewsVO {
 	private String news_file;
 	private String id;
 	private String news_category;
+	private int auth;
 	
 	
+	
+	public int getAuth() {
+		return auth;
+	}
+	public void setAuth(int auth) {
+		this.auth = auth;
+	}
 	public String getNews_category() {
 		return news_category;
 	}

@@ -21,9 +21,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#search_form').submit(function() {
-			if ($('#search').val().trim() == '') {
+			if ($('#news_search').val().trim() == '') {
 				alert('검색어를 입력하세요!');
-				$('search').val('').focus();
+				$('news_search').val('').focus();
 				return false;
 			}
 		});
@@ -103,7 +103,7 @@
 						<option value="제목">제목</option>
 						<option value="내용">내용</option>
 					</select> <input type="hidden" value="${mem_num}" name="mem_num"> <input
-						type="search" id="search" name="search" placeholder="검색어를 입력하세요.">
+						type="search" id="news_search" name="news_search" placeholder="검색어를 입력하세요.">
 					<input type="submit" value="검색">
 				</form>
 				<br>
