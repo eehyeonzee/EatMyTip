@@ -38,7 +38,7 @@ public class MainSearchAction implements Action {
 		String newsPageNum = request.getParameter("newsPageNum");
 		
 		if(newsPageNum==null) newsPageNum ="1";
-		PagingUtil page1 = new PagingUtil(search,null,Integer.parseInt(newsPageNum), news_count, 10, 7,"mainSearch.do?search="+search);
+		PagingUtil page1 = new PagingUtil(search,null,Integer.parseInt(newsPageNum), news_count, 10, 7,"mainSearchList.do?search="+search);
 		List<NewsVO> NewsList = null;
 		if(news_count > 0) {
 			NewsList = dao.getNewsList(page1.getStartCount(), page1.getEndCount(),search);
@@ -48,17 +48,17 @@ public class MainSearchAction implements Action {
 		// 모두의 레시피 리스트 출력
 		String recipePageNum = request.getParameter("recipePageNum");
 		if(recipePageNum==null) recipePageNum ="1";
-		PagingUtil page2 = new PagingUtil(search,null,Integer.parseInt(recipePageNum),recipe_count, 5, 10,"mainSearch.do?search="+search);
+		PagingUtil page2 = new PagingUtil(search,null,Integer.parseInt(recipePageNum),recipe_count, 5, 10,"mainSearchList.do?search="+search);
 		List<RecipeVO> recipeList =null;
 		if(recipe_count > 0) {
-			recipeList = dao.getRecipeList(page1.getStartCount(), page1.getEndCount(),search);
+			recipeList = dao.getRecipeList(page2.getStartCount(), page2.getEndCount(),search);
 		}
 		//qna 게시글 수 체크
 		int qna_count = dao.searchQnaCount(search);
 		//qna 뉴스 리스트 출력
 		String qnaPageNum = request.getParameter("qnaPageNum");
 		if(qnaPageNum==null) qnaPageNum ="1";
-		PagingUtil page3 = new PagingUtil(search,null,Integer.parseInt(recipePageNum),qna_count,10,7,"mainSearch.do?search="+search);
+		PagingUtil page3 = new PagingUtil(search,null,Integer.parseInt(qnaPageNum),qna_count,10,7,"qnaList.do");
 		List<QnaBoardVO> qnaList = null;
 		if(qna_count > 0) {
 			qnaList = dao.getQnaList(page3.getStartCount(), page3.getEndCount(), search);
