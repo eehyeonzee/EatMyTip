@@ -20,10 +20,10 @@
 	$(document).ready(function(){
 		
 		$('#search_form').submit(function(){
-			if($('#search').val().trim() == '') {
+			if($('#recipe_search').val().trim() == '') {
 				alert('검색어를 입력하세요!');
-				$('#search').focus();
-				$('#search').val('');
+				$('#recipe_search').focus();
+				$('#recipe_search').val('');
 				return false;
 			}
 		});
@@ -179,7 +179,7 @@
 				<option value="작성자">작성자</option>
 			</select>
 			<input type="hidden" value="${ mem_num }" name="mem_num">
-			<input type="search" id="search" name="search" style="height: 28px;" placeholder="검색어를 입력하세요.">
+			<input type="search" id="recipe_search" name="search" style="height: 28px;" placeholder="검색어를 입력하세요.">
 			<input type="submit" value="검색">
 		</form>
 			<%-- 검색 끝 --%>
