@@ -357,21 +357,35 @@ public class NewsDAO {
 			DBUtil.executeClose(null, pstmt, conn);			
 		}
 	}
+	/**
+	 * @Method 메소드명  : DeleteNews
+	 * @작성일     : 2021. 9. 15. 
+	 * @작성자     : 신혜지
+	 * @Method 설명 : 공지사항 삭제할때 쓰는 메서드
+	 */
 	public void DeleteNews(int num) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		String sql= null;
 		
 		try {
 			conn=DBUtil.getConnection();
-			sql="delete from news_board where news_num=?";
+			conn.setAutoCommit(false);
+			sql="DELETE FROM comments where news_num=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
+			sql = "delete from news_board where news_num=?";
+			pstmt2=conn.prepareStatement(sql);
+			pstmt2.setInt(1, num);
+			pstmt2.executeUpdate();
+			conn.commit();
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
 			DBUtil.executeClose(null, pstmt, conn);			
+			DBUtil.executeClose(null, pstmt2, conn);			
 		}
 	}
 	//****

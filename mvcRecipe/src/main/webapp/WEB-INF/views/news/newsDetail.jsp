@@ -300,6 +300,8 @@
 										'click',
 										'.delete-btn',
 										function() {
+											var check = confirm('삭제하시겠습니까?'); 
+											if(check){
 											var comment_num = $(this).attr(
 													'data-renum');
 											var mem_num = $(this).attr(
@@ -339,6 +341,9 @@
 																	+ error);
 														}
 													});
+											}else {
+												
+											}
 										});
 						selectData(1);
 
@@ -427,15 +432,13 @@
 				<input type="button" value="수정"
 					onclick="location.href='newsModifyForm.do?news_num=${news.news_num}'"
 					style="color: black; background-color: white; border-color: #d5dfe8">
-				<input type="button" value="삭제" id="delete_btn"
-					style="color: red; background-color: white; border-color: #d5dfe8">
+				<input type="button" value="삭제" id="delete_btn" style="color: red; background-color: white; border-color: #d5dfe8">
 				<script type="text/javascript">
 					var delete_btn = document.getElementById("delete_btn");
 					delete_btn.onclick = function() {
 						var choice = confirm("삭제하시겠습니까?");
 						if (choice) {
-							location
-									.replace("newsDelete.do?news_num=${news.news_num}");
+							location.replace("newsDelete.do?news_num=${news.news_num}");
 						}
 					};
 				</script>
