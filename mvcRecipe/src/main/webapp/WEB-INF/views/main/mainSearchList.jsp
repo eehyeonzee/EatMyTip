@@ -80,14 +80,17 @@
 	<!-- 레시피 검색 시작 -->
 	<div class="container-fluid" style="width: 90%;">
 		<div class="row" style="width: 100%;">
+		      <div class="text-center col-md-12 my-5">
+		
 			<div align="left">
 				<h3>모두의 레시피</h3>
 			</div>
 			<div align="left">
-				<br> 게시물 <span style="font-weight: bold; color: red;">${ recipe_count }
-				</span>개
+				<br> 
+				게시물 <span style="font-weight: bold; color: red;">${ recipe_count }</span>개
 			</div>
 			<hr size="2" noshade width="100%">
+		</div>
 		</div>
 		<%-- 카드시작 --%>
 		<div class="row my-5 ml-5 mr-5">
