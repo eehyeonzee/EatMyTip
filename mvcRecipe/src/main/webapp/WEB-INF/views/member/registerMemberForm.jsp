@@ -209,7 +209,7 @@
 				<input type = "date" class = "col-sm-4 form-control" name = "birthday" id = "birthday" max = "today">
 			</div>
 			<div class = "form-group row">
-				<label class = "col-sm-2 col-form-label">비밀번호 힌트 : </label> 
+				<label class = "col-sm-2 col-form-label">비밀번호 힌트</label> 
 				<label class = "col-form-label">가장 좋아하는 요리는?</label>
 			</div>
 			<div class = "form-group row">
