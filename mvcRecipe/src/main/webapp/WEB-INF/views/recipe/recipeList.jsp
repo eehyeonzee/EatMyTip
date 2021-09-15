@@ -99,7 +99,8 @@
 						<tr>
 							<td>${news.news_num}</td>
 							<td>${news.news_category}</td>
-							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a>
+							<b style="font-size: 13px; color: red;">[${ news.news_comment_count }]</b></td>
 							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.writer}</td>
 							<td>${news.news_hits}</td>
 							<td>${news.news_date}</td>

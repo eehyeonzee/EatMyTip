@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.news.dao.NewsDAO;
 import com.recipe.vo.RecipeCommendsVO;
 import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
@@ -532,7 +533,7 @@ public class RecipeDAO {
 			
 			// SQL문장 작성
 			sql = "select * from (select a.*, rownum rnum from "
-					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.comm_count desc, b.board_num desc) a) "
+					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
 					+ "where rnum >=? and rnum <=?";
 			
 			// PreparedStatement 객체 생성
@@ -713,8 +714,8 @@ public class RecipeDAO {
 			if(rs.next()) {
 				recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
-				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setContent(rs.getString("content"));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));	// 추천수
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -1422,10 +1423,13 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeNewsVO> list = null;
+		NewsDAO dao = NewsDAO.getInstance();
+		int news_comments_count = 0;
+		
 		try {
 			conn = DBUtil.getConnection();
 			sql= "SELECT * FROM (SELECT a.*,rownum rnum FROM "
-					+ "(SELECT * FROM news_board b JOIN member m ON b.mem_num = m.mem_num ORDER BY news_num DESC)a) "
+					+ "(SELECT * FROM news_board WHERE news_category='레시피' ORDER BY news_num DESC)a) "
 					+ "WHERE rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -1436,6 +1440,8 @@ public class RecipeDAO {
 			rs=pstmt.executeQuery();
 			list = new ArrayList<RecipeNewsVO>();
 			while(rs.next()) {
+				news_comments_count = dao.getCommentsCount(rs.getInt("news_num"));
+				
 				RecipeNewsVO recipe_News = new RecipeNewsVO();
 				recipe_News.setNews_num(rs.getInt("news_num"));
 				recipe_News.setNews_title(rs.getString("news_title"));
@@ -1445,6 +1451,7 @@ public class RecipeDAO {
 				recipe_News.setNews_modi(rs.getDate("news_modi"));
 				recipe_News.setNews_hits(rs.getInt("news_hits"));
 				recipe_News.setWriter("관리자");
+				recipe_News.setNews_comment_count(news_comments_count);
 				
 				list.add(recipe_News);
 				

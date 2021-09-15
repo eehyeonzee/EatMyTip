@@ -19,7 +19,16 @@ public class RecipeNewsVO {
 	private String news_file;
 	private String news_category;
 	private String writer;
+	private int news_comment_count;
 	
+	
+	
+	public int getNews_comment_count() {
+		return news_comment_count;
+	}
+	public void setNews_comment_count(int news_comment_count) {
+		this.news_comment_count = news_comment_count;
+	}
 	public String getWriter() {
 		return writer;
 	}

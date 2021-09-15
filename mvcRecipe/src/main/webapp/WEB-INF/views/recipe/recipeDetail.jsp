@@ -427,7 +427,7 @@
 	<%-- 파일업로드가 되어 있는 경우 --%>
 	<c:if test="${ !empty recipe.filename }">
 		<div align="center">
-			<img src="${pageContext.request.contextPath}/upload/${recipe.filename}">
+			<img style="width: 25em; height: 25em;" src="${pageContext.request.contextPath}/upload/${recipe.filename}">
 		</div>
 	</c:if><br>
 	<p align="center">
