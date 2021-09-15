@@ -70,7 +70,7 @@
 			<ul class = "list-group">
 				<li class = "list-group-item">
 					<label for = "id" class = "col-sm-2 col-form-label">아이디</label>
-					: ${member.id}
+					${member.id}
 				</li>
 				<li class = "list-group-item">
 					<label for = "passwd" class = "col-sm-2 col-form-label">비밀번호</label>

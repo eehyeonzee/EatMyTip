@@ -43,7 +43,7 @@
 </head>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
-<div class="container-fluid" style="width :90%;">
+<div class="container-fluid contents-wrap" style="width :90%;">
       <div class="row" style="width :100%;">
       <div class="text-center col-md-12 my-5">
       <div align="left">
