@@ -709,7 +709,7 @@ public class MemberDAO {
 	 * @Method 메소드명  : stopMember
 	 * @작성일     : 2021. 9. 11. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 멤버를 정지 회원으로 설정
+	 * @Method 설명 : 회원을 정지 회원으로 설정
 	 */
 	
 	public void stopAdminMember(String mem_num)throws Exception {
@@ -737,7 +737,7 @@ public class MemberDAO {
 	 * @Method 메소드명  : stopMember
 	 * @작성일     : 2021. 9. 11. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 멤버를 탈퇴 회원으로 설정
+	 * @Method 설명 : 회원을 탈퇴 시킬 수 있는 설정
 	 */
 	
 	public void deleteAdminMember(String mem_num)throws Exception {
@@ -798,7 +798,7 @@ public class MemberDAO {
 	 * @Method 메소드명  : upAdminMember
 	 * @작성일     : 2021. 9. 13. 
 	 * @작성자     : 박용복
-	 * @Method 설명 : 관리자 정지 회원을 다시 일반 회원으로 설정
+	 * @Method 설명 : 정지 회원을 다시 일반 회원으로 설정
 	 */
 	public void upAdminMember(String mem_num)throws Exception {
 		Connection conn = null;
