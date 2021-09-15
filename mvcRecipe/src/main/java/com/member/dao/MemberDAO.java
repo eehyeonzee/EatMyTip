@@ -258,21 +258,39 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
 		String sql = null;
 		
 		try {
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
 			
+			// 회원 등급 0으로 변경
 			sql = "UPDATE member SET auth = 0 WHERE mem_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem_num);
 			pstmt.executeUpdate();
 			
-			sql = "DELETE FROM member_detail WHERE mem_num = ?";
+			
+			// 회원이 추천한 모든 게시물의 추천 내역 삭제
+			sql = "DELETE FROM recommend WHERE mem_num = ?";
 			pstmt2 = conn.prepareStatement(sql);
 			pstmt2.setInt(1, mem_num);
 			pstmt2.executeUpdate();
+			
+			// 회원이 북마크 등록한 모든 게시물의 북마크 내역 삭제
+			sql = "DELETE FROM bookmark WHERE mem_num = ?";
+			pstmt3 = conn.prepareStatement(sql);
+			pstmt3.setInt(1, mem_num);
+			pstmt3.executeUpdate();
+			
+			
+			
+			sql = "DELETE FROM member_detail WHERE mem_num = ?";
+			pstmt4 = conn.prepareStatement(sql);
+			pstmt4.setInt(1, mem_num);
+			pstmt4.executeUpdate();
 			
 			conn.commit();
 		}catch (Exception e) {
