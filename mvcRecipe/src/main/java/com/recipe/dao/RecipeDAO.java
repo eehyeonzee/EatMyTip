@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.news.dao.NewsDAO;
@@ -12,6 +13,7 @@ import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.DurationFromNow;
+import com.util.ListComparator;
 import com.util.StringUtil;
 
 
@@ -526,6 +528,9 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		ListComparator lcom = new ListComparator();		// 리스트 댓글순 정렬을 위한 클래스
+		int news_comments_count = 0;	// 댓글 카운트 수
+		NewsDAO dao = NewsDAO.getInstance(); // 댓글 갯수를 구하는 메소드를 실행하기 위한 DAO
 		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
@@ -551,7 +556,9 @@ public class RecipeDAO {
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
 				int board_num = rs.getInt("board_num");
+				news_comments_count = dao.getCommentsCount(board_num);
 				
+				// VO에 값 삽입
 				recipe.setBoard_num(board_num);
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
@@ -565,7 +572,7 @@ public class RecipeDAO {
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
 				// VO에 댓글 수 담기
-				recipe.setComm_count(rs.getInt("comm_count"));
+				recipe.setNews_comments_count(news_comments_count);
 				
 				list.add(recipe);
 			}
@@ -576,6 +583,8 @@ public class RecipeDAO {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		
+		// 리스트 댓글수별 내림차순 정렬
+		Collections.sort(list, lcom);
 		return list;
 	}
 	
