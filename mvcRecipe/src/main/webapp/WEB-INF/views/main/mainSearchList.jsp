@@ -41,37 +41,15 @@
 				}
 			</c:if>
 		});
-		
-	/*	// 공지사항 하단 페이지 번호 클릭시
-		$(document).on("click", ".npaging-butn", function(){
-			var originSrc = $(this).text();	// 클릭한 a태그의 링크 값 가져와서 저장
-			
-			$("#newsPageNumId").val(originSrc);
-			
-			//$("a.npaging-butn").attr("href",
-			//		"mainSearchList.do?search=&division=&newsPageNum=${newsPageNum}&qnaPageNum=${qnaPageNum}&recipePageNumId=${recipePageNum}");
-			
-		});
-		
-		// 고객센터 하단 페이지 번호 클릭시
-		$(document).on("click", ".qpaging-butn", function(){
-			var originSrc2 = $(this).text();	// 클릭한 a태그의 링크 값 가져와서 저장
-			
-			$("#qnaPageNumId").val(originSrc2);
-			
-			//$("a.npaging-butn").attr("href",
-			//		"mainSearchList.do?search=&division=&newsPageNum=${newsPageNum}&qnaPageNum=${qnaPageNum}&recipePageNumId=${recipePageNum}");
-			
-		});/*/
 	});
 </script>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
 	
-		<input type="hidden" id = "newsPageNumId" name="newsPageNum" value=${ newsPageNum }>
-		<input type="hidden" id = "qnaPageNumId" name="qnaPageNum" value=${ qnaPageNum }>
-		<input type="hidden" id = "recipePageNumId" name="recipePageNum" value=${ recipePageNum }>
+	<input type="hidden" id = "newsPageNumId" name="newsPageNum" value=${ newsPageNum }>
+	<input type="hidden" id = "qnaPageNumId" name="qnaPageNum" value=${ qnaPageNum }>
+	<input type="hidden" id = "recipePageNumId" name="recipePageNum" value=${ recipePageNum }>
 	
 	<!-- 본문 -->
 	<!-- 본문 -->
