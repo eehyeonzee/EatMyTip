@@ -41,7 +41,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>공지사항</title>
+<title>EEEMT - 공지사항 글수정</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>
