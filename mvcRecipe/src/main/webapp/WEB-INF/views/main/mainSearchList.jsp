@@ -203,13 +203,13 @@
 							<th>작성자</th>
 							<th>작성일</th>
 						</tr>
-						<c:forEach var="qnaboard" items="${list}">
+						<c:forEach var="qnaList" items="${qnaList}">
 							<tr>
-								<td>${qnaboard.qna_num}</td>
-								<td><a href="../qnaboard/qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
-								${qnaboard.qna_title}</a></td>
-								<td>${qnaboard.qna_id}</td>
-								<td>${qnaboard.qna_date}</td>
+								<td>${qnaList.qna_num}</td>
+								<td><a href="${pageContext.request.contextPath}/qnaboard/qnaDetail.do?qna_num=${qnaList.qna_num}" class="next_page" data-bnum="${qnaList.qna_passwd}">
+								${qnaList.qna_title}</a></td>
+								<td>${qnaList.qna_id}</td>
+								<td>${qnaList.qna_date}</td>
 							</tr>
 						</c:forEach>
 					</thead>

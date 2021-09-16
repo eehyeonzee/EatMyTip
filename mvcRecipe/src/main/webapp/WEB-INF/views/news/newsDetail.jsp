@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <script type="text/javascript">
-	//댓글 시작
+	//댓글 시작.
 	$(document)
 			.ready(
 					function() {
