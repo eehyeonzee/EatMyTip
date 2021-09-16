@@ -59,9 +59,9 @@
 																	item) {
 																var output = '<div class="item">'
 																if(item.photo != null){
-																	output += '<img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 50px; width:45; padding-right: 1em;" class = "my-photo" />';
+																	output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 47px; width:40;" class = "my-photo" /></div>';
 																}else{
-																	output += '<img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 50px; width:45; padding-right: 1em;" class = "my-photo"/>';
+																	output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 47px; width:40;" class = "my-photo"/><div>';
 																}
 																output += '<span style="font-size:14pt;">'
 																		+ item.id

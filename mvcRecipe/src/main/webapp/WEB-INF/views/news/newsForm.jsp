@@ -47,7 +47,7 @@
 <body>
 <div class="container">
 	<br><br>
-	<h2>레시피 수정</h2>	
+	<h2>공지사항</h2>	
 	<hr size="1" noshade width="100%">
 	<form id="news_form" action="newsWrite.do" method="post" enctype="multipart/form-data">	
 		<div class="form-group">
