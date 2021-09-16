@@ -52,7 +52,7 @@
 		<table align = "center">
 			<tr>
 				<td height = "80px"><label for = "id" class = "col-sm-12 col-form-label">아이디</label></td>
-				<td><input type = "text" class = "col-sm-12 form-control" id = "id" name = "id" maxlength = "12"></td>
+				<td><input type = "text" class = "col-sm-12 form-control" id = "id" name = "id" maxlength = "10"></td>
 			</tr>
 			<tr>
 				<td height = "40px"><label for = "name" class = "col-sm-12 col-form-label">회원 가입시 입력한 이름</label></td>

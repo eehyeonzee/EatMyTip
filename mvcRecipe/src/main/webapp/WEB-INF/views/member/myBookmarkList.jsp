@@ -38,7 +38,7 @@
 	<div class="row" style="width :100%;">
 	<div class="col-md-12 my-5">
 	<div align="left">
-	<h3>내가 저장한 글</h3>
+	<h3>EEEMT - 내가 저장한 글</h3>
 	</div>
 	<div align="left">
 		<br>
@@ -70,7 +70,7 @@
 	       	<div class="col-3">
 	            <b>No. ${ recipe.board_num }</b> 
 	            <span style="float: right; font-size: 14px;">
-	            조회 ${ recipe.hits }
+	        		<b style="font-size: 14px; color: red;">[${ recipe.comm_count }]</b> 조회 ${ recipe.hits }
 	            </span>
 	          <div class="card" style="height: 540px;">
 	            <div class="card-header">
