@@ -58,26 +58,20 @@
 															function(index,
 																	item) {
 																var output = '<div class="item">'
-																if(item.photo != null){
-																	output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 47px; width:40;" class = "my-photo" /></div>';
-																}else{
-																	output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 47px; width:40;" class = "my-photo"/><div>';
-																}
-																output += '<span style="font-size:14pt;">'
-																		+ item.id
-																		+ '<span>';
-																output += '<div class="sub-item">';
-																output += '<p>'
-																		+ item.comm_con
-																		+ '</p>';
-																output += '<span>'
-																		+ item.comm_date
-																		+ '</span>';
-																//로그인한 회원번호와 작성자의 일치여부 체크
-																if ($('#mem_num').val() == item.mem_num || $('#mem_auth').val() == 3) {//로그인한 회원번호와 작성자 회원번호와 일치
-																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
-																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
-																}
+																	if(item.photo != null){
+																		output += '<div style ="width:57px; height:57px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 53px; width:53px;" class = "my-photo" /></div>'
+																	}else{
+																		output += '<div style ="width:57px; height:57px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 53px; width:53px;" class = "my-photo"/></div>';
+																	}
+																	output += "<span><h4>" + item.id + "<h4></span>";
+																	output += '<div class="sub-item">';
+																	output += "<p style='font-size:16px;'>" + item.comm_con + "</p>";
+																	output += "<span style='font-size:14px;'>" + item.comm_date + "</span>";
+																	//로그인한 회원번호와 작성자의 일치여부 체크
+																	if ($('#mem_num').val() == item.mem_num || $('#mem_auth').val() == 3) {//로그인한 회원번호와 작성자 회원번호와 일치
+																		output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" style="font-size:14px;" class="modify-btn">';
+																		output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" style="font-size:14px;" class="delete-btn">';
+																		}
 																output += '<hr size="1" noshade width="100%">';
 																output += '</div>';
 																output += '</div>';

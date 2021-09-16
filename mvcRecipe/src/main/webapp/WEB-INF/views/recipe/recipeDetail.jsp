@@ -191,9 +191,9 @@
 						var output = "<div class='item'>";
 								
 								if(item.photo != null){
-									output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 47px; width:40;" class = "my-photo" /></div>'
+									output += '<div style ="width:57px; height:57px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/upload/' + item.photo + '"style="height: 53px; width:53px;" class = "my-photo" /></div>';
 								}else{
-									output += '<div style ="width:45px; height:50px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 47px; width:40;" class = "my-photo"/></div>'
+									output += '<div style ="width:57px; height:57px; float:left; padding-right: 5em;"><img src="${pageContext.request.contextPath}/images/default_user.png" style="height: 53px; width:53px;" class = "my-photo"/></div>';
 								}
 								output += "<span><h4>" + item.id + "<h4></span>";
 								output += "<div class='sub-item'>";
