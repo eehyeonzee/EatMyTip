@@ -39,7 +39,7 @@ public class NewsCommentsListAction implements Action{
 		
 		int news_num = Integer.parseInt(request.getParameter("news_num"));
 		
-		int rowCount = 10;
+		int rowCount = 5;
 		
 		NewsDAO dao = NewsDAO.getInstance();
 		int count = dao.getNewsCommentsCount(news_num);
