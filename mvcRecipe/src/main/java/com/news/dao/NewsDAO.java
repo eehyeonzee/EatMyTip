@@ -147,6 +147,7 @@ public class NewsDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<NewsVO> list = null;
+		int news_comments_count = 0;
 		try {
 			conn = DBUtil.getConnection();
 			sql= "select * from (select a.*, rownum rnum from "
@@ -158,6 +159,7 @@ public class NewsDAO {
 			rs=pstmt.executeQuery();
 			list = new ArrayList<NewsVO>();
 			while(rs.next()) {
+				news_comments_count = getCommentsCount(rs.getInt("news_num"));
 				NewsVO news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
 				news.setNews_title(rs.getString("news_title"));
@@ -167,6 +169,8 @@ public class NewsDAO {
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
+				news.setNews_comment_count(news_comments_count);
+				
 				list.add(news);
 				
 			}
@@ -191,7 +195,7 @@ public class NewsDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<NewsVO> list = null;
-		
+		int news_comments_count = 0;
 		try {
 			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
@@ -236,6 +240,7 @@ public class NewsDAO {
 			
 			list = new ArrayList<NewsVO>();
 			while(rs.next()) {
+				news_comments_count = getCommentsCount(rs.getInt("news_num"));
 				NewsVO news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
 				news.setNews_title(rs.getString("news_title"));
@@ -245,6 +250,8 @@ public class NewsDAO {
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
+				news.setNews_comment_count(news_comments_count);
+				
 				list.add(news);
 				
 			}
@@ -546,5 +553,49 @@ public class NewsDAO {
 			}finally {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
+	}
+	
+	/**
+	 * @Method 메소드명  : getCommentsCount
+	 * @작성일     : 2021. 9. 16. 
+	 * @작성자     : 오상준
+	 * @Method 설명 : 공지사항 댓글 갯수 세는 메소드
+	 */
+	public int getCommentsCount(int news_num)throws Exception {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "select count(*) from comments where news_num = ?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, news_num);
+			
+			// SQL문을 실행해서 결과행을 rs에 담는다
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return count;
+		
 	}
 }

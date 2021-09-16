@@ -37,13 +37,14 @@
 				<table class="table mt-5 pt-5">
 					<thead>
 						<tr>
-							<td>제목</td>
-							<td>작성자</td>
-							<td>작성일</td>
+							<th width="450px">제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
 						</tr>
 						<c:forEach var="news" items="${newsList}">
 						<tr>
-							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a>
+							<b style="font-size: 13px; color: red;">[${ news.news_comment_count }]</b></td>
 							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.id}</td>
 							<td>${news.news_modi}</td>
 						</tr>
@@ -69,16 +70,17 @@
 				<c:if test="${recipe_count > 0}">
 					<!-- 반복문 시작 -->
 					<c:forEach var="recipe" items="${recipeList}">
-					<div class="col-4">
+					<div align="left" class="col-5">
+						
 						<b>No.${recipe.board_num}</b>
 						<span style="float: right; font-size: 14px;">
-						조회 ${recipe.hits}
+						<b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${recipe.hits}
 						</span>
-						<div class="card" style="height: 400px;">
-							<div class="card-header">
-								${recipe.id} 님
+						<div class="card" style="height: 460px;">
+							<div style="font-size: 14px;" class="card-header">
+								<b style="font-size: 16px;">${recipe.id}</b> 님
 								<span style="float: right;">
-								추천 <b style="color: #f76f31;">${recipe.recom_count}</b>
+								추천 <b style="color: #f76f31; font-size: 16px;">${recipe.recom_count}</b>
 								</span>
 							</div>
 							<%-- 이미지가 없는 경우 --%>
@@ -128,9 +130,9 @@
 			<div class="col-3">
 				<b>No.${recipe.board_num}</b>
 				<span style="float: right; font-size: 14px;">
-				조회 ${recipe.hits}
+				<b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${recipe.hits}
 				</span>
-				<div class="card" style="height: 400px;">
+				<div class="card" style="height: 460px;">
 					<div class="card-header">
 						${recipe.id} 님
 						<span style="float: right;">

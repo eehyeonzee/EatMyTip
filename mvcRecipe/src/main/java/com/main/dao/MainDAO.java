@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.news.dao.NewsDAO;
 import com.news.vo.NewsVO;
 import com.qnaboard.vo.QnaBoardVO;
+import com.recipe.dao.RecipeDAO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.StringUtil;
@@ -171,6 +173,9 @@ public class MainDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<NewsVO> newsList = null;
+		NewsDAO dao = NewsDAO.getInstance();
+		
+		int news_comments_count = 0;
 
 		try {
 			conn = DBUtil.getConnection();
@@ -186,6 +191,7 @@ public class MainDAO {
 
 			newsList = new ArrayList<NewsVO>();
 			while (rs.next()) {
+				news_comments_count = dao.getCommentsCount(rs.getInt("news_num"));
 				NewsVO news = new NewsVO();
 				news.setNews_num(rs.getInt("news_num"));
 				news.setNews_title(rs.getString("news_title"));
@@ -195,6 +201,8 @@ public class MainDAO {
 				news.setNews_date(rs.getDate("news_date"));
 				news.setNews_modi(rs.getDate("news_modi"));
 				news.setNews_hits(rs.getInt("news_hits"));
+				news.setNews_comment_count(news_comments_count);
+				
 				newsList.add(news);
 			}
 		} catch (Exception e) {
@@ -217,6 +225,10 @@ public class MainDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> recipeList = null;
+		RecipeDAO dao = RecipeDAO.getInstance();
+		
+		int news_comments_count = 0;	// 댓글 카운트 수
+		
 		try {
 			conn = DBUtil.getConnection();
 			sql="select * from (select a.*, rownum rnum from(select * from recipe_board b join member m on b.mem_num = m.mem_num  where title like ? or content like ? or id like ? order by b.board_num desc)a) where rnum >=? and rnum <=?";
@@ -228,6 +240,7 @@ public class MainDAO {
 			pstmt.setInt(5, endCount);
 			rs = pstmt.executeQuery();
 			recipeList = new ArrayList<RecipeVO>();
+			
 			while (rs.next()) {
 				RecipeVO recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
@@ -242,6 +255,10 @@ public class MainDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
+				
+				news_comments_count = dao.getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count); // 댓글 수 담기
+				
 				recipeList.add(recipe);
 			}
 		} catch (Exception e) {

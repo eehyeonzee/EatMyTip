@@ -20,8 +20,18 @@ public class RecipeVO {
 	private int comm_count; // 댓글 객수
 	private String id;  // join을 위해 id 명시
 	private int auth;	// 회원등급
+	private int news_comments_count;	// 댓글수
 	
 	
+	
+	public int getNews_comments_count() {
+		return news_comments_count;
+	}
+
+	public void setNews_comments_count(int news_comments_count) {
+		this.news_comments_count = news_comments_count;
+	}
+
 	public int getBoard_num() {
 		return board_num;
 	}
