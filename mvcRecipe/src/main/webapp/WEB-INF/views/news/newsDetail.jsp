@@ -74,7 +74,7 @@
 																		+ item.comm_date
 																		+ '</span>';
 																//로그인한 회원번호와 작성자의 일치여부 체크
-																if ($('#mem_num').val() == item.mem_num) {//로그인한 회원번호와 작성자 회원번호와 일치
+																if ($('#mem_num').val() == item.mem_num || $('#mem_auth').val() == 3) {//로그인한 회원번호와 작성자 회원번호와 일치
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="수정" class="modify-btn">';
 																	output += ' <input type="button" data-renum="'+item.comm_num+'" data-memnum="'+item.mem_num+'" value="삭제" class="delete-btn">';
 																}
@@ -404,6 +404,7 @@
 				<form style="width : 750px; border : none;" id="news_comment_form">
 					<input type="hidden" name="news_num" value="${news.news_num}" id="news_num"> 
 					<input type="hidden" name="mem_num" value="${mem_num}" id="mem_num"> 
+					<input type="hidden" name="mem_auth" value="${auth}" id="mem_auth">
 					<textarea name="re_content" id="re_content" class="rep-content"
 						<c:if test="${empty mem_num || auth == 1}">disabled="disabled"</c:if>
 					><c:if test="${empty mem_num || auth == 1}">정지회원 또는 비회원은 작성할 수 없습니다.</c:if></textarea>
