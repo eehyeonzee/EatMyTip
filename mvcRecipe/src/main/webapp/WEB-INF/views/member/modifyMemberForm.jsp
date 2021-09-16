@@ -10,12 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 정보 수정</title>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<script src="../js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>회원 정보 수정</title>
 <script type="text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#modify_form').submit(function() {
@@ -67,8 +67,8 @@
 	});
 </script>
 </head>
-<body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<body>
 <div class = "container-fluid" style = "width:90%">
 	<div class="col-sm-12 my-5">
 	<h3>회원 정보 수정</h3>

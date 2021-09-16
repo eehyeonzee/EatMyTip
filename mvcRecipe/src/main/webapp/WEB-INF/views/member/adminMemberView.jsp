@@ -11,12 +11,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>관리자 페이지 - 회원 정보 조회</title>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<title>관리자 페이지 - 회원 정보 조회</title>
 <script type ="text/javascript">
 	$(document).ready(function() {
 		$('input[type=checkbox]:checked').prop("checked", false);
@@ -153,8 +153,8 @@
 
 </script>
 </head>
-<body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<body>
 <div class = "container-fluid contents-wrap" style = "width:90%">
 	<div class="text-center col-sm-30 my-5">
 		<div align = "left">

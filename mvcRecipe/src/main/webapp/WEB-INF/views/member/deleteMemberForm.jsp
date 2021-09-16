@@ -10,12 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<script src="../js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>회원 탈퇴</title>
 <script type="text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<title>회원 탈퇴</title>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#delete_form').submit(function() {
@@ -59,8 +59,8 @@
 	});
 </script>
 </head>
-<body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<body>
 <div class = "container-fluid contents-wrap" style = "width:90%">
 	<div class="text-left col-sm-10 my-5">
 		<div align = "left">
