@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function(){	// 자바스크립트
 		
 		$('.box').each(function(){
             var content = $(this).children('.content');
