@@ -52,7 +52,7 @@ public class MainAction implements Action {
 		// 리스트 출력
 		List<RecipeVO> recipeList = null;
 		if(recipe_count > 0) {
-			recipeList = dao.getTotalRecipeList(1, 3);
+			recipeList = dao.getTotalRecipeList(1, 2);
 		}
 		
 		// ---------- 베스트 레시피 ----------

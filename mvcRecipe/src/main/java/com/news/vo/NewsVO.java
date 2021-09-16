@@ -24,9 +24,16 @@ public class NewsVO {
 	private String id;
 	private String news_category;
 	private int auth;
+	private int news_comment_count;
 	
 	
 	
+	public int getNews_comment_count() {
+		return news_comment_count;
+	}
+	public void setNews_comment_count(int news_comment_count) {
+		this.news_comment_count = news_comment_count;
+	}
 	public int getAuth() {
 		return auth;
 	}

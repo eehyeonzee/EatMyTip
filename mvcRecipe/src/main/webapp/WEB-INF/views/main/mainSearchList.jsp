@@ -21,13 +21,13 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		// 카드형 게시물 50글자 초과시 ... 처리
+		// 카드형 게시물 70글자 초과시 ... 처리
 		$('.box').each(function() {
 			var content = $(this).children('.content');
 			var content_txt = content.text();
-			var content_txt_short = content_txt.substring(0,50)+"...";
+			var content_txt_short = content_txt.substring(0,70)+"...";
 			
-			if(content_txt.length >= 50) {
+			if(content_txt.length >= 70) {
 				content.html(content_txt_short);
 			}
 		});
@@ -83,7 +83,8 @@
 							<tr>
 								<td>${news.news_num}</td>
 								<td>${news.news_category}</td>
-								<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+								<td><a href="../news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a>
+								<b style="font-size: 13px; color: red;">[${ news.news_comment_count }]</b></td>
 								<td><img
 									src="${pageContext.request.contextPath}/images/crown.gif"
 									style="height: 25px; width: 30;" />${news.id}</td>
@@ -129,8 +130,9 @@
 				<!-- 반복문 시작 -->
 				<c:forEach var="recipe" items="${ recipeList }">
 					<div class="col-3">
-						<b>No. ${ recipe.board_num }</b> <span
-							style="float: right; font-size: 14px;"> 조회 ${ recipe.hits }
+						<b>No. ${ recipe.board_num }</b> 
+						<span style="float: right; font-size: 14px;">
+							<b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${ recipe.hits }
 						</span>
 						<div class="card" style="height: 540px;">
 							<div class="card-header">
@@ -151,7 +153,7 @@
 							</c:if>
 							<div class="card-body">
 								<h5 class="card-title">
-									<a href="recipeDetail.do?board_num=${ recipe.board_num }"
+									<a href="../recipe/recipeDetail.do?board_num=${ recipe.board_num }"
 										class="btn btn-outline-dark">${ recipe.title }</a>
 								</h5>
 								<div class="box">
@@ -170,7 +172,8 @@
 		</div>
 		<div align="center">${ pagingHtmlRecipe }</div>
 	</div>
-	<hr>
+	<br>
+	<br>
 	<!-- 고객센터게시판 시작 -->
 		<div class="container-fluid" style="width: 90%;">
 		<div class="row" style="width: 100%">
@@ -179,7 +182,7 @@
 					<h3>문의 게시판</h3>
 				</div>
 				<div align="left">
-					<br> 게시물 <span style="font-weight: bold; color: red;">${ qna_count }</span>개
+					<br> 게시물 <span style="font-weight: bold; color: red;">${qna_count}</span>개
 				</div>
 			</div>
 			<hr size="2" noshade width="85%">
@@ -203,7 +206,7 @@
 						<c:forEach var="qnaboard" items="${list}">
 							<tr>
 								<td>${qnaboard.qna_num}</td>
-								<td><a href="qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
+								<td><a href="../qnaboard/qnaDetail.do?qna_num=${qnaboard.qna_num}" class="next_page" data-bnum="${qnaboard.qna_passwd}">
 								${qnaboard.qna_title}</a></td>
 								<td>${qnaboard.qna_id}</td>
 								<td>${qnaboard.qna_date}</td>

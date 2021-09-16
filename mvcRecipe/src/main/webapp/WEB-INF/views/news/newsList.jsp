@@ -79,7 +79,8 @@
 								<tr>
 									<td>${news.news_num}</td>
 									<td>${news.news_category}</td>
-									<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+									<td><a href="newsDetail.do?news_num=${news.news_num}">${news.news_title}</a> 
+									<b style="font-size: 13px; color: red;">[${ news.news_comment_count }]</b></td>
 									<td><img
 										src="${pageContext.request.contextPath}/images/crown.gif"
 										style="height: 25px; width: 30;" />${news.id}</td>
@@ -96,7 +97,7 @@
 			</c:if>
 			<!-- 검색 -->
 			<div align="center"
-				style="background-color: #f5f5ff; width: 100%; height: 100%;">
+				style="width: 100%; height: 100%;">
 				<br>
 				<form id="search_form" action="newsList.do" method="get">
 					<select name="division">

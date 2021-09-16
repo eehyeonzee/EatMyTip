@@ -63,7 +63,7 @@ public class RecipeModifyAction implements Action{
 		recipe.setIp(request.getRemoteAddr());
 		
 		// 글 수정
-		if(dbRecipe.getFilename() != null) FileUtil.removeFile(request, dbRecipe.getFilename());
+		if(dbRecipe.getFilename() != null && recipe.getFilename() != null) FileUtil.removeFile(request, dbRecipe.getFilename());
 		dao.updateRecipe(recipe);
 		
 		// JSP 경로 반환

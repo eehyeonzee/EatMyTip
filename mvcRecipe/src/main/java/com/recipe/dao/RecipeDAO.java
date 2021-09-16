@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import com.news.dao.NewsDAO;
 import com.recipe.vo.RecipeCommendsVO;
 import com.recipe.vo.RecipeNewsVO;
 import com.recipe.vo.RecipeVO;
 import com.util.DBUtil;
 import com.util.DurationFromNow;
+import com.util.ListComparator;
 import com.util.StringUtil;
 
 
@@ -334,6 +337,7 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		int news_comments_count = 0;	// 댓글 카운트 수
 		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
@@ -358,6 +362,7 @@ public class RecipeDAO {
 			
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
+				
 				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
@@ -370,6 +375,9 @@ public class RecipeDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
+				
+				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count); // 댓글 수 담기
 				
 				list.add(recipe);
 			}
@@ -397,6 +405,8 @@ public class RecipeDAO {
 		String sql = null;
 		List<RecipeVO> list = null;
 		
+		int news_comments_count = 0;	// 댓글 카운트 수
+		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
@@ -420,9 +430,8 @@ public class RecipeDAO {
 			
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
-				int board_num = rs.getInt("board_num");
 				
-				recipe.setBoard_num(board_num);
+				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
@@ -434,6 +443,9 @@ public class RecipeDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
+				
+				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count); // 댓글 수 담기
 				
 				list.add(recipe);
 			}
@@ -462,6 +474,8 @@ public class RecipeDAO {
 		String sql = null;
 		List<RecipeVO> list = null;
 		
+		int news_comments_count = 0;	// 댓글 카운트 수
+		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
@@ -485,9 +499,8 @@ public class RecipeDAO {
 			
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
-				int board_num = rs.getInt("board_num");
 				
-				recipe.setBoard_num(board_num);
+				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
@@ -499,6 +512,9 @@ public class RecipeDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
+				
+				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count); // 댓글 수 담기
 				
 				list.add(recipe);
 			}
@@ -525,6 +541,8 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		ListComparator lcom = new ListComparator();		// 리스트 댓글순 정렬을 위한 클래스
+		int news_comments_count = 0;	// 댓글 카운트 수
 		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
@@ -532,7 +550,7 @@ public class RecipeDAO {
 			
 			// SQL문장 작성
 			sql = "select * from (select a.*, rownum rnum from "
-					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.comm_count desc, b.board_num desc) a) "
+					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
 					+ "where rnum >=? and rnum <=?";
 			
 			// PreparedStatement 객체 생성
@@ -549,9 +567,9 @@ public class RecipeDAO {
 			
 			while(rs.next()) {
 				RecipeVO recipe = new RecipeVO();
-				int board_num = rs.getInt("board_num");
 				
-				recipe.setBoard_num(board_num);
+				// VO에 값 삽입
+				recipe.setBoard_num(rs.getInt("board_num"));
 				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
 				recipe.setContent(StringUtil.useNoHtml(rs.getString("content")));
 				recipe.setHits(rs.getInt("hits"));
@@ -563,8 +581,9 @@ public class RecipeDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
-				// VO에 댓글 수 담기
-				recipe.setComm_count(rs.getInt("comm_count"));
+				
+				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count);	// 댓글 수 담기
 				
 				list.add(recipe);
 			}
@@ -575,6 +594,8 @@ public class RecipeDAO {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
 		
+		// 리스트 댓글수별 내림차순 정렬
+		Collections.sort(list, lcom);
 		return list;
 	}
 	
@@ -591,6 +612,7 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		int news_comments_count = 0;	// 댓글 카운트 수
 		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
@@ -667,6 +689,9 @@ public class RecipeDAO {
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
 				
+				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setNews_comments_count(news_comments_count);	// 댓글 수 담기
+				
 				list.add(recipe);
 			}
 		}catch(Exception e) {
@@ -713,8 +738,8 @@ public class RecipeDAO {
 			if(rs.next()) {
 				recipe = new RecipeVO();
 				recipe.setBoard_num(rs.getInt("board_num"));
-				recipe.setTitle(StringUtil.useNoHtml(rs.getString("title")));
-				recipe.setContent(StringUtil.useBrNoHtml(rs.getString("content")));
+				recipe.setTitle(rs.getString("title"));
+				recipe.setContent(rs.getString("content"));
 				recipe.setHits(rs.getInt("hits"));
 				recipe.setRecom_count(rs.getInt("recom_count"));	// 추천수
 				recipe.setReport_date(rs.getDate("report_date"));
@@ -1098,13 +1123,12 @@ public class RecipeDAO {
 	 * @Method 메소드명  : insertRecipeCommend
 	 * @작성일     : 2021. 9. 10. 
 	 * @작성자     : 오상준
-	 * @Method 설명 : 댓글테이블에 등록과 동시에 레시피 테이블에 댓글카운트 1 증가
+	 * @Method 설명 : 댓글테이블에 등록
 	 */
 	
 	public void insertRecipeCommend(RecipeCommendsVO recipeReply)throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
 		String sql = null;
 		
 		try {
@@ -1125,26 +1149,11 @@ public class RecipeDAO {
 			// SQL문 실행
 			pstmt.executeUpdate();
 			
-			// 댓글 등록 완료 후 레시피 테이블 댓글 수 +1			
-			
-			//SQL문 작성
-			sql = "update recipe_board set comm_count = comm_count+1 where board_num=?";
-						
-			// pstmt 객체 생성
-			pstmt2 = conn.prepareStatement(sql);
-						
-			// ? 에 데이터 바인딩
-			pstmt2.setInt(1, recipeReply.getBoard_num());
-						
-			// SQL문 실행
-			pstmt2.executeUpdate();
-			
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
 			// 자원정리
-			DBUtil.executeClose(null, pstmt, null);
-			DBUtil.executeClose(null, pstmt2, conn);
+			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
 	
@@ -1168,7 +1177,7 @@ public class RecipeDAO {
 			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
 			// SQL문 작성
-			sql = "select comm_count from recipe_board where board_num = ?";
+			sql = "select count(*) from comments where board_num = ?";
 			
 			// PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -1180,7 +1189,7 @@ public class RecipeDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				count = rs.getInt("comm_count");
+				count = rs.getInt(1);
 			}
 			
 		}catch(Exception e) {
@@ -1307,69 +1316,32 @@ public class RecipeDAO {
 	public void deleteRecipeCommend(int comm_num)throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
-		ResultSet rs = null;
 		String sql = null;
-		int board_num = 0;
 		
 		try {
-			// board_num을 구하기 위한 sql문
-			
 			// 커넥션 풀로부터 커넥션 할당
 			conn = DBUtil.getConnection();
-			
-			//SQL문 실행
-			sql = "select board_num from comments where comm_num = ?";
-			
-			// PreparedStatement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-						
-			// ? 에 데이터 바인딩
-			pstmt.setInt(1, comm_num);
-						
-			// SQL문 실행
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				board_num = rs.getInt("board_num");
-			}
-			
-			// 댓글 번호가 일치하는 댓글 삭제
 			
 			// SQL문 작성
 			sql = "delete from comments where comm_num = ?";
 			
 			// PreparedStatement 객체 생성
-			pstmt2 = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			
 			// ? 에 데이터 바인딩
-			pstmt2.setInt(1, comm_num);
+			pstmt.setInt(1, comm_num);
 			
 			// SQL문 실행
-			pstmt2.executeUpdate();
+			pstmt.executeUpdate();
 			
 			// 레시피 게시판 댓글 수 업데이트(-1)
 			
-			//SQL문 작성
-			sql = "update recipe_board set comm_count = comm_count-1 where board_num=?";
-						
-			// pstmt 객체 생성
-			pstmt3 = conn.prepareStatement(sql);
-						
-			// ? 에 데이터 바인딩
-			pstmt3.setInt(1, board_num);
-						
-			// SQL문 실행
-			pstmt3.executeUpdate();
 			
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
 			// 자원정리
-			DBUtil.executeClose(null, pstmt, null);
-			DBUtil.executeClose(null, pstmt2, null);
-			DBUtil.executeClose(null, pstmt3, conn);
+			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
 	
@@ -1422,10 +1394,13 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeNewsVO> list = null;
+		NewsDAO dao = NewsDAO.getInstance();
+		int news_comments_count = 0;
+		
 		try {
 			conn = DBUtil.getConnection();
 			sql= "SELECT * FROM (SELECT a.*,rownum rnum FROM "
-					+ "(SELECT * FROM news_board b JOIN member m ON b.mem_num = m.mem_num ORDER BY news_num DESC)a) "
+					+ "(SELECT * FROM news_board WHERE news_category='레시피' ORDER BY news_num DESC)a) "
 					+ "WHERE rnum>=? AND rnum<=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -1436,6 +1411,8 @@ public class RecipeDAO {
 			rs=pstmt.executeQuery();
 			list = new ArrayList<RecipeNewsVO>();
 			while(rs.next()) {
+				news_comments_count = dao.getCommentsCount(rs.getInt("news_num"));
+				
 				RecipeNewsVO recipe_News = new RecipeNewsVO();
 				recipe_News.setNews_num(rs.getInt("news_num"));
 				recipe_News.setNews_title(rs.getString("news_title"));
@@ -1445,6 +1422,7 @@ public class RecipeDAO {
 				recipe_News.setNews_modi(rs.getDate("news_modi"));
 				recipe_News.setNews_hits(rs.getInt("news_hits"));
 				recipe_News.setWriter("관리자");
+				recipe_News.setNews_comment_count(news_comments_count);
 				
 				list.add(recipe_News);
 				

@@ -70,7 +70,7 @@ window.onload=function(){
 		</div>
 				<label for="qna_id">닉네임</label>
 				<c:if test="${empty mem_num }">
-					<input type="text" class="form-control" name="qna_id" id="qna_id" maxlength="12" placeholder="닉네임을 입력하세요">
+					<input type="text" class="form-control" name="qna_id" id="qna_id" maxlength="10" placeholder="닉네임을 입력하세요">
 				</c:if>
 				<c:if test="${!empty mem_num }">
 					<input type="text" class="form-control" name="qna_id" id="qna_id" maxlength="12" value="${mem_id }" readonly>

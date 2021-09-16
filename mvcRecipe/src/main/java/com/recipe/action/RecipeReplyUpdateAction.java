@@ -30,15 +30,18 @@ public class RecipeReplyUpdateAction implements Action {
 		
 		// 작성자 회원 번호
 		int writer_num = Integer.parseInt(request.getParameter("writer_num"));
+	
 		
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		
 		HttpSession session = request.getSession();
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
+		Integer auth = (Integer)session.getAttribute("auth");
+		
 		// 로그인 체크
 		if(mem_num == null) { // 로그인이 되지 않은 경우
 			mapAjax.put("result", "logout");
-		}else if(mem_num!=null && mem_num == writer_num) {	// 로그인이 되어 있고 로그인한 회원 번호와 작성자 회원번호 일치
+		}else if((mem_num!=null && mem_num == writer_num) || auth == 3) {	// 로그인이 되어 있고 로그인한 회원 번호와 작성자 회원번호 일치 or 관리자인 경우
 			// 자바빈 생성
 			RecipeCommendsVO comm = new RecipeCommendsVO();
 			comm.setComm_num(Integer.parseInt(request.getParameter("comm_num")));

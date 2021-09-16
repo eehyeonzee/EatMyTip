@@ -71,7 +71,7 @@ $(document).ready(function() {
 		<form action = "modifyPasswd.do" method = "post" id = "password_form">
 			<ul class = "list-group">
 				<li class = "list-group-item"><label for = "id" class = "col-sm-2 col-form-label">아이디</label>
-				 : ${member.id}<input type = "hidden" name = "id" id = "id" value = "${member.id}"></li>
+				 ${member.id}<input type = "hidden" name = "id" id = "id" value = "${member.id}"></li>
 				<li class = "list-group-item"><label for = "passwd" class = "col-sm-2 col-form-label">변경 할 비밀번호</label>
 				<input type = "password" name = "passwd" id = "passwd" maxlength = "12"></li>
 				<li class = "list-group-item"><label for = "passwd2" class = "col-sm-2 col-form-label">변경 할 비밀번호 확인</label>

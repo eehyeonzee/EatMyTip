@@ -99,7 +99,8 @@
 						<tr>
 							<td>${news.news_num}</td>
 							<td>${news.news_category}</td>
-							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a></td>
+							<td><a href="${pageContext.request.contextPath}/news/newsDetail.do?news_num=${news.news_num}">${news.news_title}</a>
+							<b style="font-size: 13px; color: red;">[${ news.news_comment_count }]</b></td>
 							<td><img src="${pageContext.request.contextPath}/images/crown.gif" style="height: 25px; width:30;" />${news.writer}</td>
 							<td>${news.news_hits}</td>
 							<td>${news.news_date}</td>
@@ -131,7 +132,7 @@
 	       	<div class="col-3">
 	            <b>No. ${ recipe.board_num }</b> 
 	            <span style="float: right; font-size: 14px;">
-	            조회 ${ recipe.hits }
+	            <b style="font-size: 14px; color: red;">[${ recipe.news_comments_count }]</b> 조회 ${ recipe.hits }
 	            </span>
 	          <div class="card" style="height: 540px;">
 	            <div class="card-header">
@@ -167,7 +168,7 @@
       <div align="center">
 	        	${ pagingHtml }
 	  </div>
-      <div align="center" style="background-color: #f5f5ff; width :100%; height: 100%;">
+      <div align="center" style="width :100%; height: 100%;">
 	        <br>
 	        <%-- 검색부분 --%>  
 		<form action="recipeList.do" method="get" name="search_form" id="search_form">

@@ -40,7 +40,7 @@
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
 <!-- container 시작 -->
 <div class = "container-fluid contents-wrap" style = "width:90%">
-	<div class="text-center col-sm-30 my-5">
+	<div class="text-center col-sm-12 my-5">
 		<div align = "left">
 			<h3>로그인</h3>
 		</div>
