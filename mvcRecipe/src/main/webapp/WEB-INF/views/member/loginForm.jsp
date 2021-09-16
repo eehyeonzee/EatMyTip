@@ -10,11 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>로그인</title>
+<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#login_form').submit(function() {
@@ -36,8 +37,8 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<body>
 <!-- container 시작 -->
 <div class = "container-fluid contents-wrap" style = "width:90%">
 	<div class="text-center col-sm-12 my-5">

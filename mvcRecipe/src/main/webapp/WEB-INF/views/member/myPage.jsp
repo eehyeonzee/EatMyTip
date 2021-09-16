@@ -12,13 +12,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>마이 페이지</title>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<title>마이 페이지</title>
 <script type ="text/javascript">
 	$(document).ready(function() {
 		$('#photo_btn').click(function() {
@@ -87,6 +87,7 @@
 	});
 </script>
 </head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
 <!-- 본문 -->
 <div class = "container-fluid" style = "width:90%">

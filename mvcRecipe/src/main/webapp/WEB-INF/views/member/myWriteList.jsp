@@ -11,9 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>내가 작성한 글</title>
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<title>EEEMT - 내가 작성한 글</title>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <script type="text/javascript">
@@ -32,8 +32,8 @@
 	});
 </script>
 </head>
-<body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<body>
 <div class="container-fluid contents-wrap" style="width :90%;">
     <div class="row" style="width :100%;">
     <div class="col-md-12 my-5">
@@ -71,7 +71,7 @@
 	       	<div class="col-3">
 	            <b>No. ${ recipe.board_num }</b> 
 	            <span style="float: right; font-size: 14px;">
-	            조회 ${ recipe.hits }
+	         	   <b style="font-size: 14px; color: red;">[${ recipe.comm_count }]</b> 조회 ${ recipe.hits }
 	            </span>
 	          <div class="card" style="height: 540px;">
 	            <div class="card-header">

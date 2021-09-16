@@ -11,15 +11,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel = "stylesheet" href= "${pageContext.request.contextPath}/css/style.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>아이디 찾기 결과</title>
 </head>
-<body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<body>
 <div class = "container-fluid contents-wrap" style="width:90%">
 	<div class="text-center col-sm-30 my-5">
 		<div align = "left">

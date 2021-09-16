@@ -54,7 +54,7 @@ window.onload=function(){
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>고객센터 게시판 글 작성</title>
+<title>EEEMT - 고객센터 글작성</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>

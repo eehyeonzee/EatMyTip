@@ -10,11 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>비밀번호 찾기</title>
+<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel = "stylesheet" href= "${pageContext.request.contextPath}/css/style.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<script type = "text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -41,8 +42,8 @@
 	});
 </script>
 </head>
-<body>
 <jsp:include page = "/WEB-INF/views/common/header.jsp" />
+<body>
 <div class = "container-fluid contents-wrap" style = "width:90%">
 	<div class="text-left col-sm-30 my-5">
 		<div align = "left">
@@ -52,7 +53,7 @@
 		<table align = "center">
 			<tr>
 				<td height = "80px"><label for = "id" class = "col-sm-12 col-form-label">아이디</label></td>
-				<td><input type = "text" class = "col-sm-12 form-control" id = "id" name = "id" maxlength = "12"></td>
+				<td><input type = "text" class = "col-sm-12 form-control" id = "id" name = "id" maxlength = "10"></td>
 			</tr>
 			<tr>
 				<td height = "40px"><label for = "name" class = "col-sm-12 col-form-label">회원 가입시 입력한 이름</label></td>

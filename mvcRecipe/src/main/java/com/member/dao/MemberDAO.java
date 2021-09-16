@@ -463,18 +463,17 @@ public class MemberDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		int comments_count = 0;
 		
 		try {
 			conn = DBUtil.getConnection();
 			
-			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM "
-					+ "(SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num ORDER BY b.board_num DESC) a) "
-					+ "WHERE rnum >=? AND rnum <= ? AND id = ?";
+			sql = "SELECT * FROM (SELECT a.*, rownum rnum FROM (SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num where id = ? ORDER BY b.board_num DESC) a)WHERE rnum >= ? AND rnum <= ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			pstmt.setString(3, id);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery();
 			
 			list = new ArrayList<RecipeVO>();
@@ -493,6 +492,9 @@ public class MemberDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
+				
+				comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setComm_count(comments_count);
 				
 				list.add(recipe);
 			}
@@ -554,16 +556,17 @@ public class MemberDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
+		int comments_count = 0;
 		
 		try {
 			conn = DBUtil.getConnection();
 			
-			sql = "SELECT * FROM(SELECT a.*, rownum rnum FROM (SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num JOIN bookmark o ON b.board_num = o.board_num ORDER BY b.board_num DESC) a)WHERE rnum >= ? AND rnum <= ? AND mem_num = ?";
+			sql = "SELECT * FROM(SELECT a.*, rownum rnum FROM (SELECT * FROM recipe_board b JOIN member m ON b.mem_num = m.mem_num JOIN bookmark o on b.board_num = o.board_num WHERE o.mem_num = ? ORDER BY b.board_num DESC) a)WHERE rnum >= ? AND rnum <= ?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			pstmt.setInt(3, mem_num);
+			pstmt.setInt(1, mem_num);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rs = pstmt.executeQuery();
 			
 			list = new ArrayList<RecipeVO>();
@@ -583,6 +586,9 @@ public class MemberDAO {
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
 				recipe.setBook_num(rs.getInt("book_num"));
+				
+				comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
+				recipe.setComm_count(comments_count);
 				
 				list.add(recipe);
 			}
@@ -818,5 +824,40 @@ public class MemberDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 		
+	}
+	
+	public int getRecipeReplyBoardCount(int board_num)throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// SQL문 작성
+			sql = "SELECT COUNT(*) FROM comments WHERE board_num = ?";
+			
+			// PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 데이터 바인딩
+			pstmt.setInt(1, board_num);
+			
+			// SQL문을 실행해서 결과행을 rs에 담는다
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			// 자원정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}	
+		return count;
 	}
 }

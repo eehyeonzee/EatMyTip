@@ -41,13 +41,13 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>공지사항</title>
+<title>EEEMT - 공지사항 글수정</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 </head>
 <body>
 <div class="container">
 	<br><br>
-	<h2>레시피 수정</h2>	
+	<h2>공지사항 수정</h2>	
 	<hr size="1" noshade width="100%">
 	<form id="modify_form" action="newsModify.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="news_num" id="news_num" value="${news.news_num}">

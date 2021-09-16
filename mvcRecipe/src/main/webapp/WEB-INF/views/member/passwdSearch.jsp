@@ -11,12 +11,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>비밀번호 찾기 결과</title>
+<script type="text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel = "stylesheet" href= "${pageContext.request.contextPath}/css/style.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script type="text/javascript" src = "${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	// 이벤트 연결
@@ -58,10 +58,9 @@ $(document).ready(function() {
 	});
 });
 </script>
-<title>비밀번호 찾기 결과</title>
+<jsp:include page = "/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
-<jsp:include page = "/WEB-INF/views/common/header.jsp" />
 <div class = "container-fluid contents-wrap" style="width:90%">
 	<div class="text-left col-sm-12 my-5">
 		<div align = "left">

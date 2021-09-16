@@ -27,6 +27,10 @@ public class MyBookmarkListAction implements Action{
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
 		Integer mem_num = (Integer)session.getAttribute("mem_num");
+		
+		if(mem_num == null) {
+			return "redirect:/member/loginForm.do";
+		}
 						
 		// 전송된 데이터 타입
 		request.setCharacterEncoding("utf-8");
@@ -44,7 +48,7 @@ public class MyBookmarkListAction implements Action{
 							
 		// 페이지 처리
 		// currentPage, count, rowCount, pageCount, url
-		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 6, 5,"recipeList.do");
+		PagingUtil page = new PagingUtil(Integer.parseInt(pageNum), count, 4, 5,"myBookmarkList.do");
 							
 		List<RecipeVO> list = null;
 							

@@ -77,7 +77,7 @@ public class BestRecipeListAction implements Action {
 				list = dao.getRecommTotalRecipeList(page.getStartCount(), page.getEndCount());
 			}
 			if(division.equals("댓글순")) {
-				// 리스트에 추천순 담기
+				// 리스트에 댓글순 담기
 				list = dao.getCommentsTotalRecipeList(page.getStartCount(), page.getEndCount());
 			}
 		}

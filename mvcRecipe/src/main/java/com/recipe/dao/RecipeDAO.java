@@ -541,8 +541,6 @@ public class RecipeDAO {
 		ResultSet rs = null;
 		String sql = null;
 		List<RecipeVO> list = null;
-		ListComparator lcom = new ListComparator();		// 리스트 댓글순 정렬을 위한 클래스
-		int news_comments_count = 0;	// 댓글 카운트 수
 		
 		try {
 			// 커넥션 풀로부터 커넥션 할당
@@ -550,7 +548,10 @@ public class RecipeDAO {
 			
 			// SQL문장 작성
 			sql = "select * from (select a.*, rownum rnum from "
-					+ "(select * from recipe_board b join member m on b.mem_num = m.mem_num order by b.board_num desc) a) "
+					+ "(select * from recipe_board b left outer join "
+					+ "(select  board_num, count(*) comm_cnt from comments group by board_num) "
+					+ "using(board_num) join member "
+					+ "using(mem_num) order by comm_cnt desc nulls last)a) "
 					+ "where rnum >=? and rnum <=?";
 			
 			// PreparedStatement 객체 생성
@@ -581,9 +582,7 @@ public class RecipeDAO {
 				recipe.setCategory(rs.getString("category"));
 				recipe.setMem_num(rs.getInt("mem_num"));
 				recipe.setId(rs.getString("id"));
-				
-				news_comments_count = getRecipeReplyBoardCount(rs.getInt("board_num"));
-				recipe.setNews_comments_count(news_comments_count);	// 댓글 수 담기
+				recipe.setNews_comments_count(rs.getInt("comm_cnt"));
 				
 				list.add(recipe);
 			}
@@ -595,7 +594,6 @@ public class RecipeDAO {
 		}
 		
 		// 리스트 댓글수별 내림차순 정렬
-		Collections.sort(list, lcom);
 		return list;
 	}
 	

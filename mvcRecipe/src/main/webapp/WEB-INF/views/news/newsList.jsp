@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>공지사항</title>
+<title>EEEMT - 공지사항</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
@@ -49,6 +49,11 @@
 									value="홈으로"
 									onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 							</form>
+						</c:if>
+						<c:if test="${auth!=3}">
+						<input type="button"
+									value="홈으로"
+									onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 						</c:if>
 					</span>
 				</div>
