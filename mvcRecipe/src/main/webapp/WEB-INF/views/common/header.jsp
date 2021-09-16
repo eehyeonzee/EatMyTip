@@ -70,7 +70,7 @@ body {
 	</ul>
 </c:if>
 <!-- 검색창 -->
-<form id="search" action="../main/mainSearchList.do" method="get">
+<form id="search" action="${pageContext.request.contextPath}/main/mainSearchList.do" method="get">
 	<div class="search-bar input-group" style="width:170px;">
 		<input type="search" name="search" id="search" class="form-control rounded-pill" placeholder="통합검색" autocomplete="off" aria-label="Recipient's username" aria-describedby="button-addon2">
 		<div class="input-group-append"></div>

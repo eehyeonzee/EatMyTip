@@ -25,10 +25,10 @@ public class NewsListAction implements Action {
 		//세션으로 회원등급파악
 		HttpSession session = request.getSession();
 		Integer auth =(Integer)session.getAttribute("auth");
-		String news_search = request.getParameter("news_search");
+		String news_search = request.getParameter("search");
 		String division = request.getParameter("division");
 		request.setCharacterEncoding("utf-8");
-		request.setAttribute("news_search",news_search);
+		request.setAttribute("search",news_search);
 		request.setAttribute("division", division);
 		
 		//
@@ -83,7 +83,7 @@ public class NewsListAction implements Action {
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(news_search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do");
+			PagingUtil page = new PagingUtil(news_search,division,Integer.parseInt(pageNum), count, 4, 5,"newsList.do");
 					
 			List<NewsVO> list =null;
 					
@@ -112,7 +112,7 @@ public class NewsListAction implements Action {
 					
 			// 페이지 처리
 			// currentPage, count, rowCount, pageCount, url
-			PagingUtil page = new PagingUtil(news_search,division,Integer.parseInt(pageNum), count, 4, 5,"recipeList.do?news_search="+news_search+"&category="+division);
+			PagingUtil page = new PagingUtil(news_search,division,Integer.parseInt(pageNum), count, 4, 5,"newsList.do");
 					
 			List<NewsVO> list =null;
 					
@@ -128,7 +128,7 @@ public class NewsListAction implements Action {
 			request.setAttribute("pagingHtml", page.getPagingHtml());
 			request.setAttribute("auth",auth);	
 			request.setAttribute("division", division);
-			request.setAttribute("news_search", news_search);
+			request.setAttribute("search", news_search);
 			// 모두의 레시피로 이동	
 			return "/WEB-INF/views/news/newsList.jsp";
 		}

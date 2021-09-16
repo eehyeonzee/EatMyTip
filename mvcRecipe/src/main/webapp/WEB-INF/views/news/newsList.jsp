@@ -23,7 +23,7 @@
 		$('#search_form').submit(function() {
 			if ($('#news_search').val().trim() == '') {
 				alert('검색어를 입력하세요!');
-				$('news_search').val('').focus();
+				$('#news_search').val('').focus();
 				return false;
 			}
 		});
@@ -108,8 +108,8 @@
 					<select name="division">
 						<option value="제목">제목</option>
 						<option value="내용">내용</option>
-					</select> <input type="hidden" value="${mem_num}" name="mem_num"> <input
-						type="search" id="news_search" name="news_search" placeholder="검색어를 입력하세요.">
+					</select>  <input
+						type="search" id="news_search" name="search" placeholder="검색어를 입력하세요.">
 					<input type="submit" value="검색">
 				</form>
 				<br>
