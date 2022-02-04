@@ -35,6 +35,6 @@
 
 ## 구축 화면
 ### **`잇마이팁`**
-  * **[메인]**&nbsp;&nbsp;[페이지 전체](https://github.com/eehyeonzee/EverydayHome/tree/main2/springProject/src/main/webapp/WEB-INF/views)
-  <img width="85%" src="https://user-images.githubusercontent.com/83903563/148885942-275e845b-be9c-4ee4-b727-95dabb5bd251.png"/>
+  * **[메인]**
+  <img width="85%" src="https://user-images.githubusercontent.com/83903563/152450842-4e4797ad-e747-4578-944e-c4b8830903d2.jpg"/>
 <br><br>
