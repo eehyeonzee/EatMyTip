@@ -36,5 +36,5 @@
 ## 구축 화면
 ### **`잇마이팁`**
   * **[메인]**
-  <img width="85%" src="https://user-images.githubusercontent.com/83903563/152450842-4e4797ad-e747-4578-944e-c4b8830903d2.jpg"/>
+  <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460077-78cd59f9-6c82-49ef-9442-5bfd8c5fc3b8.png"/>
 <br><br>
