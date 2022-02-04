@@ -39,50 +39,50 @@
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460077-78cd59f9-6c82-49ef-9442-5bfd8c5fc3b8.png"/>
 <br><br>
 
-  * **[마이페이지] 회원정보**
+  * **[마이페이지]** 회원정보
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460693-75bde223-a678-4537-a6a4-d97e2ce6735e.jpg"/>
 <br><br>
 
-  * **[마이페이지] 내가 쓴 글**
+  * **[마이페이지]** 내가 쓴 글
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460691-9ff9bd5c-dd4e-49c5-b090-016766a4a8ee.jpg"/>
 <br><br>
 
-  * **[마이페이지] 북마크**
+  * **[마이페이지]** 북마크
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460697-6ba7ad37-9a7e-4a59-bfed-f526673d64d6.png"/>
 <br><br>
 
-  * **[공지사항] 글 목록**
+  * **[공지사항]** 글 목록
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460881-d3c60111-a658-466f-b4a8-32fcc886f76a.jpg"/>
 <br><br>
 
-  * **[공지사항] 글 상세**
+  * **[공지사항]** 글 상세
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152460888-294c4898-b6ef-4ca0-8860-e05c0a785a3f.jpg"/>
 <br><br>
 
-  * **[모두의레시피] 글 목록**
+  * **[모두의레시피]** 글 목록
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461168-75e6f194-ca51-4b86-a425-74a20a1c2b76.jpg"/>
 <br><br>
 
-  * **[모두의레시피] 글 상세**
+  * **[모두의레시피]** 글 상세
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461173-cf2e1b35-6456-4bc8-bf6d-e8eb4d0be59e.jpg"/>
 <br><br>
 
-  * **[베스트레시피] 추천순/조회순/댓글순 보기**
+  * **[베스트레시피]** 추천순/조회순/댓글순 보기
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461255-c81a6e42-45a2-4c5f-b52f-8659224d7632.jpg"/>
 <br><br>
 
-  * **[고객센터] 글 목록**
+  * **[고객센터]** 글 목록
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461367-634cb8c4-1f36-4753-b307-60ad6eaf2525.jpg"/>
 <br><br>
 
-  * **[고객센터] 글 상세**
+  * **[고객센터]** 글 상세
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461374-c6041573-2d4d-414b-a7c1-8a57dc5a535a.jpg"/>
 <br><br>
 
-  * **[관리자페이지] 회원정보**
+  * **[관리자페이지]** 회원정보
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461477-d49d99d4-02f3-4bba-abe7-05c4da81b2e5.jpg"/>
 <br><br>
 
-  * **[관리자페이지] 회원관리**
+  * **[관리자페이지]** 회원관리
   <img width="85%" src="https://user-images.githubusercontent.com/83903563/152461474-8e9ffa0c-5b5f-4706-bd4d-abb4744c3ca0.jpg"/>
 <br><br>
