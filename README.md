@@ -18,11 +18,11 @@
 
 ## 개발환경 및 사용기술
   * **`OS`**&nbsp;&nbsp;Windows 10
-  * **`Tool`**&nbsp;&nbsp;JAVA JDK-1.7
+  * **`Tool`**&nbsp;&nbsp;JAVA JDK-16.0.1
   * **`DBMS`**&nbsp;&nbsp;Oracle 11g Release2
   * **`Server`**&nbsp;&nbsp;Apache Tomcat 9.0
   * **`Front-end`**&nbsp;&nbsp;HTML5, CSS3, JavaScript, jQuery, Bootstrap
-  * **`Back-end`**&nbsp;&nbsp;Java, Spring Framework, MyBatis, JSP
+  * **`Back-end`**&nbsp;&nbsp;Java, JSP
 <br><br>
 
 ## 시스템 설계
