@@ -27,7 +27,10 @@
 
 ## 시스템 설계
   * [ERD] 논리/물리 모델
-  ![ERD](https://user-images.githubusercontent.com/83903563/148183561-6d8e7131-c14e-4af7-a17a-41a0b67c8f08.png)
+  ![ERD](https://user-images.githubusercontent.com/83903563/152450336-5deea72c-bd09-4e49-9c60-e47080094e67.png)
+<br>
+  * [UML] Class Diagram
+  ![데이터 모델링  UML - 클래스 다이어그램](https://user-images.githubusercontent.com/83903563/152450429-bc0c3868-8ac4-40e5-a84b-c6bceb309020.png)
 <br>
 
 ## 구축 화면
