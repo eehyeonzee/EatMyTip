@@ -28,10 +28,10 @@
 ## 시스템 설계
   * [ERD] 논리/물리 모델
   ![ERD](https://user-images.githubusercontent.com/83903563/152450336-5deea72c-bd09-4e49-9c60-e47080094e67.png)
-<br>
+<br><br>
   * [UML] Class Diagram
   <img width="70%" src="https://user-images.githubusercontent.com/83903563/152450429-bc0c3868-8ac4-40e5-a84b-c6bceb309020.png"/>
-<br>
+<br><br>
 
 ## 구축 화면
 ### **`잇마이팁`**
